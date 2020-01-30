@@ -22,4 +22,4 @@ namespace SeminarBuildingMap.Pages
 
         }
     }
-}
+} 
