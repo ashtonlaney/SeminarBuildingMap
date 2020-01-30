@@ -9,7 +9,7 @@ map.fitBounds(bounds);
 var geojsonFeature = {
     "type": "Feature",
     "properties": {
-        "name": "Coors Field",
+        "name": "Girls Bathroom",
         "amenity": "Baseball Stadium",
         "popupContent": "This is where the Rockies play!"
     },
@@ -56,4 +56,5 @@ function onEachFeature(feature, layer) {
 }
 
 L.geoJSON(geojsonFeature, { onEachFeature: onEachFeature }).addTo(map);
+L.control.mousePosition().addTo(map);
 
