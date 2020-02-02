@@ -3,7 +3,7 @@
 });
 
 var bounds = [[0, 0], [1000, 1000]];
-var image = L.imageOverlay('/images/2ndFloorFinal.svg', bounds).addTo(map);
+var image = L.imageOverlay('/images/Darden2nd.svg', bounds).addTo(map);
 map.fitBounds(bounds);
 
 /*var geojsonFeature = {
