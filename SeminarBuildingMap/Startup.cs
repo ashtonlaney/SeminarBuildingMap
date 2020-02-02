@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SeminarBuildingMap.GenericClasses;
 
 namespace SeminarBuildingMap
 {
@@ -24,6 +25,7 @@ namespace SeminarBuildingMap
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

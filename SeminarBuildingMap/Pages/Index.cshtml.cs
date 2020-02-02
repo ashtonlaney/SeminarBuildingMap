@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using SeminarBuildingMap.GenericClasses;
+using SeminarBuildingMap.Models;
 
 namespace SeminarBuildingMap.Pages
 {
@@ -12,13 +15,21 @@ namespace SeminarBuildingMap.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+
+        private readonly IOptions<ConnectionConfig> _connectionConfig;
+
+        readonly RoomDataAccessLayer objRoom = new RoomDataAccessLayer();
+
+        public IEnumerable<Room> Rooms { get; set; }
+
+        public IndexModel(IOptions<ConnectionConfig> connectionConfig)
         {
-            _logger = logger;
+            _connectionConfig = connectionConfig;
         }
 
         public void OnGet()
         {
+            Rooms = objRoom.GetDardenRooms(_connectionConfig.Value.ConnStr);
 
         }
     }

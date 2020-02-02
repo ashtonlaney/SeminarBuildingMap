@@ -6,23 +6,19 @@ var bounds = [[0, 0], [1000, 1000]];
 var image = L.imageOverlay('/images/2ndFloorFinal.svg', bounds).addTo(map);
 map.fitBounds(bounds);
 
-var geojsonFeature = {
+/*var geojsonFeature = {
     "type": "Feature",
     "properties": {
         "name": "Girls Bathroom",
         "amenity": "Baseball Stadium",
-        "popupContent": "This is where the Rockies play!"
+        "popupContent": "This is where the Rockies play!",
     },
     "geometry": {
         "type": "Polygon",
-        "coordinates": [[
-            [293, 459.9],
-            [295, 513.5],
-            [330.5, 515],
-            [330.5, 459.9]
-        ]]
+        "coordinates": [[[293, 459.9],[295, 513.5],[330.5, 515],[330.5, 459.9]]]
     }
-};
+};*/
+
 
 
 function highlightFeature(e) {
@@ -40,21 +36,23 @@ function highlightFeature(e) {
     }
 }
 
-function resetHighlight(e) {
-    geoJSON.resetStyle(e.target);
-}
+/*function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+}*/
 
 function zoomToFeature(e) {
     map.fitBounds(e.target.getBounds());
 }
 
-function onEachFeature(feature, layer) {
+/*function onEachFeature(feature, layer) {
     layer.on({
         click: highlightFeature,
         mouseout: resetHighlight,
     });
-}
+}*/
 
-L.geoJSON(geojsonFeature, { onEachFeature: onEachFeature }).addTo(map);
+//var geojson = L.geoJSON(geojsonFeature, { onEachFeature: onEachFeature }).addTo(map);
 L.control.mousePosition().addTo(map);
+
+
 
