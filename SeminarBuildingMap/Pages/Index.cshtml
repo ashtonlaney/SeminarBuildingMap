@@ -35,10 +35,10 @@
         <text>
         {
             "type": "Feature",
-            "properties": { "name": "@room.RoomNumber", "color": "@room.Color" },
+            "properties": { "name": "@room.rmId", "color": "@room.Color"},
             "geometry": {
                 "type": "Polygon",
-                "coordinates": @room.Coordinates
+                "coordinates": [[[@room.rmTopLeftPoint],[@room.rmBottomLeftPoint],[@room.rmBottomRightPoint],[@room.rmTopRightPoint]]]
                 }
         }
         </text>
@@ -55,5 +55,5 @@
         };
     }
 
-    L.geoJSON(rooms, { style: style }).addTo(map);
+var geoJson = L.geoJSON(rooms, { style: style, onEachFeature: onEachFeature }).addTo(map);
 </script>

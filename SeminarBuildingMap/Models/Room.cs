@@ -8,12 +8,16 @@ namespace SeminarBuildingMap.Models
 {
     public partial class Room
     {
-        [Required]
-        public string Building { get; set; }
         [Required][Display(Name = "Room Number")]
-        public string RoomNumber { get; set; }
-        public String Coordinates { get; set; }
+        public string rmId { get; set; }
+        public string rmName { get; set; }
+        public string rmTopLeftPoint { get; set; }
+        public string rmBottomLeftPoint { get; set; }
+        public string rmBottomRightPoint { get; set; }
+        public string rmTopRightPoint { get; set; }
+
         public string Color { get; set; } = "Blue";
 
     }
 }
+
