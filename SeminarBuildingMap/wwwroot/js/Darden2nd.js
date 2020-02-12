@@ -6,6 +6,21 @@ var bounds = [[0, 0], [1000, 1000]];
 var image = L.imageOverlay('/images/Darden2nd.svg', bounds).addTo(map);
 map.fitBounds(bounds);
 
+/*var geojsonFeature = {
+    "type": "Feature",
+    "properties": {
+        "name": "Girls Bathroom",
+        "amenity": "Baseball Stadium",
+        "popupContent": "This is where the Rockies play!",
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[293, 459.9],[295, 513.5],[330.5, 515],[330.5, 459.9]]]
+    }
+};*/
+
+
+
 function highlightFeature(e) {
     var layer = e.target;
 
@@ -27,12 +42,7 @@ function resetHighlight(e) {
 
 function zoomToFeature(e) {
     map.fitBounds(e.target.getBounds());
-    document.getElementById("testlabel2").textContent = e.target.feature.properties.name;
 }
-
-map.on('click', function (e) {
-    document.getElementById("testlabel").textContent += (e.latlng.lng + ", " + e.latlng.lat + ";")
-});
 
 function onEachFeature(feature, layer) {
     layer.on({
@@ -42,6 +52,11 @@ function onEachFeature(feature, layer) {
     });
 }
 
+function zoomToFeature(e) {
+    map.fitBounds(e.target.getBounds());
+}
+
+//var geojson = L.geoJSON(geojsonFeature, { onEachFeature: onEachFeature }).addTo(map);
 L.control.mousePosition().addTo(map);
 
 
