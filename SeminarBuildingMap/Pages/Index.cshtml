@@ -18,10 +18,35 @@
 
 
 }
+
+<script>
+    function updateSendData() {
+        $.ajax({
+            url: '/?handler=Add',
+            data: {
+                RoomNumber: document.getElementById("roomNum").value,
+                Coords: document.getElementById("testlabel").textContent
+            }
+        })
+            .done(function (result) {
+                document.getElementById("testlabel").textContent = "";
+            })
+    }
+
+</script>
+
+
+
 <div class="text-center">
     <h1 class="display-4">hey bird</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <textarea id="roomNum"></textarea>
+    <button id="btnTest" onclick="updateSendData()">add room to database</button>
+    <p id="testlabel"></p>
+    <p id="testlabel2">hi</p>
 </div>
+
+
 
 <div id="mapid"></div>
 

@@ -32,5 +32,16 @@ namespace SeminarBuildingMap.Pages
             Rooms = objRoom.GetDardenRooms(_connectionConfig.Value.ConnStr);
 
         }
+
+        public JsonResult OnGetAdd(String RoomNumber, String Coords)
+        {
+            objRoom.InsertDardenRoom(RoomNumber, Coords, _connectionConfig.Value.ConnStr);
+            return new JsonResult("[hello]");
+        }
+
+        public JsonResult OnGetInfo(String RoomNumber)
+        {
+            return new JsonResult("");
+        }
     }
 } 
