@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,35 +14,28 @@ namespace SeminarBuildingMap.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
 
+        private readonly IOptions<ConnectionConfig> _connectionConfig; //brings connection strings into this page
 
-        private readonly IOptions<ConnectionConfig> _connectionConfig;
+        readonly RoomDataAccessLayer objRoom = new RoomDataAccessLayer(); //for creating rooms on map
+        readonly RoomScheduleDataAccessLayer objSchedule = new RoomScheduleDataAccessLayer(); //for getting schedules for ajax call
 
-        readonly RoomDataAccessLayer objRoom = new RoomDataAccessLayer();
+        public IEnumerable<Room> Rooms { get; set; } //list of rooms to use on front end for geoJSON
 
-        public IEnumerable<Room> Rooms { get; set; }
-
-        public IndexModel(IOptions<ConnectionConfig> connectionConfig)
+        public IndexModel(IOptions<ConnectionConfig> connectionConfig) //init model
         {
             _connectionConfig = connectionConfig;
         }
 
-        public void OnGet()
+        public void OnGet() //normal get request, loads rooms onto map
         {
             Rooms = objRoom.GetDardenRooms(_connectionConfig.Value.ConnStr);
-
         }
 
-        public JsonResult OnGetAdd(String RoomNumber, String Coords)
+        public JsonResult OnGetInfo(String Building, String RoomNumber) //made to respond to ajax call for room info. provides todays schedule of room in json reach via /?handler=Info&Building=<building>&RoomNumber=<roomnumber>
         {
-            objRoom.InsertDardenRoom(RoomNumber, Coords, _connectionConfig.Value.ConnStr);
-            return new JsonResult("[hello]");
-        }
-
-        public JsonResult OnGetInfo(String RoomNumber)
-        {
-            return new JsonResult("");
+            var ScheduleList = objSchedule.GetRoomSchedule_Today(RoomNumber, _connectionConfig.Value.ConnStr); //gets list of bookings in room today
+            return new JsonResult(ScheduleList); //return JSON serialized value for front end
         }
     }
 } 

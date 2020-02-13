@@ -6,17 +6,20 @@ namespace SeminarBuildingMap.Models
 {
     public class RoomDataAccessLayer
     {
+        //returns all rooms in darden, will be changed to be dynamic later
         public IEnumerable<Room> GetDardenRooms(string _connectionString)
         {
             IEnumerable<Room> rooms = new List<Room>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                //creates a list of the "Room" object, the variables in this class must correspond to sql column names or this will not work
                 rooms = connection.Query<Room>("up_GetRooms_Darden", commandType: System.Data.CommandType.StoredProcedure);
             }
             return rooms;
         }
 
+        //adds a new room to darden, this will be changed when an eventual admin page for this is created
         public void InsertDardenRoom(string rmID, string rmCoords, string _connectionString)
         {
             rmCoords = rmCoords.Remove(rmCoords.Length - 1);
@@ -27,6 +30,7 @@ namespace SeminarBuildingMap.Models
             }
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                //this is how you add SQL parameters, this splits the coords entered into the 4 corners of an object
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@rmId", rmID);
                 queryParameters.Add("@rmName", "Darden " + rmID);
@@ -37,7 +41,6 @@ namespace SeminarBuildingMap.Models
                 connection.Execute("up_InsertRoom_Darden", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
-
 
     }
 }

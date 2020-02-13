@@ -1,13 +1,14 @@
 ﻿@page
-@model IndexModel
+@model SeminarBuildingMap.AddRoomsToMapModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "addRoomsToMap";
 }
-<!-- mapping section, include this on any page with a map-->
 @section Mapping{
     <link rel="stylesheet" href="~/css/leaflet.css" />
     <script src="~/js/leaflet.js"></script>
-        
+    <link rel="stylesheet" href="~/css/L.Control.MousePosition.css" />
+    <script src="~/js/L.Control.MousePosition.js"></script>
+
     <style>
         #mapid {
             height: 750px;
@@ -18,24 +19,40 @@
 
 }
 
+<script>
+    function updateSendData() {
+        $.ajax({
+            url: '/?handler=Add',
+            data: {
+                RoomNumber: document.getElementById("roomNum").value,
+                Coords: document.getElementById("testlabel").textContent
+            }
+        })
+            .done(function (result) {
+                document.getElementById("testlabel").textContent = "";
+            })
+    }
+
+</script>
+
+
 
 <div class="text-center">
     <h1 class="display-4">hey bird</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <textarea id="roomNum"></textarea>
+    <button id="btnTest" onclick="updateSendData()">add room to database</button>
+    <p id="testlabel"></p>
+    <p id="testlabel2">hi</p>
 </div>
 
 
-<!-- DO NOT REMOVE OR MODIFY THE BELOW DIV, THIS IS WHAT THE MAP IS BOUND TO-->
+
 <div id="mapid"></div>
 
-<!-- pull in the main menu map js file from wwwroot/js/MainMap.js-->
-<script src="~/js/MainMap.js"></script> 
+<script src="~/js/AddRoomsMap.js"></script>
 
 <script>
-
-    //this bit of code dynamically generates the room javascript on the server side using the model from SQL and the geoJSON is then shipped with the page, this cannot be in a js file, since it uses
-    //the model of this page to operate
-    //the bits with the 'at' sign before them are razor syntax, its what is ran server side
     var rooms = [
     @for(int i = 0; i < Model.Rooms.Count(); i++)
     {
@@ -51,8 +68,8 @@
         }
         </text>
         @if(i != Model.Rooms.Count() - 1)
-        { 
-            <text>,</text>    
+        {
+            <text>,</text>
         }
     }
         ];
@@ -65,3 +82,4 @@
 
 var geoJson = L.geoJSON(rooms, { style: style, onEachFeature: onEachFeature }).addTo(map);
 </script>
+

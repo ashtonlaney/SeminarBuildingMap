@@ -38,7 +38,7 @@ function onEachFeature(feature, layer) {
     layer.on({
         click: zoomToFeature,
         mouseover: highlightFeature,
-        mouseout: resetHighlight 
+        mouseout: resetHighlight
     });
 }
 
