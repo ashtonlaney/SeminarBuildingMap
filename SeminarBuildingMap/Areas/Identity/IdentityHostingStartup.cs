@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -21,9 +22,11 @@ namespace SeminarBuildingMap.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("SeminarBuildingMapContextConnection")));
 
-                services.AddDefaultIdentity<SeminarBuildingMapUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<SeminarBuildingMapUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<SeminarBuildingMapContext>();
             });
+
+            
         }
     }
-}
+}                                            

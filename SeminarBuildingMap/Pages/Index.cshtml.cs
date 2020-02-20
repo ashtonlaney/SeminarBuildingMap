@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SeminarBuildingMap.GenericClasses;
 using SeminarBuildingMap.Models;
@@ -37,5 +34,11 @@ namespace SeminarBuildingMap.Pages
             var ScheduleList = objSchedule.GetRoomSchedule_Today(RoomNumber, _connectionConfig.Value.ConnStr); //gets list of bookings in room today
             return new JsonResult(ScheduleList); //return JSON serialized value for front end
         }
+
+        public void OnGetSetup()
+        {
+
+        }
+
     }
 } 

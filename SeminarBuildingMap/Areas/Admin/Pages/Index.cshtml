@@ -1,5 +1,42 @@
 ﻿@page
 @model SeminarBuildingMap.Areas.Admin.Pages.IndexModel
 @{
-    <h1>hello to admin</h1>
+    ViewData["Title"] = "Admin Panel";
+}
+<h1>Admin Page</h1>
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Faculty") || User.IsInRole("Manager") || User.IsInRole("Admin")))
+{
+    <div id="faculty">
+        <h2>Faculty Permission Level</h2>
+        <ul>
+            <li>
+                <a asp-area="Admin" asp-page="/ManageRoomSearch">Update Rooms</a>
+            </li>
+        </ul>
+    </div>
+}
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Admin")))
+{
+    <div id="manager">
+        <h2>Manager Permission Level (Building Admins like Roshita)</h2>
+        <ul>
+            <li>
+                <a asp-area="Identity" asp-page="/Account/Register">Register New User</a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-page="/ManageUserSearch">Manage Users</a> <!-- managers can delete their building's users or assign a user a room, admins can promote users to managers of buildings as well -->
+            </li>
+        </ul>
+    </div>
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div id="admin">
+        <h2>Admin Permission Level (Whoever on campus owns this project</h2>
+        <ul>
+            <li>
+                <a asp-area="Admin" asp-page="/ManageBuildingSearch">Manage Buildings</a>
+            </li>
+        </ul>
+    </div>
 }

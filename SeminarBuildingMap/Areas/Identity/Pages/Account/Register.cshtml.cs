@@ -24,17 +24,20 @@ namespace SeminarBuildingMap.Areas.Identity.Pages.Account
         private readonly UserManager<SeminarBuildingMapUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<SeminarBuildingMapUser> userManager,
             SignInManager<SeminarBuildingMapUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -67,6 +70,11 @@ namespace SeminarBuildingMap.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            //this below is how we add roles/users to roles this will be useful in the future
+           // var result = await _roleManager.CreateAsync(new IdentityRole("Manager"));
+            //result = await _roleManager.CreateAsync(new IdentityRole("User"));
+            //SeminarBuildingMapUser user = await _userManager.FindByEmailAsync("ashtonlaney72@gmail.com");
+            //await _userManager.AddToRoleAsync(user, "Admin");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

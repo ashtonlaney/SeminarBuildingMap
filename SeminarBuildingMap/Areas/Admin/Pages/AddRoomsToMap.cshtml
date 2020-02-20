@@ -56,7 +56,8 @@
     var rooms = [
     @for(int i = 0; i < Model.Rooms.Count(); i++)
     {
-        Models.Room room = Model.Rooms.ElementAt(i);
+        
+        SeminarBuildingMap.Models.Room room = Model.Rooms.ElementAt(i);
         <text>
         {
             "type": "Feature",

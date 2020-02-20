@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SeminarBuildingMap.Areas.Identity.Data;
 using SeminarBuildingMap.GenericClasses;
 
 namespace SeminarBuildingMap
@@ -63,7 +64,7 @@ namespace SeminarBuildingMap
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -89,6 +90,8 @@ namespace SeminarBuildingMap
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+
         }
+
     }
 }

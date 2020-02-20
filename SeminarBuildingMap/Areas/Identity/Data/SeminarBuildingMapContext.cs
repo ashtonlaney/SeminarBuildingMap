@@ -9,7 +9,7 @@ using SeminarBuildingMap.Areas.Identity.Data;
 
 namespace SeminarBuildingMap.Data
 {
-    public class SeminarBuildingMapContext : IdentityDbContext<SeminarBuildingMapUser>
+    public class SeminarBuildingMapContext : IdentityDbContext<SeminarBuildingMapUser, IdentityRole, string>
     {
         public SeminarBuildingMapContext(DbContextOptions<SeminarBuildingMapContext> options)
             : base(options)
