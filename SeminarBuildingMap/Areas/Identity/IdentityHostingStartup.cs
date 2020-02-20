@@ -15,6 +15,7 @@ namespace SeminarBuildingMap.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
+
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<SeminarBuildingMapContext>(options =>
                     options.UseSqlServer(
