@@ -71,7 +71,7 @@ namespace SeminarBuildingMap.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             //this below is how we add roles/users to roles this will be useful in the future
-           // var result = await _roleManager.CreateAsync(new IdentityRole("Manager"));
+            // var result = await _roleManager.CreateAsync(new IdentityRole("Manager"));
             //result = await _roleManager.CreateAsync(new IdentityRole("User"));
             //SeminarBuildingMapUser user = await _userManager.FindByEmailAsync("ashtonlaney72@gmail.com");
             //await _userManager.AddToRoleAsync(user, "Admin");

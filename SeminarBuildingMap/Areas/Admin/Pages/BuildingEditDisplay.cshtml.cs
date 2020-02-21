@@ -11,7 +11,7 @@ using SeminarBuildingMap.Models;
 
 namespace SeminarBuildingMap
 {
-    public class AddRoomsToMapModel : PageModel
+    public class BuildingEditDisplayModel : PageModel
     {
 
         private readonly IOptions<ConnectionConfig> _connectionConfig;
@@ -20,7 +20,7 @@ namespace SeminarBuildingMap
 
         public IEnumerable<Room> Rooms { get; set; }
 
-        public AddRoomsToMapModel(IOptions<ConnectionConfig> connectionConfig)
+        public BuildingEditDisplayModel(IOptions<ConnectionConfig> connectionConfig)
         {
             _connectionConfig = connectionConfig;
         }

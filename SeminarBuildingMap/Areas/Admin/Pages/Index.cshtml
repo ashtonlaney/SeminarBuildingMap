@@ -10,7 +10,7 @@
         <h2>Faculty Permission Level</h2>
         <ul>
             <li>
-                <a asp-area="Admin" asp-page="/ManageRoomSearch">Update Rooms</a>
+                <a asp-area="Admin" asp-page="/OwnedRoomSearch">Update Rooms</a>
             </li>
         </ul>
     </div>
@@ -24,7 +24,7 @@
                 <a asp-area="Identity" asp-page="/Account/Register">Register New User</a>
             </li>
             <li>
-                <a asp-area="Admin" asp-page="/ManageUserSearch">Manage Users</a> <!-- managers can delete their building's users or assign a user a room, admins can promote users to managers of buildings as well -->
+                <a asp-area="Admin" asp-page="/SubuserSearch">Manage Users</a> <!-- managers can delete their building's users or assign a user a room, admins can promote users to managers of buildings as well -->
             </li>
         </ul>
     </div>
@@ -35,7 +35,7 @@
         <h2>Admin Permission Level (Whoever on campus owns this project</h2>
         <ul>
             <li>
-                <a asp-area="Admin" asp-page="/ManageBuildingSearch">Manage Buildings</a>
+                <a asp-area="Admin" asp-page="/BuildingEditSearch">Manage Buildings</a>
             </li>
         </ul>
     </div>
