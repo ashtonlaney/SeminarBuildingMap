@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -41,6 +42,14 @@ namespace SeminarBuildingMap.Areas.Identity.Pages.Account
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+
+            if (result.Succeeded)
+            {
+                var pwCode = await _userManager.GeneratePasswordResetTokenAsync(user);
+                pwCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(pwCode));
+                return RedirectToPage("./ResetPassword", new { code = pwCode });
+            }
+
             return Page();
         }
     }

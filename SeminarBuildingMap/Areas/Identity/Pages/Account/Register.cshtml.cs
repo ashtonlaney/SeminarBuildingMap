@@ -102,7 +102,7 @@ namespace SeminarBuildingMap.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+                        return RedirectToPage("RegisterConfirm", new { email = Input.Email });
                     }
                     else
                     {
