@@ -15,34 +15,38 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SeminarBuildingMap.Areas.Identity.Data;
 
-namespace SeminarBuildingMap.Areas.Identity.Pages.Account
+namespace SeminarBuildingMap.Areas.Admin.Pages
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin,Manager")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<SeminarBuildingMapUser> _signInManager;
         private readonly UserManager<SeminarBuildingMapUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<SeminarBuildingMapUser> userManager,
             SignInManager<SeminarBuildingMapUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            IEmailSender emailSender
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _roleManager = roleManager;
+            //RoleManager<IdentityRole> roleManager <- add this to parameter list to reenable manual registration
+            //_roleManager = roleManager;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
 
+        public List<String> AvailableRoles { get; set; }
+        [BindProperty]
+        public string SelectedRole { get; set; }
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
@@ -53,24 +57,23 @@ namespace SeminarBuildingMap.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            //this below is how we add roles/users to roles this will be useful in the future
+            AvailableRoles = new List<String>();
+            if (User.IsInRole("Admin"))
+            {
+                AvailableRoles.Add("Manager");
+                AvailableRoles.Add("Faculty");
+            }
+            else if (User.IsInRole("Manager"))
+            {
+                AvailableRoles.Add("Faculty");
+            } 
+            //this below is how we manually add roles/users probably not needed since we have the proper registration created
             // var result = await _roleManager.CreateAsync(new IdentityRole("Manager"));
             //result = await _roleManager.CreateAsync(new IdentityRole("User"));
             //SeminarBuildingMapUser user = await _userManager.FindByEmailAsync("ashtonlaney72@gmail.com");
@@ -81,10 +84,11 @@ namespace SeminarBuildingMap.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && ((User.IsInRole("Admin") && SelectedRole != "Admin" ) || (User.IsInRole("Manager") && SelectedRole == "Faculty")))
             {
                 var user = new SeminarBuildingMapUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, SeminarBuildingMap.Areas.Identity.Data.Password.Generate(12, 3));
+                await _userManager.AddToRoleAsync(user, SelectedRole);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

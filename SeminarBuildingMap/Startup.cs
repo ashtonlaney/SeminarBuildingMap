@@ -49,6 +49,8 @@ namespace SeminarBuildingMap
                 options.Conventions.AuthorizeAreaFolder("Admin", "/");
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                 options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                //options.Conventions.AuthorizeAreaPage("Identity", "/Account/Register");
+                //options.Conventions.AuthorizeAreaPage("Identity", "/Account/RegisterConfirm");
             });
 
             services.ConfigureApplicationCookie(options =>

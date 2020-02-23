@@ -1,8 +1,7 @@
 ﻿@page
-@model RegisterModel
+@model SeminarBuildingMap.Areas.Admin.Pages.RegisterModel
 @{
     ViewData["Title"] = "Register";
-    //add something to let the user know they successfully registered an account
     //also get rid of password input fields and generate a random password to hash until the user sets their own
 }
 
@@ -20,14 +19,9 @@
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                <label>Role:</label>
+                <select asp-for="SelectedRole" asp-items="@new SelectList(Model.AvailableRoles)" class="form-control"></select>
+                <span asp-validation-for="SelectedRole" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
