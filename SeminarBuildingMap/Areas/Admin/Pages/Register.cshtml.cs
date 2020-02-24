@@ -66,6 +66,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             AvailableRoles = new List<String>();
             if (User.IsInRole("Admin"))
             {
+                AvailableRoles.Add("Admin");
                 AvailableRoles.Add("Manager");
                 AvailableRoles.Add("Faculty");
             }

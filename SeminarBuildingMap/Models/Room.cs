@@ -9,6 +9,8 @@ namespace SeminarBuildingMap.Models
     public partial class Room
     {
         [Required][Display(Name = "Room Number")]
+        public string rmNo { get; set; }
+        public string bdId { get; set; }
         public string rmId { get; set; }
         public string rmName { get; set; }
         public string rmTopLeftPoint { get; set; }

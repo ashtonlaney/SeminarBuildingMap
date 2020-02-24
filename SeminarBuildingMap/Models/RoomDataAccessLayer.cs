@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace SeminarBuildingMap.Models
 {
@@ -40,6 +41,20 @@ namespace SeminarBuildingMap.Models
                 queryParameters.Add("@rmTopRightPoint", coordsArray[3]);
                 connection.Execute("up_InsertRoom_Darden", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
+        }
+
+        //return rooms owned by user
+        public IQueryable<Room> GetOwnedRooms(string username, string userRole, string _connectionString)
+        {
+            IEnumerable<Room> roomList = new List<Room>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@username", username);
+                queryParameters.Add("@userRole", userRole);
+                roomList = connection.Query<Room>("up_GetOwnedRooms", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return roomList.AsQueryable();
         }
 
     }
