@@ -16,6 +16,12 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         readonly Models.RoomDataAccessLayer ObjRoom = new Models.RoomDataAccessLayer();
 
+        readonly Models.RoomScheduleDataAccessLayer ObjSchedule = new Models.RoomScheduleDataAccessLayer();
+
+        public Models.Room lclRoom { get; set; }
+
+        public IQueryable<Models.RoomSchedule> lclSchedule { get; set; }
+
         public OwnedRoomDisplayModel(IOptions<ConnectionConfig> connectionConfig)
         {
             _connectionConfig = connectionConfig;
@@ -23,7 +29,8 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         public void OnGet(int id)
         {
-
+            lclRoom = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr);
+            lclSchedule = ObjSchedule.GetRoomSchedule(lclRoom.rmNo, _connectionConfig.Value.ConnStr);
         }
     }
 }

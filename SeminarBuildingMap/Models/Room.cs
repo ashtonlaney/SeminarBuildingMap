@@ -18,6 +18,8 @@ namespace SeminarBuildingMap.Models
         public string rmBottomRightPoint { get; set; }
         public string rmTopRightPoint { get; set; }
         public string Color { get; set; } = "Blue";
+        public string rmFloorNo { get; set; }
+        public string rmType { get; set; }
 
     }
 }

@@ -4,3 +4,76 @@
     //allows user to add or remove events/classes from a room they own
     ViewData["Title"] = "Edit Room";
 }
+<h1>Room</h1>
+<form method="post">
+    <div class="form-group">
+        <label>bdId</label>
+        <input class="form-control" asp-for="lclRoom.bdId" disabled />
+    </div>
+    <div class="form-group">
+        <label>rmNo</label>
+        <input class="form-control" asp-for="lclRoom.rmNo" disabled />
+    </div>
+    <div class="form-group">
+        <label>rmFloorNo</label>
+        <input class="form-control" asp-for="lclRoom.rmFloorNo" disabled />
+    </div>
+    <div class="form-group">
+        <label>rmType</label>
+        <input class="form-control" asp-for="lclRoom.rmType" disabled />
+    </div>
+    <div class="form-group">
+        <label>rmName</label>
+        <input class="form-control" asp-for="lclRoom.rmName" required />
+        <span asp-validation-for="lclRoom.rmName" class="text-danger"></span>
+    </div>
+
+    <style>
+        .hiddenColumn {
+            display: none;
+        }
+    </style>
+
+    @(Html
+    .Grid(Model.lclSchedule)
+    .Build(columns =>
+    {
+        columns.Add(model => model.avId).Titled("id").Css("hiddenColumn");
+        columns.Add(model => model.avName).Titled("Name");
+        columns.Add(model => model.avDay).Titled("Day").Filterable(GridFilterType.Multi).UsingFilterOptions(new[]
+        {
+            new SelectListItem {Value = "Monday", Text = "Monday" },
+            new SelectListItem {Value = "Tuesday", Text = "Tuesday"},
+            new SelectListItem {Value = "Wednesday", Text = "Wednesday"},
+            new SelectListItem {Value = "Thursday", Text = "Thursday" },
+            new SelectListItem {Value = "Friday", Text = "Friday" },
+            new SelectListItem {Value = "Saturday", Text = "Saturday" },
+            new SelectListItem {Value = "Sunday", Text = "Sunday" }
+            });
+
+        columns.Add(model => model.avStartTime).Titled("Start Time");
+        columns.Add(model => model.avEndTime).Titled("End Time");
+    })
+    .Empty("No data found")
+    .Sortable()
+    .Pageable()
+    .Filterable()
+    )
+
+</form>
+
+@section Scripts
+{
+    <script src="~/js/mvc-grid/mvc-grid.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
+            new MvcGrid(element);
+        });
+    </script>
+    <script>
+        document.addEventListener('rowclick', function (e) {
+            //this will populate the textboxes for editing times taht will be below
+        });
+    </script>
+
+}

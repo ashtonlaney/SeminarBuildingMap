@@ -14,7 +14,7 @@
     .Grid(Model.RoomData)
     .Build(columns =>
     {
-        columns.Add(model => model.rmId).Titled("key").Css("hiddenColumn");
+        columns.Add(model => model.rmId).Titled("rmId").Css("hiddenColumn");
         columns.Add(model => model.bdId).Titled("Building");
         columns.Add(model => model.rmNo).Titled("Room Number");
     })

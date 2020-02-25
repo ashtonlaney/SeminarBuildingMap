@@ -35,10 +35,5 @@ namespace SeminarBuildingMap.Pages
             return new JsonResult(ScheduleList); //return JSON serialized value for front end
         }
 
-        public void OnGetSetup()
-        {
-
-        }
-
     }
 } 
