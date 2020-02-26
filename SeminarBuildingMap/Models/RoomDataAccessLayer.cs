@@ -59,7 +59,7 @@ namespace SeminarBuildingMap.Models
 
         public Room GetRoomInfo(int rmId, string _connectionString)
         {
-            Room room = new Room();
+            Room room;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 room = connection.QuerySingle<Room>("up_GetRoomInfo", new { rmId }, commandType: System.Data.CommandType.StoredProcedure);
