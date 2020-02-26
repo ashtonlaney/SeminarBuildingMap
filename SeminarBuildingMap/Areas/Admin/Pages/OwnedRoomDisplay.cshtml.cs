@@ -20,6 +20,11 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         public Models.Room lclRoom { get; set; }
 
+        public int rmId { get; set; }
+
+        [BindProperty]
+        public Models.RoomSchedule lclNewAvailability { get; set; }
+
         public IQueryable<Models.RoomSchedule> lclSchedule { get; set; }
 
         public OwnedRoomDisplayModel(IOptions<ConnectionConfig> connectionConfig)
@@ -30,7 +35,22 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         public void OnGet(int id)
         {
             lclRoom = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr);
-            lclSchedule = ObjSchedule.GetRoomSchedule(lclRoom.rmNo, _connectionConfig.Value.ConnStr);
+            lclSchedule = ObjSchedule.GetRoomSchedule(id, _connectionConfig.Value.ConnStr);
+            rmId = id;
+            foreach( Models.RoomSchedule availability in lclSchedule)
+            {
+                availability.convertToEst();
+            }
+        }
+
+        public void OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                lclNewAvailability.convertToUtc();
+                lclNewAvailability.avRoom = rmId;
+                ObjSchedule.InsertRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+            }
         }
     }
 }

@@ -8,9 +8,9 @@ namespace SeminarBuildingMap.Models
     public class RoomSchedule
     {
         //manual constructor, since we have to handle changing the sql time type to a string representation
-        public RoomSchedule(int avId, string avName, string avDay, TimeSpan avStartTime, TimeSpan avEndTime)
+        /*public RoomSchedule(int? avId, string avName, string avDay, TimeSpan avStartTime, TimeSpan avEndTime)
         {
-            this.avId = avId.ToString();
+            this.avId = avId;
             this.avName = avName;
             this.avDay = avDay;
 
@@ -21,27 +21,55 @@ namespace SeminarBuildingMap.Models
             
             dt = new DateTime(avEndTime.Ticks);
             this.avEndTime = TimeZoneInfo.ConvertTimeFromUtc(dt, easternTime).ToShortTimeString();
-        }
+        }*/
 
-        public RoomSchedule(string avId, string avName, TimeSpan avStartTime, TimeSpan avEndTime, string avDay)
+        /*public RoomSchedule(int avId, string avName, string avDay, TimeSpan avStartTime, TimeSpan avEndTime, bool convertToUtc)
         {
             this.avId = avId;
             this.avName = avName;
             this.avDay = avDay;
 
-            //time stuff
             TimeZoneInfo easternTime = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
             var dt = new DateTime(avStartTime.Ticks);
-            this.avStartTime = TimeZoneInfo.ConvertTimeFromUtc(dt, easternTime).ToShortTimeString();
+            this.avStartTime = TimeZoneInfo.ConvertTimeToUtc(dt, easternTime).ToShortTimeString();
 
             dt = new DateTime(avEndTime.Ticks);
-            this.avEndTime = TimeZoneInfo.ConvertTimeFromUtc(dt, easternTime).ToShortTimeString();
+            this.avEndTime = TimeZoneInfo.ConvertTimeToUtc(dt, easternTime).ToShortTimeString();
+        }*/
+
+        public void convertToUtc()
+        {
+            TimeZoneInfo easternTime = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            var dt = new DateTime(TimeSpan.Parse(EstStartTime).Ticks);
+            UstStartTime = TimeZoneInfo.ConvertTimeToUtc(dt, easternTime).ToShortTimeString();
+
+            dt = new DateTime(TimeSpan.Parse(EstEndTime).Ticks);
+            UstEndTime = TimeZoneInfo.ConvertTimeToUtc(dt, easternTime).ToShortTimeString();
         }
 
-        public string avId { get; set; }
+        public void convertToEst()
+        {
+            TimeZoneInfo easternTime = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            var dt = new DateTime(avStartTime.Ticks);
+            this.EstStartTime = TimeZoneInfo.ConvertTimeFromUtc(dt, easternTime).ToShortTimeString();
+
+            dt = new DateTime(avEndTime.Ticks);
+            this.EstEndTime = TimeZoneInfo.ConvertTimeFromUtc(dt, easternTime).ToShortTimeString();
+        }
+
+
+        public int avId { get; set; }
         public string avName { get; set; }
-        public string avStartTime { get; set; }
-        public string avEndTime { get; set; }
+        public TimeSpan avStartTime { get; set; }
+        public TimeSpan avEndTime { get; set; }
         public string avDay { get; set; }
+        public int avRoom { get; set; }
+
+        public string EstStartTime { get; set; }
+        public string EstEndTime { get; set; }
+
+        public string UstStartTime { get; set; }
+
+        public string UstEndTime { get; set; }
     }
 }

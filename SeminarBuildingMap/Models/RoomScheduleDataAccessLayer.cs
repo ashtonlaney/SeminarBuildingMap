@@ -24,7 +24,7 @@ namespace SeminarBuildingMap.Models
             return schedule;
         }
 
-        public IQueryable<RoomSchedule> GetRoomSchedule(string rmId, string _connectionString)
+        public IQueryable<RoomSchedule> GetRoomSchedule(int rmId, string _connectionString)
         {
             IEnumerable<RoomSchedule> schedule = new List<RoomSchedule>();
 
@@ -36,6 +36,21 @@ namespace SeminarBuildingMap.Models
                 schedule = connection.Query<RoomSchedule>("up_GetRoomAvailability", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
             return schedule.AsQueryable();
+        }
+
+        public void InsertRoomAvailability(RoomSchedule availability, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@avRoom", availability.avRoom);
+                queryParameters.Add("@avName", availability.avName);
+                queryParameters.Add("@avDay", availability.avDay);
+                queryParameters.Add("@avStartTime", availability.UstStartTime);
+                queryParameters.Add("@avEndTime", availability.UstEndTime);
+
+                connection.Execute("up_InsertAvailability", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
         }
 
     }

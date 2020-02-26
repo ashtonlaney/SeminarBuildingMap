@@ -85,7 +85,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid && ((User.IsInRole("Admin") && SelectedRole != "Admin" ) || (User.IsInRole("Manager") && SelectedRole == "Faculty")))
+            if (ModelState.IsValid && (User.IsInRole("Admin") || (User.IsInRole("Manager") && SelectedRole == "Faculty")))
             {
                 var user = new SeminarBuildingMapUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, SeminarBuildingMap.Areas.Identity.Data.Password.Generate(12, 3));

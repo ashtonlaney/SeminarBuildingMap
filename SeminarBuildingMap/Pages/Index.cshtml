@@ -7,7 +7,7 @@
 @section Mapping{
     <link rel="stylesheet" href="~/css/leaflet.css" />
     <script src="~/js/leaflet.js"></script>
-        
+
     <style>
         #mapid {
             height: 750px;
@@ -16,7 +16,7 @@
 
     <style>
         .info-panel {
-            position:absolute;
+            position: absolute;
             right: 80px;
             width: 250px;
         }
@@ -30,19 +30,20 @@
 <div class="text-center">
     <h1 class="display-4">Hey Goose</h1>
 </div>
-
-<div class="info-panel">
-    Here is some kind of test again because I have no clue what I am doing and I am not even sure this is suppose to be a div tag
-    but I am doing it anyways because I have no clue whats going on. This will probs be changed anyways. Now I need to grab the info
-    for a room once it has been selected on the map and put it in here so that I can test my AJAX goodieness. God help me
+<div class="container">
+    <div class="row">
+        <div class="info-panel col-sm">
+            Here is some kind of test again because I have no clue what I am doing and I am not even sure this is suppose to be a div tag
+            but I am doing it anyways because I have no clue whats going on. This will probs be changed anyways. Now I need to grab the info
+            for a room once it has been selected on the map and put it in here so that I can test my AJAX goodieness. God help me
+        </div>
+        <!-- DO NOT REMOVE OR MODIFY THE BELOW DIV, THIS IS WHAT THE MAP IS BOUND TO-->
+        <div id="mapid" class="col-sm"></div>
+    </div>
 </div>
 
-
-<!-- DO NOT REMOVE OR MODIFY THE BELOW DIV, THIS IS WHAT THE MAP IS BOUND TO-->
-<div id="mapid"></div>
-
 <!-- pull in the main menu map js file from wwwroot/js/MainMap.js-->
-<script src="~/js/MainMap.js"></script> 
+<script src="~/js/MainMap.js"></script>
 
 <script>
 
@@ -64,8 +65,8 @@
         }
         </text>
         @if(i != Model.Rooms.Count() - 1)
-        { 
-            <text>,</text>    
+        {
+            <text>,</text>
         }
     }
         ];
