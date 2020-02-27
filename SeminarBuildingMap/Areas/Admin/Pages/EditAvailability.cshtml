@@ -1,0 +1,104 @@
+﻿@page "{id}"
+@model SeminarBuildingMap.Areas.Admin.Pages.EditAvailabilityModel
+@{
+}
+<a asp-page="OwnedRoomSearch/" class="btn btn-default pull-right">Return to search</a>
+<h1>Room</h1>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
+    <li class="nav-item"><a class="nav-link active" role="tab" aria-controls="home" aria-selected="true">View/Edit Availability</a></li>
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="EditEvent/">View/Edit Events</a></li>
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="EditOwners/">View/Edit Assigned Persons</a></li>
+</ul>
+<br />
+<div class="tab-content">
+    <div class="tab-pane fade show active">
+        <form>
+            @(Html
+                .Grid(Model.lclSchedule)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.avId).Titled("id").Css("hiddenColumn");
+                    columns.Add(model => model.avName).Titled("Name");
+                    columns.Add(model => model.avDay).Titled("Day").Filterable(GridFilterType.Multi).UsingFilterOptions(new[]
+                    {
+                        new SelectListItem {Value = "Monday", Text = "Monday" },
+                        new SelectListItem {Value = "Tuesday", Text = "Tuesday"},
+                        new SelectListItem {Value = "Wednesday", Text = "Wednesday"},
+                        new SelectListItem {Value = "Thursday", Text = "Thursday" },
+                        new SelectListItem {Value = "Friday", Text = "Friday" },
+                        new SelectListItem {Value = "Saturday", Text = "Saturday" },
+                        new SelectListItem {Value = "Sunday", Text = "Sunday" }
+                        });
+
+                    columns.Add(model => model.EstStartTime).Titled("Start Time");
+                    columns.Add(model => model.EstEndTime).Titled("End Time");
+                })
+                .Empty("No Scheduled Availability")
+                .Sortable()
+                .Pageable()
+                .Filterable()
+            )
+
+
+            <div class="form-group">
+                <label style="display:none" id="id"></label>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" id="name" asp-for="lclNewAvailability.avName" required />
+                </div>
+                <div class="form-group">
+                    <label>Day</label>
+                    <input class="form-control" id="day" asp-for="lclNewAvailability.avDay" required />
+                </div>
+                <div class="form-group">
+                    <label>Start Time</label>
+                    <input class="form-control" id="start" asp-for="lclNewAvailability.EstStartTime" required type="time" />
+                </div>
+                <div class="form-group">
+                    <label>End Time</label>
+                    <input class="form-control" id="end" asp-for="lclNewAvailability.EstEndTime" required type="time" />
+                </div>
+            </div>
+            <button type="submit" formaction="Delete" id="delete" style="display:none;" class="btn btn-danger">Delete Selected</button>
+            <button type="button" onclick="cancel()" id="cancel" style="display:none;" class="btn btn-dark">Cancel Edit</button>
+            <button type="submit" formaction="Submit" id="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+        @section Scripts
+{
+            <script src="~/js/mvc-grid/mvc-grid.js"></script>
+            <script>
+                [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
+                    new MvcGrid(element);
+                });
+            </script>
+            <script>
+                document.addEventListener('rowclick', function (e) {
+                    document.getElementById("id").textContent= e.detail.data["av-id"];
+                    document.getElementById("name").value = e.detail.data["av-name"];
+                    document.getElementById("day").value = e.detail.data["av-day"];
+                    //to work these below need to receive an input like 13:00 instead of 1:00 PM EVEN THOUGH THEY SHOW 1PM !!!!!!
+                    document.getElementById("start").valuet = e.detail.data["est-start-time"];
+                    document.getElementById("end").value = e.detail.data["est-end-time"];
+                    $("#delete").show()
+                    $("#cancel").show()
+                    document.getElementById("submit").textContent = "Update";
+                });
+            </script>
+
+            <script>
+                function cancel(){
+                    document.getElementById("id").textContent = "";
+                    document.getElementById("name").value = "";
+                    document.getElementById("day").valuet = "";
+                    document.getElementById("start").value = "";
+                    document.getElementById("end").value = "";
+                    $("#delete").hide()
+                    $("#cancel").hide()
+                    document.getElementById("submit").textContent = "Add New";
+                }
+            </script>
+
+        }
