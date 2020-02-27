@@ -26,7 +26,7 @@ namespace SeminarBuildingMap.Pages
 
         public void OnGet() //normal get request, loads rooms onto map
         {
-            Rooms = objRoom.GetDardenRooms(_connectionConfig.Value.ConnStr);
+            Rooms = objRoom.GetSelectedRooms("Darden", "2", _connectionConfig.Value.ConnStr);
         }
 
         public JsonResult OnGetInfo(String Building, String RoomNumber) //made to respond to ajax call for room info. provides todays schedule of room in json reach via /?handler=Info&Building=<building>&RoomNumber=<roomnumber>

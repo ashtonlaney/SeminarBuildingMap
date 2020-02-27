@@ -38,11 +38,23 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         public void OnPost(int id)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && ObjRoom.UserCanEditRoom(User.Identity.Name, id, _connectionConfig.Value.ConnStr))
             {
                 lclNewAvailability.convertToUtc();
-                lclNewAvailability.avRoom = id;
-                ObjSchedule.InsertRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+                lclNewAvailability.rmId = id;
+                if (lclNewAvailability.avId == 0)
+                {
+                    ObjSchedule.InsertRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+                }
+                else
+                {
+                    ObjSchedule.EditRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+                }
+            }
+            lclSchedule = ObjSchedule.GetRoomSchedule(id, _connectionConfig.Value.ConnStr);
+            foreach (Models.RoomSchedule availability in lclSchedule)
+            {
+                availability.convertToEst();
             }
         }
     }

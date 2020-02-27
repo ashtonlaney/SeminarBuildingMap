@@ -13,7 +13,7 @@
 <br />
 <div class="tab-content">
     <div class="tab-pane fade show active">
-        <form>
+        <form method="post">
             @(Html
                 .Grid(Model.lclSchedule)
                 .Build(columns =>
@@ -33,6 +33,8 @@
 
                     columns.Add(model => model.EstStartTime).Titled("Start Time");
                     columns.Add(model => model.EstEndTime).Titled("End Time");
+                    columns.Add(model => model.EstStartTime24hr).Titled("24hrStart").Css("hiddenColumn");
+                    columns.Add(model => model.EstEndTime24hr).Titled("24hrEnd").Css("hiddenColumn");
                 })
                 .Empty("No Scheduled Availability")
                 .Sortable()
@@ -58,11 +60,12 @@
                 <div class="form-group">
                     <label>End Time</label>
                     <input class="form-control" id="end" asp-for="lclNewAvailability.EstEndTime" required type="time" />
-                </div>
+                </div>        
             </div>
+         
             <button type="submit" formaction="Delete" id="delete" style="display:none;" class="btn btn-danger">Delete Selected</button>
-            <button type="button" onclick="cancel()" id="cancel" style="display:none;" class="btn btn-dark">Cancel Edit</button>
-            <button type="submit" formaction="Submit" id="submit" class="btn btn-primary">Add</button>
+            <button onclick="cancelEdit()" id="cancel" style="display:none;" class="btn btn-dark">Cancel Edit</button>
+            <button type="submit" id="submit" class="btn btn-primary">Add</button>
         </form>
     </div>
 </div>
@@ -79,17 +82,17 @@
                     document.getElementById("id").textContent= e.detail.data["av-id"];
                     document.getElementById("name").value = e.detail.data["av-name"];
                     document.getElementById("day").value = e.detail.data["av-day"];
-                    //to work these below need to receive an input like 13:00 instead of 1:00 PM EVEN THOUGH THEY SHOW 1PM !!!!!!
-                    document.getElementById("start").valuet = e.detail.data["est-start-time"];
-                    document.getElementById("end").value = e.detail.data["est-end-time"];
+                    document.getElementById("start").value = e.detail.data["est-start-time24hr"];
+                    document.getElementById("end").value = e.detail.data["est-end-time24hr"];
                     $("#delete").show()
                     $("#cancel").show()
                     document.getElementById("submit").textContent = "Update";
                 });
             </script>
+         
 
             <script>
-                function cancel(){
+                function cancelEdit() {
                     document.getElementById("id").textContent = "";
                     document.getElementById("name").value = "";
                     document.getElementById("day").valuet = "";
@@ -100,5 +103,4 @@
                     document.getElementById("submit").textContent = "Add New";
                 }
             </script>
-
         }

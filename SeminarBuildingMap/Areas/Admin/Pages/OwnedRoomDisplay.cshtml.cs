@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
@@ -9,6 +10,7 @@ using SeminarBuildingMap.GenericClasses;
 
 namespace SeminarBuildingMap.Areas.Admin.Pages
 {
+    [Authorize(Roles="Faculty, Manager, Admin")]
     public class OwnedRoomDisplayModel : PageModel
     {
 
@@ -16,16 +18,8 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         readonly Models.RoomDataAccessLayer ObjRoom = new Models.RoomDataAccessLayer();
 
-        readonly Models.RoomScheduleDataAccessLayer ObjSchedule = new Models.RoomScheduleDataAccessLayer();
-
-        public Models.Room lclRoom { get; set; }
-
-        public int rmId { get; set; }
-
         [BindProperty]
-        public Models.RoomSchedule lclNewAvailability { get; set; }
-
-        public IQueryable<Models.RoomSchedule> lclSchedule { get; set; }
+        public Models.Room lclRoom { get; set; }
 
         public OwnedRoomDisplayModel(IOptions<ConnectionConfig> connectionConfig)
         {
@@ -35,21 +29,15 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         public void OnGet(int id)
         {
             lclRoom = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr);
-            lclSchedule = ObjSchedule.GetRoomSchedule(id, _connectionConfig.Value.ConnStr);
-            rmId = id;
-            foreach( Models.RoomSchedule availability in lclSchedule)
-            {
-                availability.convertToEst();
-            }
         }
 
-        public void OnPost()
+        public void OnPost(int id)
         {
-            if (ModelState.IsValid)
+
+            if (ModelState.IsValid && ObjRoom.UserCanEditRoom(User.Identity.Name, id, _connectionConfig.Value.ConnStr))
             {
-                lclNewAvailability.convertToUtc();
-                lclNewAvailability.avRoom = rmId;
-                ObjSchedule.InsertRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+                ObjRoom.UpdateRoomName(id, lclRoom.rmName, _connectionConfig.Value.ConnStr);
+                lclRoom = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr);
             }
         }
     }

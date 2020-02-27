@@ -43,13 +43,27 @@ namespace SeminarBuildingMap.Models
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 var queryParameters = new DynamicParameters();
-                queryParameters.Add("@avRoom", availability.avRoom);
+                queryParameters.Add("@rmId", availability.rmId);
                 queryParameters.Add("@avName", availability.avName);
                 queryParameters.Add("@avDay", availability.avDay);
                 queryParameters.Add("@avStartTime", availability.UstStartTime);
                 queryParameters.Add("@avEndTime", availability.UstEndTime);
 
                 connection.Execute("up_InsertAvailability", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
+        public void EditRoomAvailability(RoomSchedule availability, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", availability.rmId);
+                queryParameters.Add("@avName", availability.avName);
+                queryParameters.Add("@avStartTime", availability.UstStartTime);
+                queryParameters.Add("@avEndTime", availability.UstEndTime);
+
+                connection.Execute("up_EditAvailability", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
 

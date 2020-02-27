@@ -122,6 +122,17 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             }
 
             // If we got this far, something failed, redisplay form
+            AvailableRoles = new List<String>();
+            if (User.IsInRole("Admin"))
+            {
+                AvailableRoles.Add("Admin");
+                AvailableRoles.Add("Manager");
+                AvailableRoles.Add("Faculty");
+            }
+            else if (User.IsInRole("Manager"))
+            {
+                AvailableRoles.Add("Faculty");
+            }
             return Page();
         }
     }

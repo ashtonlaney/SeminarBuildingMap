@@ -8,14 +8,17 @@ namespace SeminarBuildingMap.Models
     public class RoomDataAccessLayer
     {
         //returns all rooms in darden, will be changed to be dynamic later
-        public IEnumerable<Room> GetDardenRooms(string _connectionString)
+        public IEnumerable<Room> GetSelectedRooms(string bdId, string rmFloorNo, string _connectionString)
         {
             IEnumerable<Room> rooms = new List<Room>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@bdId", bdId);
+                queryParameters.Add("@rmFloorNo", rmFloorNo);
                 //creates a list of the "Room" object, the variables in this class must correspond to sql column names or this will not work
-                rooms = connection.Query<Room>("up_GetRooms_Darden", commandType: System.Data.CommandType.StoredProcedure);
+                rooms = connection.Query<Room>("up_GetSelectedRooms", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
             return rooms;
         }
@@ -65,6 +68,39 @@ namespace SeminarBuildingMap.Models
                 room = connection.QuerySingle<Room>("up_GetRoomInfo", new { rmId }, commandType: System.Data.CommandType.StoredProcedure);
             }
             return room;
+        }
+
+        public bool UserCanEditRoom(string UserName, int rmId, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", rmId);
+                queryParameters.Add("@UserName", UserName);
+                string result = connection.ExecuteScalar<string>("up_UserCanEditRoom", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+                if (string.IsNullOrEmpty(result))
+                {
+                    return false;
+                } else if(result == rmId.ToString())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public void UpdateRoomName(int rmId, string rmName, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", rmId);
+                queryParameters.Add("@rmName", rmName);
+                int result = connection.Execute("up_UpdateRoomName", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
         }
 
     }

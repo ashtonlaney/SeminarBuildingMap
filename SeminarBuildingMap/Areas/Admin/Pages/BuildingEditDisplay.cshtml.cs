@@ -27,7 +27,7 @@ namespace SeminarBuildingMap
 
         public void OnGet()
         {
-            Rooms = objRoom.GetDardenRooms(_connectionConfig.Value.ConnStr);
+            Rooms = objRoom.GetSelectedRooms("Darden", "2", _connectionConfig.Value.ConnStr);
         }
 
         public JsonResult OnGetAdd(String RoomNumber, String Coords)
