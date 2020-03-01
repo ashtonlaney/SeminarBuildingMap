@@ -1,4 +1,96 @@
-﻿@page
+﻿@page "{id}"
 @model SeminarBuildingMap.Areas.Admin.Pages.EditEventModel
 @{
+}
+
+<a asp-page="OwnedRoomSearch/" class="btn btn-default pull-right">Return to search</a>
+<h1>Room</h1>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="EditAvailability/" asp-route-id="@RouteData.Values["id"]">View/Edit Availability</a></li>
+    <li class="nav-item"><a class="nav-link active" role="tab" aria-controls="home" aria-selected="true">View/Edit Events</a></li>
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="EditOwners/" asp-route-id="@RouteData.Values["id"]">View/Edit Assigned Persons</a></li>
+</ul>
+<br />
+<div class="tab-content">
+    <div class="tab-pane fade show active">
+    <form method="post">
+            @(Html
+                .Grid(Model.lclSchedule)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.avId).Titled("id").Css("hiddenColumn");
+                    columns.Add(model => model.avName).Titled("Name");
+                    columns.Add(model => model.evDate.ToShortDateString()).Titled("Date");
+                    columns.Add(model => model.StartTime.ToShortTimeString()).Titled("Start Time").Named("av-start-time");
+                    columns.Add(model => model.EndTime.ToShortTimeString()).Titled("End Time").Named("av-end-time");
+                    columns.Add(model => model.StartTime.ToString("HH:mm")).Titled("24hrStart").Named("24-hr-start").Css("hiddenColumn");
+                    columns.Add(model => model.EndTime.ToString("HH:mm")).Titled("24hrEnd").Named("24-hr-end").Css("hiddenColumn");
+                })
+                .Empty("No Scheduled Events")
+                .Sortable()
+                .Pageable()
+                .Filterable()
+            )
+
+
+            <div class="form-group">
+                <input id="id" type="hidden" asp-for="lclNewEvent.avId" value="0" />
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" id="name" asp-for="lclNewEvent.avName" required />
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input class="form-control" id="date" type="date" asp-for="lclNewEvent.evDate"/>
+                </div>
+                <div class="form-group">
+                    <label>Start Time</label>
+                    <input class="form-control" id="start" asp-for="lclNewEvent.avStartTime" required type="time" />
+                </div>
+                <div class="form-group">
+                    <label>End Time</label>
+                    <input class="form-control" id="end" asp-for="lclNewEvent.avEndTime" required type="time" />
+                </div>
+            </div>
+
+            <button onclick="cancelEdit()" id="cancel" style="display:none;" class="btn btn-dark">Cancel Edit</button>
+            <button type="submit" id="delete" style="display:none;" asp-page-handler="delete" class="btn btn-danger">Delete Selected</button>
+            <button type="submit" id="submit" class="btn btn-primary" asp-page-handler="save">Add</button>
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/js/mvc-grid/mvc-grid.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
+            new MvcGrid(element);
+        });
+    </script>
+    <script>
+        document.addEventListener('rowclick', function (e) {
+            document.getElementById("id").value = e.detail.data["av-id"];
+            document.getElementById("name").value = e.detail.data["av-name"];
+            document.getElementById("start").value = e.detail.data["24-hr-start"];
+            document.getElementById("end").value = e.detail.data["24-hr-end"];
+            document.getElementById("date").value = e.detail.data["ev-date"];
+            $("#delete").show();
+            $("#cancel").show();
+            document.getElementById("submit").textContent = "Update";
+        });
+    </script>
+
+
+    <script>
+        function cancelEdit() {
+            document.getElementById("id").value = "0";
+            document.getElementById("name").value = "";
+            document.getElementById("start").value = "";
+            document.getElementById("end").value = "";
+            $("#delete").hide();
+            $("#cancel").hide();
+            document.getElementById("submit").textContent = "Add New";
+        }
+    </script>
 }

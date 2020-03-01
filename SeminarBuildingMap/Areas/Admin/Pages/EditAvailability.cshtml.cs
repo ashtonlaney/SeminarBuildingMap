@@ -19,7 +19,8 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         [BindProperty]
         public Models.RoomSchedule lclNewAvailability { get; set; }
-
+        [BindProperty]
+        public List<String> checkboxDays { get; set; }
         public IQueryable<Models.RoomSchedule> lclSchedule { get; set; }
 
         public EditAvailabilityModel(IOptions<ConnectionConfig> connectionConfig)
@@ -29,33 +30,47 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         public void OnGet(int id)
         {
-            lclSchedule = ObjSchedule.GetRoomSchedule(id, _connectionConfig.Value.ConnStr);
-            foreach (Models.RoomSchedule availability in lclSchedule)
-            {
-                availability.convertToEst();
-            }
+            lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
         }
 
-        public void OnPost(int id)
+        public void OnPostSave(int id)
         {
+            lclNewAvailability.rmId = id;
             if (ModelState.IsValid && ObjRoom.UserCanEditRoom(User.Identity.Name, id, _connectionConfig.Value.ConnStr))
             {
-                lclNewAvailability.convertToUtc();
-                lclNewAvailability.rmId = id;
                 if (lclNewAvailability.avId == 0)
                 {
-                    ObjSchedule.InsertRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+                    var validDays = new List<String> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+                    foreach (string day in checkboxDays)
+                    {
+                        if (validDays.Contains(day))
+                        {
+                            lclNewAvailability.avDay = day;
+                            ObjSchedule.InsertRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+                        }
+                    }
                 }
                 else
                 {
                     ObjSchedule.EditRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
                 }
             }
-            lclSchedule = ObjSchedule.GetRoomSchedule(id, _connectionConfig.Value.ConnStr);
-            foreach (Models.RoomSchedule availability in lclSchedule)
+            lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
+            lclNewAvailability = new Models.RoomSchedule();
+        }
+
+        public void OnPostDelete(int id)
+        {
+            if(ModelState.IsValid && ObjRoom.UserCanEditRoom(User.Identity.Name, id, _connectionConfig.Value.ConnStr))
             {
-                availability.convertToEst();
+                if (lclNewAvailability.avId != 0)
+                {
+                    ObjSchedule.DeleteRoomAvailability(lclNewAvailability.avId, _connectionConfig.Value.ConnStr);
+                }
             }
+            lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
+            lclNewAvailability = new Models.RoomSchedule();
         }
     }
+
 }
