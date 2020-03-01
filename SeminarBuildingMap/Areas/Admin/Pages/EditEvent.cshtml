@@ -22,6 +22,7 @@
                     columns.Add(model => model.avId).Titled("id").Css("hiddenColumn");
                     columns.Add(model => model.avName).Titled("Name");
                     columns.Add(model => model.evDate.ToShortDateString()).Titled("Date");
+                    columns.Add(model => model.evDate.ToString("yyyy-MM-dd")).Titled("formatDate").Named("ev-date").Css("hiddenColumn");
                     columns.Add(model => model.StartTime.ToShortTimeString()).Titled("Start Time").Named("av-start-time");
                     columns.Add(model => model.EndTime.ToShortTimeString()).Titled("End Time").Named("av-end-time");
                     columns.Add(model => model.StartTime.ToString("HH:mm")).Titled("24hrStart").Named("24-hr-start").Css("hiddenColumn");
@@ -87,6 +88,7 @@
             document.getElementById("id").value = "0";
             document.getElementById("name").value = "";
             document.getElementById("start").value = "";
+            document.getElementById("date").value = "";
             document.getElementById("end").value = "";
             $("#delete").hide();
             $("#cancel").hide();
