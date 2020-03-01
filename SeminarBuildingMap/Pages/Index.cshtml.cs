@@ -31,8 +31,10 @@ namespace SeminarBuildingMap.Pages
 
         public JsonResult OnGetInfo(String Building, String RoomNumber) //made to respond to ajax call for room info. provides todays schedule of room in json reach via /?handler=Info&Building=<building>&RoomNumber=<roomnumber>
         {
-            var ScheduleList = objSchedule.GetRoomSchedule_Today(RoomNumber, _connectionConfig.Value.ConnStr); //gets list of bookings in room today
-            return new JsonResult(ScheduleList); //return JSON serialized value for front end
+            string[] test = { "hello", "hi" };
+            var ScheduleList = objSchedule.GetRoomSchedule_Today(RoomNumber, _connectionConfig.Value.ConnStr);//gets list of bookings in room today
+            Console.WriteLine(ScheduleList);
+            return new JsonResult(test); //return JSON serialized value for front end
         }
 
     }
