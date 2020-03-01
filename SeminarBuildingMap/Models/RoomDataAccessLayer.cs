@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using SeminarBuildingMap.Areas.Identity.Data;
 
 namespace SeminarBuildingMap.Models
 {
@@ -103,5 +104,42 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        public IQueryable<SeminarBuildingMapUser> GetOwnedUsers(int rmId, string _connectionString)
+        {
+            IEnumerable<SeminarBuildingMapUser> schedule = new List<SeminarBuildingMapUser>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", rmId);
+
+                schedule = connection.Query<SeminarBuildingMapUser>("up_GetRoomOwnedUsers", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return schedule.AsQueryable();
+        }
+
+        public void AddOwnedRooms(int rmId, string username, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", rmId);
+                queryParameters.Add("@username", username);
+
+                connection.Execute("up_AddOwnedRooms", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
+        public void DeleteOwnedRooms(int rmId, string username, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", rmId);
+                queryParameters.Add("@username", username);
+
+                connection.Execute("up_DeleteOwnedRooms", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
     }
 }

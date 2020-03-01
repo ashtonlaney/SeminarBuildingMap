@@ -1,5 +1,87 @@
-﻿@page
+﻿@page "{id}"
 @model SeminarBuildingMap.Areas.Admin.Pages.EditOwnersModel
 @{
 }
+<a asp-page="OwnedRoomSearch/" class="btn btn-default pull-right">Return to search</a>
+<h1>Room</h1>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="EditAvailability/" asp-route-id="@RouteData.Values["id"]">View/Edit Availability</a></li>
+    <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="EditEvent/" asp-route-id="@RouteData.Values["id"]">View/Edit Events</a></li>
+    <li class="nav-item"><a class="nav-link active" role="tab" aria-controls="home" aria-selected="true" asp-page="EditOwners/">View/Edit Assigned Persons</a></li>
+</ul>
+<br />
+<div class="tab-content">
+    <div class="tab-pane fade show active">
+        <form method="post">
+            @(Html
+                .Grid(Model.allUsers)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Email).Titled("Email");
+                    columns.Add(model => model.FirstName).Titled("First Name");
+                    columns.Add(Model => Model.LastName).Titled("Last Name");
 
+                    })
+                .Empty("No Available Users")
+                .Sortable()
+                .Pageable()
+                .Named("allUsers")
+                .Filterable()
+            )
+
+            <div class="form-group">
+                <label>Add:</label>
+                <input class="form-control" id="addusers" asp-for="UsersToAdd" />
+            </div>
+
+            <button type="submit" id="submit" class="btn btn-primary" asp-page-handler="save">Add</button>
+
+
+            @(Html
+                .Grid(Model.ownedUsers)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.UserName).Titled("Email");
+                    columns.Add(model => model.FirstName).Titled("First Name");
+                    columns.Add(Model => Model.LastName).Titled("Last Name");
+
+                    })
+                .Empty("No Available Users")
+                .Sortable()
+                .Pageable()
+                .Named("ownedUsers")
+                .Filterable()
+            )
+
+            <div class="form-group">
+                <label>Delete:</label>
+                <input class="form-control" id="deleteusers" asp-for="UsersToDelete" />
+            </div>
+
+            <button type="submit" id="delete" class="btn btn-danger" asp-page-handler="delete">Delete Selected</button>
+
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/js/mvc-grid/mvc-grid.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
+            new MvcGrid(element);
+        });
+    </script>
+
+    <script>
+        document.addEventListener('rowclick', function (e) {
+            if (e.detail.grid["name"] == "owned-users") {
+                document.getElementById("deleteusers").value += (e.detail.data["user-name"] + ", ");
+            }
+            if (e.detail.grid["name"] == "all-users") {
+                document.getElementById("addusers").value += (e.detail.data["email"] + ", ");
+            }
+        });
+    </script>
+
+}

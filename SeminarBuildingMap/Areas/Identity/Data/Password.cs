@@ -10,7 +10,7 @@ namespace SeminarBuildingMap.Areas.Identity.Data
     //its used to make a temporary password to store in the database until the user sets their own
     public class Password
     {
-        private static readonly char[] Punctuations = "!@#$%^&*()_-+=[{]};:>|./?".ToCharArray();
+        private static readonly char[] Punctuations = "!@#$%".ToCharArray();
 
         public static string Generate(int length, int numberOfNonAlphanumericCharacters)
         {
