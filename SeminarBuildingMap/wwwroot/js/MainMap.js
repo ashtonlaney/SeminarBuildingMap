@@ -6,6 +6,7 @@ var bounds = [[0, 0], [1000, 1000]];
 var image = L.imageOverlay('/images/Darden2nd.svg', bounds).addTo(map); //this will need to be a parameter eventually, since we don't want to hardcore the 2nd floor map in
 map.fitBounds(bounds);
 var scheduleJSON = {};
+var rowNum = 0;
 
 function highlightFeature(e) { //this function changes the style of a highlighted room
     var layer = e.target;
@@ -32,10 +33,60 @@ function zoomToFeature(e) { //this function is called when a room is clicked, we
 
 function getSchedule(e) {
 
-    scheduleJSON = $.getJSON('https://localhost:44317/?handler=Info&Building=Darden&RoomNumber=210', function (result) {
-        console.log(result)
-        // replaces text next to map. This is just a test. I will have to parse through json
-        document.getElementById("test").innerHTML = result[0];
+    var roomID = e.target.feature.properties.id;
+
+    scheduleJSON = $.getJSON('https://localhost:44317/?handler=Info&Building=Darden&rmId=' + roomID, function (result) {
+        console.log(result);
+
+        var table = document.getElementById("InfoPanelTable");
+        
+        //var obj = JSON.stringify(result);
+        //obj = JSON.parse(obj);
+        //console.log(obj[0].avId)
+        //console.log(obj[3]);
+        //console.log(result.Array)
+
+        if (rowNum === 0) {
+            for (var i = 0; i < result.length; i++) {
+                var row = table.insertRow(rowNum);
+                rowNum += 1;
+                row.innerHTML = "Name of Class:" + " " + result[i].avName;
+
+                row = table.insertRow(rowNum);
+                rowNum += 1;
+                row.innerHTML = "Start Time:" + " " + result[i].avStartTime;
+
+                row = table.insertRow(rowNum);
+                rowNum += 1;
+                row.innerHTML = "End Time:" + " " + result[i].avEndTime;
+
+            }
+        }
+
+        else {
+            for (var i = table.rows.length - 1; i >= 0; i--) {
+                table.deleteRow(i);
+                rowNum -= 1;
+            }
+
+            for (var i = 0; i < result.length; i++) {
+                var row = table.insertRow(rowNum);
+                rowNum += 1;
+                row.innerHTML = "Name of Class:" + " " + result[i].avName;
+
+                row = table.insertRow(rowNum);
+                rowNum += 1;
+                row.innerHTML = "Start Time:" + " " + result[i].avStartTime;
+
+                row = table.insertRow(rowNum);
+                rowNum += 1;
+                row.innerHTML = "End Time:" + " " + result[i].avEndTime;
+
+            }
+        }
+        console.log(rowNum);
+        console.log(table.rows.length);
+        
     });
 
 }
