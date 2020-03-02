@@ -93,13 +93,9 @@ function getSchedule(e) {
 
 function onEachFeature(feature, layer) { //adds the functions to each created feature
     layer.on({
-        click: zoomToFeature,
+        click: getSchedule,
         mouseover: highlightFeature,
         mouseout: resetHighlight 
-    });
-
-    layer.on({
-        click: getSchedule
     });
 }
 
