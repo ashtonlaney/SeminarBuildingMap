@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\SeminarBuildingMap.css" />
     <None Include="wwwroot\js\mvc-grid\mvc-grid.js" />
   </ItemGroup>
 
@@ -27,6 +28,10 @@
     <PackageReference Include="NonFactors.Grid.Mvc6" Version="5.1.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
     <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 

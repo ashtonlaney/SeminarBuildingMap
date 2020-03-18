@@ -16,7 +16,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-inverse navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">SeminarBuildingMap</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -26,21 +26,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Map</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">MAP</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/BuildingList">Full Schedule</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/BuildingList">FULL SCHEDULE</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-page="/Index">Admin Panel</a>
+                                <a class="nav-link text-dark" asp-area="Admin" asp-page="/Index">ADMIN PANEL</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Faculty Login</a>
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">FACULTY LOGIN</a>
                             </li>
                         }
 

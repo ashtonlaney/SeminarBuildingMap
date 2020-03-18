@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SeminarBuildingMap.Areas.Identity.Data;
 using SeminarBuildingMap.GenericClasses;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 
 namespace SeminarBuildingMap
 {
@@ -29,6 +30,7 @@ namespace SeminarBuildingMap
         {
             services.AddRazorPages();
             services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.Configure<IdentityOptions>(options =>
             {
                 //Password settings
