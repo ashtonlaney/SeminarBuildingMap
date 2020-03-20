@@ -1,0 +1,87 @@
+﻿@page
+@model SeminarBuildingMap.FloorEditDisplayModel
+@{
+    ViewData["Title"] = "addRoomsToMap";
+    //allows admin to add/remove rooms or change building info(name)
+}
+@section Mapping{
+    <link rel="stylesheet" href="~/css/leaflet.css" />
+    <script src="~/js/leaflet.js"></script>
+    <link rel="stylesheet" href="~/css/L.Control.MousePosition.css" />
+    <script src="~/js/L.Control.MousePosition.js"></script>
+
+    <style>
+        #mapid {
+            height: 750px;
+        }
+    </style>
+
+
+
+}
+
+<script>
+    function updateSendData() {
+        $.ajax({
+            url: '/?handler=Add',
+            data: {
+                RoomNumber: document.getElementById("roomNum").value,
+                Coords: document.getElementById("testlabel").textContent
+            }
+        })
+            .done(function (result) {
+                document.getElementById("testlabel").textContent = "";
+            })
+    }
+
+</script>
+
+
+
+<div class="text-center">
+    <h1 class="display-4">hey bird</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <textarea id="roomNum"></textarea>
+    <button id="btnTest" onclick="updateSendData()">add room to database</button>
+    <p id="testlabel"></p>
+    <p id="testlabel2">hi</p>
+</div>
+
+
+
+<div id="mapid"></div>
+
+<script src="~/js/AddRoomsMap.js"></script>
+
+<script>
+    var rooms = [
+    @for(int i = 0; i < Model.Rooms.Count(); i++)
+    {
+        
+        SeminarBuildingMap.Models.Room room = Model.Rooms.ElementAt(i);
+        <text>
+        {
+            "type": "Feature",
+            "properties": { "name": "@room.rmId", "color": "@room.Color"},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[@room.rmTopLeftPoint],[@room.rmBottomLeftPoint],[@room.rmBottomRightPoint],[@room.rmTopRightPoint]]]
+                }
+        }
+        </text>
+        @if(i != Model.Rooms.Count() - 1)
+        {
+            <text>,</text>
+        }
+    }
+        ];
+
+    function style(feature) {
+        return {
+            fillColor: feature.properties.color
+        };
+    }
+
+var geoJson = L.geoJSON(rooms, { style: style, onEachFeature: onEachFeature }).addTo(map);
+</script>
+
