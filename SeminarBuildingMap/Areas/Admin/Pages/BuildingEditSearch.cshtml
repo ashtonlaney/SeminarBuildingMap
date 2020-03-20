@@ -1,6 +1,43 @@
 ﻿@page
 @model SeminarBuildingMap.Areas.Admin.Pages.BuildingEditSearchModel
 @{
-//shows list of all buildings on campus or allow admin to add new building
+    //shows list of all buildings on campus or allow admin to add new building
 }
 
+@(Html
+    .Grid(Model.BuildingData)
+    .Build(columns =>
+    {
+        columns.Add(model => model.bdId).Titled("Building ID");
+        columns.Add(model => model.bdName).Titled("Building Name");
+    })
+    .Empty("No Buildings Found")
+    .Sortable()
+    .Pageable()
+    .Filterable()
+)
+
+    <form method="post">
+        <div class="form-group">
+            <label>New Building ID: </label>
+            <input class="form-control" id="name" asp-for="bdId" required />
+        </div>
+        <button type="submit" id="submit" class="btn btn-primary">Add Building</button>
+
+    </form>
+
+@section Scripts
+{
+    <script src="~/js/mvc-grid/mvc-grid.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
+            new MvcGrid(element);
+        });
+    </script>
+    <script>
+        document.addEventListener('rowclick', function (e) {
+            window.location.href = "BuildingEditDisplay/" + e.detail.data['bd-id'];
+        });
+    </script>
+
+}
