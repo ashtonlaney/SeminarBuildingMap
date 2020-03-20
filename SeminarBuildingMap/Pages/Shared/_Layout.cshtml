@@ -16,8 +16,8 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-inverse navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+        <nav class="navbar navbar-inverse navbar-expand-sm navbar-toggleable-sm navbar-dark fixed-top border-bottom box-shadow mb-3">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">SeminarBuildingMap</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -26,21 +26,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">MAP</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Index">MAP</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/BuildingList">FULL SCHEDULE</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/BuildingList">FULL SCHEDULE</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Admin" asp-page="/Index">ADMIN PANEL</a>
+                                <a class="nav-link text-light" asp-area="Admin" asp-page="/Index">ADMIN PANEL</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">FACULTY LOGIN</a>
+                                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">FACULTY LOGIN</a>
                             </li>
                         }
 
@@ -49,14 +49,17 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <br /><br />
+
+    <div class="container-fluid" style="background-color: lightgray">
+        <br />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container-fluid">
             &copy; 2020 - SeminarBuildingMap - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>

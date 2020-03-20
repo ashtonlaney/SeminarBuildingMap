@@ -24,10 +24,8 @@ a {
   border-color: #1861ac;
 }
 
-.navbar-inverse {
-    background-color: #25282b !important;
-    font-weight: 900;
-
+.table-custom {
+    font-family: cursive;
 }
 
 /* Sticky footer styles

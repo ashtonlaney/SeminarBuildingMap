@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\css\SeminarBuildingMap.css" />
     <None Include="wwwroot\js\mvc-grid\mvc-grid.js" />
   </ItemGroup>
 
