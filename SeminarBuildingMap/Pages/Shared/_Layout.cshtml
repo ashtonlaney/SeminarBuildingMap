@@ -9,16 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SeminarBuildingMap</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/site.css? v=1.0" rel="stylesheet" type="text/css" />
     <link href="~/css/mvc-grid/mvc-grid.css" rel="stylesheet">
+    <link href="~/css/custom.css" rel="stylesheet" />
     @RenderSection("Mapping", required: false)
 
 </head>
-<body>
+<body style="background-color: lightgrey">
     <header>
-        <nav class="navbar navbar-inverse navbar-expand-sm navbar-toggleable-sm navbar-dark fixed-top border-bottom box-shadow mb-3">
+        <nav class="navbar bg-dark navbar-expand-sm navbar-toggleable-sm fixed-top mb-3" style="-webkit-box-shadow: 0px 3px 8px 10px #999; box-shadow: 0px 3px 8px 10px #999;">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">SeminarBuildingMap</a>
+                <a class="navbar-brand text-white font-weight-bolder" asp-area="" asp-page="/Index">SeminarBuildingMap</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -51,7 +52,7 @@
     </header>
     <br /><br />
 
-    <div class="container-fluid" style="background-color: lightgray">
+    <div class="container-fluid" style="background-color:lightgrey">
         <br />
         <main role="main" class="pb-3">
             @RenderBody()
@@ -59,7 +60,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container-fluid">
+        <div class="container-fluid" style="background-color:lightgrey">
             &copy; 2020 - SeminarBuildingMap - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
