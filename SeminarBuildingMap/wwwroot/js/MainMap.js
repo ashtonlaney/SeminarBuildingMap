@@ -4,22 +4,12 @@
 
 
 // Grabs the URL of the page and splits it on the '?' and looks for map=(SomeMapName) then sets images accordingly. Only two maps right now so only two statements
-var URL = window.location.href;
-var mapRequest = URL.split("?");
+var building = document.getElementById("building").value;
+var floor = document.getElementById("floor").value;
 var bounds = [[0, 0], [1000, 1000]];
 
-if (mapRequest[1] == "map=Darden1stFloor") {
-    var image = L.imageOverlay('/images/Darden1st.svg', bounds).addTo(map);
-    document.getElementById("hMapTitle").innerHTML = "Darden 1st Floor";
-}
-else if (mapRequest[1] == "map=Darden2ndFloor") {
-    var image = L.imageOverlay('/images/Darden2nd.svg', bounds).addTo(map); //this will need to be a parameter eventually, since we don't want to hardcore the 2nd floor map in
-    document.getElementById("hMapTitle").innerHTML = "Darden 2nd Floor";
-}
-else {
-    var image = L.imageOverlay('/images/Darden2nd.svg', bounds).addTo(map);
-    document.getElementById("hMapTitle").innerHTML = "Darden 2nd Floor";
-}
+var image = L.imageOverlay('/images/'+ building + floor + '.svg', bounds).addTo(map); //this will need to be a parameter eventually, since we don't want to hardcore the 2nd floor map in
+
 
 map.fitBounds(bounds);
 var scheduleJSON = {};
@@ -63,44 +53,45 @@ function getSchedule(e) {
         //console.log(obj[3]);
         //console.log(result.Array)
 
-        if (rowNum === 0) {
-            for (var i = 0; i < result.length; i++) {
-                var row = table.insertRow(rowNum);
-                rowNum += 1;
-                row.innerHTML = "Name of Class:" + " " + result[i].avName;
-
-                row = table.insertRow(rowNum);
-                rowNum += 1;
-                row.innerHTML = "Start Time:" + " " + result[i].avStartTime;
-
-                row = table.insertRow(rowNum);
-                rowNum += 1;
-                row.innerHTML = "End Time:" + " " + result[i].avEndTime;
-
-            }
-        }
-
-        else {
+        if (rowNum != 0) {
             for (var i = table.rows.length - 1; i >= 0; i--) {
                 table.deleteRow(i);
                 rowNum -= 1;
-            }
+            }  
+        }
+        
+        for (var i = 0; i < result.length; i++) {
+            var row = table.insertRow(rowNum);
+            rowNum += 1;
 
-            for (var i = 0; i < result.length; i++) {
-                var row = table.insertRow(rowNum);
-                rowNum += 1;
-                row.innerHTML = "Name of Class:" + " " + result[i].avName;
+            let cell = row.insertCell()
+            let text = document.createTextNode(result[i].avName);
+            cell.appendChild(text);
 
-                row = table.insertRow(rowNum);
-                rowNum += 1;
-                row.innerHTML = "Start Time:" + " " + result[i].avStartTime;
+            cell = row.insertCell()
+            text = document.createTextNode(result[i].avStartTime);
+            cell.appendChild(text);
 
-                row = table.insertRow(rowNum);
-                rowNum += 1;
-                row.innerHTML = "End Time:" + " " + result[i].avEndTime;
+            cell = row.insertCell()
+            text = document.createTextNode(result[i].avEndTime);
+            cell.appendChild(text);
+        }
 
+        if (result.length > 0) {
+
+            let headers = ["Name", "Start Time", "End Time"]
+
+            let thead = table.createTHead();
+            let row = thead.insertRow();
+            rowNum += 1;
+            for (let key of headers) {
+                let th = document.createElement("th");
+                let text = document.createTextNode(key);
+                th.appendChild(text);
+                row.appendChild(th);
             }
         }
+
         console.log(rowNum);
         console.log(table.rows.length);
         
