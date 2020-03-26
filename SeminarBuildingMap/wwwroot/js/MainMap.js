@@ -2,8 +2,25 @@
     crs: L.CRS.Simple //creates new map using CRS.Simple which uses a 1000,1000 coord system instead of geospacial
 });
 
+
+// Grabs the URL of the page and splits it on the '?' and looks for map=(SomeMapName) then sets images accordingly. Only two maps right now so only two statements
+var URL = window.location.href;
+var mapRequest = URL.split("?");
 var bounds = [[0, 0], [1000, 1000]];
-var image = L.imageOverlay('/images/Darden2nd.svg', bounds).addTo(map); //this will need to be a parameter eventually, since we don't want to hardcore the 2nd floor map in
+
+if (mapRequest[1] == "map=Darden1stFloor") {
+    var image = L.imageOverlay('/images/Darden1st.svg', bounds).addTo(map);
+    document.getElementById("hMapTitle").innerHTML = "Darden 1st Floor";
+}
+else if (mapRequest[1] == "map=Darden2ndFloor") {
+    var image = L.imageOverlay('/images/Darden2nd.svg', bounds).addTo(map); //this will need to be a parameter eventually, since we don't want to hardcore the 2nd floor map in
+    document.getElementById("hMapTitle").innerHTML = "Darden 2nd Floor";
+}
+else {
+    var image = L.imageOverlay('/images/Darden2nd.svg', bounds).addTo(map);
+    document.getElementById("hMapTitle").innerHTML = "Darden 2nd Floor";
+}
+
 map.fitBounds(bounds);
 var scheduleJSON = {};
 var rowNum = 0;
