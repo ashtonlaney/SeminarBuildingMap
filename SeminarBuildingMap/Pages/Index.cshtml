@@ -29,30 +29,36 @@
 <input id="building" asp-for="building" type="hidden" />
 <input id="floor" asp-for="floor" type="hidden" />
 
-<div class="text-left">
-    <h1 id="hMapTitle" class="display-4">@Model.building @Model.floorName</h1>
-</div>
-<div class="btn-toolbar">
-    <div class="dropdown mr-2">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Building</button>
-        <div class="dropdown-menu" style="z-index:10000">
-            @for (int i = 0; i < Model.Buildings.Count(); i++)
-            {
-                <a class="dropdown-item" href="/?building=@Model.Buildings.ElementAt(i).bdName">@Model.Buildings.ElementAt(i).bdName</a>
-            }
+<div class="row">
+
+    <div class="col-sm-6">
+        <h1 id="hMapTitle" class="display-4">@Model.building @Model.floorName</h1>
+    </div>
+    <div class="btn-toolbar col-sm-3" style="text-align:right">
+
+        <div class="dropdown mr-2">
+            <br />
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Building</button>
+            <div class="dropdown-menu" style="z-index:10000">
+                @for (int i = 0; i < Model.Buildings.Count(); i++)
+                {
+                    <a class="dropdown-item" href="/?building=@Model.Buildings.ElementAt(i).bdName">@Model.Buildings.ElementAt(i).bdName</a>
+                }
+            </div>
+        </div>
+        <div class="dropdown mr-2">
+            <br />
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Floor</button>
+            <div class="dropdown-menu" style="z-index:10000">
+                @for (int i = 0; i < Model.Floors.Count(); i++)
+                {
+                    <a class="dropdown-item" href="/?building=@Model.building&floor=@Model.Floors.ElementAt(i).flNo">@Model.Floors.ElementAt(i).flName</a>
+                }
+            </div>
         </div>
     </div>
-    <div class="dropdown mr-2">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Floor</button>
-        <div class="dropdown-menu" style="z-index:10000">
-            @for (int i = 0; i < Model.Floors.Count(); i++)
-            {
-                <a class="dropdown-item" href="/?building=@Model.building&floor=@Model.Floors.ElementAt(i).flNo">@Model.Floors.ElementAt(i).flName</a>
-            }
-        </div>
-    </div>`
 </div>
-<br />
+
 <div class="container-fluid">
     <div class="row">
         <!-- DO NOT REMOVE OR MODIFY THE BELOW DIV, THIS IS WHAT THE MAP IS BOUND TO-->
