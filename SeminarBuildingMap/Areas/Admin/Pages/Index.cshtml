@@ -23,9 +23,6 @@
             <li>
                 <a asp-area="Admin" asp-page="/Register">Register New User</a>
             </li>
-            <li>
-                <a asp-area="Admin" asp-page="/SubuserSearch">Manage Users</a> <!-- managers can delete their building's users or assign a user a room, admins can promote users to managers of buildings as well -->
-            </li>
         </ul>
     </div>
 }
@@ -36,6 +33,9 @@
         <ul>
             <li>
                 <a asp-area="Admin" asp-page="/BuildingEditSearch">Manage Buildings</a>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-page="/SubuserSearch">Manage Users</a> <!-- admins can promote users to managers of buildings -->
             </li>
         </ul>
     </div>

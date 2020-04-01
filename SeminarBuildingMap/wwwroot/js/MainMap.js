@@ -1,6 +1,9 @@
 ﻿var map = L.map('mapid', {
-    crs: L.CRS.Simple //creates new map using CRS.Simple which uses a 1000,1000 coord system instead of geospacial
+    crs: L.CRS.Simple, //creates new map using CRS.Simple which uses a 1000,1000 coord system instead of geospacial
+    minZoom: 0.5,
+    zoomSnap: 0.25
 });
+
 
 
 // Grabs the URL of the page and splits it on the '?' and looks for map=(SomeMapName) then sets images accordingly. Only two maps right now so only two statements

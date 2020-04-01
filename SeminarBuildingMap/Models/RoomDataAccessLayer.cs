@@ -141,5 +141,28 @@ namespace SeminarBuildingMap.Models
                 connection.Execute("up_DeleteOwnedRooms", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
+
+        public IQueryable<Room> GetBuildingRooms(string bdId, string _connectionString)
+        {
+            IEnumerable<Room> roomList = new List<Room>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@bdId", bdId);
+                roomList = connection.Query<Room>("up_GetBuildingRooms", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return roomList.AsQueryable();
+        }
+
+        public IQueryable<SeminarBuildingMapUser> GetSubusers(string _connectionString)
+        {
+            IEnumerable<SeminarBuildingMapUser> userList = new List<SeminarBuildingMapUser>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                userList = connection.Query<SeminarBuildingMapUser>("up_GetSubusers", commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return userList.AsQueryable();
+        }
+
     }
 }

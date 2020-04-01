@@ -3,3 +3,34 @@
 @{
     //show all users under an admin/manager that they can edit
 }
+
+@(Html
+    .Grid(Model.users)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Id).Titled("Id").Css("hiddenColumn");
+        columns.Add(model => model.Email).Titled("Email");
+        columns.Add(model => model.FirstName).Titled("First Name");
+        columns.Add(model => model.LastName).Titled("Last Name");
+    })
+    .Empty("No Buildings Found")
+    .Sortable()
+    .Pageable()
+    .Filterable()
+)
+
+@section Scripts
+{
+    <script src="~/js/mvc-grid/mvc-grid.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
+            new MvcGrid(element);
+        });
+    </script>
+    <script>
+        document.addEventListener('rowclick', function (e) {
+            window.location.href = "SubuserDisplay/" + e.detail.data['id'];
+        });
+    </script>
+
+}
