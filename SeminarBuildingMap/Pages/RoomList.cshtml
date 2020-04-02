@@ -7,3 +7,31 @@
 
 <h1>RoomList</h1>
 
+
+@(Html
+    .Grid(Model.BuildingData)
+    .Build(columns =>
+    {
+        columns.Add(model => model.rmNo).Titled("Room Number");
+    })
+    .Empty("No Buildings Found")
+    .Sortable()
+    .Pageable()
+    .Filterable()
+)
+
+@section Scripts
+{
+    <script src="~/js/mvc-grid/mvc-grid.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
+            new MvcGrid(element);
+        });
+    </script>
+    <script>
+        document.addEventListener('rowclick', function (e) {
+            window.location.href = "RoomSchedule/" + e.detail.data['rmNo'];
+        });
+    </script>
+
+}

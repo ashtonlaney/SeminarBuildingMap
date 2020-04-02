@@ -6,3 +6,32 @@
 }
 
 <h1>BuildingList</h1>
+
+@(Html
+    .Grid(Model.BuildingData)
+    .Build(columns =>
+    {
+        columns.Add(model => model.bdId).Titled("Building ID");
+        columns.Add(model => model.bdName).Titled("Building Name");
+    })
+    .Empty("No Buildings Found")
+    .Sortable()
+    .Pageable()
+    .Filterable()
+)
+
+@section Scripts
+{
+    <script src="~/js/mvc-grid/mvc-grid.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
+            new MvcGrid(element);
+        });
+    </script>
+    <script>
+        document.addEventListener('rowclick', function (e) {
+            window.location.href = "RoomList?Building=" + e.detail.data['bd-id'];
+        });
+    </script>
+
+}
