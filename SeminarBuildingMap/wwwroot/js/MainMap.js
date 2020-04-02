@@ -41,9 +41,16 @@ function zoomToFeature(e) { //this function is called when a room is clicked, we
     map.fitBounds(e.target.getBounds());
 }
 
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
 function getSchedule(e) {
 
     var roomID = e.target.feature.properties.id;
+    var name = e.target.feature.properties.name;
 
     scheduleJSON = $.getJSON('https://localhost:44317/?handler=Info&Building=Darden&rmId=' + roomID, function (result) {
         console.log(result);
@@ -68,15 +75,15 @@ function getSchedule(e) {
             rowNum += 1;
 
             let cell = row.insertCell()
-            let text = document.createTextNode(result[i].avName);
+            let text = document.createTextNode(decodeHtml(result[i].avName));
             cell.appendChild(text);
 
             cell = row.insertCell()
-            text = document.createTextNode(result[i].avStartTime);
+            text = document.createTextNode(decodeHtml(result[i].avStartTime));
             cell.appendChild(text);
 
             cell = row.insertCell()
-            text = document.createTextNode(result[i].avEndTime);
+            text = document.createTextNode(decodeHtml(result[i].avEndTime));
             cell.appendChild(text);
         }
 
@@ -86,13 +93,22 @@ function getSchedule(e) {
 
             let thead = table.createTHead();
             let row = thead.insertRow();
+            let th = document.createElement("th");
+            th.colSpan = 3;
+            let text = document.createTextNode(decodeHtml(name));
+            th.appendChild(text);
+            row.appendChild(th);
+            rowNum += 1;
+
+            row = thead.insertRow();
             rowNum += 1;
             for (let key of headers) {
-                let th = document.createElement("th");
-                let text = document.createTextNode(key);
+                th = document.createElement("th");
+                text = document.createTextNode(decodeHtml(key));
                 th.appendChild(text);
                 row.appendChild(th);
             }
+
         }
 
         console.log(rowNum);

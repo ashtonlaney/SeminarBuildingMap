@@ -52,5 +52,38 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        public IEnumerable<string> GetOwnedBuildings(string username, string _connectionString)
+        {
+            IEnumerable<string> buildingList = new List<string>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@username", username);
+                buildingList = connection.Query<string>("up_GetOwnedBuildings", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return buildingList;
+        }
+
+        public void ClearOwnedBuildings(string username, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@username", username);
+                connection.Execute("up_ClearOwnedBuildings", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
+        public void AddOwnedBuilding(string username, string bdId, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@username", username);
+                queryParameters.Add("@bdId", bdId);
+                connection.Execute("up_AddOwnedBuilding", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
     }
 }
