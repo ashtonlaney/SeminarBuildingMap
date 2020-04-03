@@ -18,6 +18,9 @@
     position: relative;
     overflow-x: auto;
     font-size: 1rem;
+    box-shadow: 0px 0px 6px 0px black;
+    border-radius: 8px;
+    background-color:lightgrey;
 }
 
 .mvc-grid table {
@@ -28,7 +31,7 @@
 
 .mvc-grid th {
     background-clip: padding-box;
-    background-color: #f7f7f7;
+    background-color: lightgrey;
     position: relative;
 }
 
@@ -308,6 +311,7 @@
 .mvc-grid-pager button {
     background-color: #ffffff;
     border: 1px solid #dddddd;
+    border-radius: 5px;
     box-sizing: content-box;
     line-height: 2.5em;
     padding: 0 0.25em;
@@ -326,8 +330,8 @@
 .mvc-grid-pager .active,
 .mvc-grid-pager .active:focus,
 .mvc-grid-pager .active:hover {
-    background-color: #0275d8;
-    border-color: #0275d8;
+    background-color: #d21414;
+    border-color: #d21414;
     color: #ffffff;
 }
 
@@ -410,7 +414,11 @@
 
 .mvc-grid tr:hover {
     cursor: pointer;
-    background-color: lightblue;
+    background-color: lightgrey;
+}
+
+.mvc-grid tr {
+    background-color: white
 }
 
 .hiddenColumn {
