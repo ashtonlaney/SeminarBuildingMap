@@ -15,7 +15,7 @@
     @RenderSection("Mapping", required: false)
 
 </head>
-<body style="background-color: lightgrey">
+<body style="background-color:#C0C0C0">
     <header>
         <nav class="navbar bg-dark navbar-expand-sm navbar-toggleable-sm mb-3" style="-webkit-box-shadow: 0px 3px 8px 10px #999; box-shadow: 0px 3px 8px 10px #999;">
             <div class="container-fluid">
@@ -46,7 +46,7 @@
                             </li>
                             <li class="nav-item">
                                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                                    <button id="logout" type="submit" class="nav-link btn btn-link text-light font-weight-bolder btn-outline-light">Logout</button>
+                                    <button id="logout" type="submit" class="nav-link btn btn-link text-light font-weight-bolder btn-outline-light" style="background-color:#d21414">Logout</button>
                                 </form>
                             </li>
                         }
@@ -55,13 +55,13 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid" style="background-color: lightgrey">
+    <div class="container-fluid" style="background-color:#C0C0C0">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" style="background-color: lightgrey">
+    <footer class="border-top footer text-muted" style="background-color:#C0C0C0">
         <div class="container-fluid">
             &copy; 2020 - SeminarBuildingMap - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
