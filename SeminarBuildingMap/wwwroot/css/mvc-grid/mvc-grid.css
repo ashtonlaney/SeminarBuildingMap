@@ -18,6 +18,8 @@
     position: relative;
     overflow-x: auto;
     font-size: 1rem;
+    box-shadow: 0px 0px 6px 0px black;
+    border-radius: 8px;
 }
 
 .mvc-grid table {
@@ -28,7 +30,7 @@
 
 .mvc-grid th {
     background-clip: padding-box;
-    background-color: #f7f7f7;
+    background-color: lightgrey;
     position: relative;
 }
 
@@ -410,7 +412,11 @@
 
 .mvc-grid tr:hover {
     cursor: pointer;
-    background-color: lightblue;
+    background-color: lightgrey;
+}
+
+.mvc-grid tr {
+    background-color: white
 }
 
 .hiddenColumn {
