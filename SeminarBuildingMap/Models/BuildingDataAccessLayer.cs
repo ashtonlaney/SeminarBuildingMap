@@ -31,6 +31,18 @@ namespace SeminarBuildingMap.Models
             return buildingList.AsQueryable();
         }
 
+        public string GetBuildingName(string bdId, string _connectionString)
+        {
+            string bdName = "";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@bdId", bdId);
+                bdName = connection.QuerySingle<string>("up_GetBuildingName", queryParameters ,commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return bdName;
+        }
+
         public void AddBuilding(string bdId, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -49,6 +61,17 @@ namespace SeminarBuildingMap.Models
                 queryParameters.Add("@bdId", bdId);
                 queryParameters.Add("@flNo", flNo);
                 connection.Execute("up_AddFloor", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
+        public void UpdateBuilding(string bdId, string bdName, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@bdId", bdId);
+                queryParameters.Add("@bdName", bdName);
+                connection.Execute("up_UpdateBuilding", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
 

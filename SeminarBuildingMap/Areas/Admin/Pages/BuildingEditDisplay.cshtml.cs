@@ -19,6 +19,9 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         [BindProperty]
         public string flNo { get; set; }
 
+        [BindProperty]
+        public string bdName { get; set; }
+
         public IQueryable<Models.Floor> FloorData { get; set; }
         public BuildingEditDisplayModel(IOptions<GenericClasses.ConnectionConfig> connectionConfig)
         {
@@ -28,12 +31,24 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         public void OnGet(string bdId)
         {
             FloorData = ObjBuilding.GetBuildingFloors(bdId, _connectionConfig.Value.ConnStr);
+            bdName = ObjBuilding.GetBuildingName(bdId, _connectionConfig.Value.ConnStr);
         }
 
-        public void OnPost(string bdId)
+        public void OnPostUpdate(string bdId)
+        {
+            if (!String.IsNullOrEmpty(bdName))
+            {
+                ObjBuilding.UpdateBuilding(bdId, bdName, _connectionConfig.Value.ConnStr);
+            }
+            bdName = ObjBuilding.GetBuildingName(bdId, _connectionConfig.Value.ConnStr);
+            FloorData = ObjBuilding.GetBuildingFloors(bdId, _connectionConfig.Value.ConnStr);
+        }
+
+        public void OnPostAdd(string bdId)
         {
             ObjBuilding.AddFloor(bdId, flNo, _connectionConfig.Value.ConnStr);
             FloorData = ObjBuilding.GetBuildingFloors(bdId, _connectionConfig.Value.ConnStr);
+            bdName = ObjBuilding.GetBuildingName(bdId, _connectionConfig.Value.ConnStr);
         }
     }
 }

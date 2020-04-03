@@ -27,12 +27,12 @@ namespace SeminarBuildingMap
             _connectionConfig = connectionConfig;
         }
 
-        public void OnGet()
+        public void OnGet(string bdId, string flId)
         {
-            Rooms = objRoom.GetSelectedRooms("Darden", "2", _connectionConfig.Value.ConnStr);
+            Rooms = objRoom.GetSelectedRooms(bdId, flId, _connectionConfig.Value.ConnStr);
         }
 
-        public JsonResult OnGetAdd(String RoomNumber, String Coords)
+        public JsonResult OnGetAdd(string RoomNumber, string Coords)
         {
             objRoom.InsertDardenRoom(RoomNumber, Coords, _connectionConfig.Value.ConnStr);
             return new JsonResult("[success]");

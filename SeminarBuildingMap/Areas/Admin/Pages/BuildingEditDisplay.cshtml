@@ -8,6 +8,11 @@
         <label>Building ID:</label>
         <input class="form-control" value="@RouteData.Values["bdId"]" readonly />
     </div>
+    <div class="form-group">
+        <label>Building Name:</label>
+        <input class="form-control" asp-for="bdName" required/>
+    </div>
+    <button type="submit" class="btn btn-primary" asp-page-handler="update">Update Building Name</button>
 </form>
 
 @(Html
@@ -15,6 +20,7 @@
     .Build(columns =>
     {
         columns.Add(model => model.flNo).Titled("Floor ID");
+        columns.Add(model => model.flName).Titled("Floor Name");
     })
     .Empty("No Floors Found For This Building")
     .Sortable()
@@ -24,10 +30,10 @@
 
 <form method="post">
     <div class="form-group">
-        <label>Floor Name:</label>
+        <label>Floor Number:</label>
         <input class="form-control" asp-for="flNo" />
     </div>
-    <button type="submit" class="btn btn-primary">Add New Floor</button>
+    <button type="submit" class="btn btn-primary" asp-page-handler="add">Add New Floor</button>
 </form>
 
 
@@ -41,7 +47,7 @@
     </script>
     <script>
         document.addEventListener('rowclick', function (e) {
-            window.location.href = "FloorEditDisplay/" + e.detail.data['-id'];
+            window.location.href = "../FloorEditDisplay/" + "@RouteData.Values["bdId"]" + "/"  + e.detail.data['fl-no'];
         });
     </script>
 
