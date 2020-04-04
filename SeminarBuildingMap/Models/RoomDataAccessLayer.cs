@@ -24,8 +24,23 @@ namespace SeminarBuildingMap.Models
             return rooms;
         }
 
+        public IEnumerable<Room> GetSelectedRooms_NoAvailability(string bdId, string rmFloorNo, string _connectionString)
+        {
+            IEnumerable<Room> rooms = new List<Room>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@bdId", bdId);
+                queryParameters.Add("@rmFloorNo", rmFloorNo);
+                //creates a list of the "Room" object, the variables in this class must correspond to sql column names or this will not work
+                rooms = connection.Query<Room>("up_GetSelectedRooms_NoAvailability", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return rooms;
+        }
+
         //adds a new room to darden, this will be changed when an eventual admin page for this is created
-        public void InsertDardenRoom(string rmID, string rmCoords, string _connectionString)
+        public void AddRoom(string rmNo, string bdId, string flNo, string rmCoords, string _connectionString)
         {
             rmCoords = rmCoords.Remove(rmCoords.Length - 1);
             string[] coordsArray = rmCoords.Split(";");
@@ -37,13 +52,37 @@ namespace SeminarBuildingMap.Models
             {
                 //this is how you add SQL parameters, this splits the coords entered into the 4 corners of an object
                 var queryParameters = new DynamicParameters();
-                queryParameters.Add("@rmId", rmID);
-                queryParameters.Add("@rmName", "Darden " + rmID);
+                queryParameters.Add("@rmNo", rmNo);
+                queryParameters.Add("@bdId", bdId);
+                queryParameters.Add("@flNo", flNo);
                 queryParameters.Add("@rmTopLeftPoint", coordsArray[0]);
                 queryParameters.Add("@rmBottomLeftPoint", coordsArray[1]);
                 queryParameters.Add("@rmBottomRightPoint", coordsArray[2]);
                 queryParameters.Add("@rmTopRightPoint", coordsArray[3]);
-                connection.Execute("up_InsertRoom_Darden", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+                connection.Execute("up_AddRoom", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
+        public void UpdateRoom(string rmId, string rmNo, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                //this is how you add SQL parameters, this splits the coords entered into the 4 corners of an object
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", rmId);
+                queryParameters.Add("@rmNo", rmNo);
+                connection.Execute("up_UpdateRoom", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
+        public void DeleteRoom(string rmId, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                //this is how you add SQL parameters, this splits the coords entered into the 4 corners of an object
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", rmId);
+                connection.Execute("up_DeleteRoom", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
 

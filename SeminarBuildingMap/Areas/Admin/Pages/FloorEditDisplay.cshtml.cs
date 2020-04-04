@@ -1,41 +1,63 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SeminarBuildingMap.GenericClasses;
-using SeminarBuildingMap.Models;
 
-namespace SeminarBuildingMap
+namespace SeminarBuildingMap.Areas.Admin.Pages
 {
-    [Authorize(Roles="Admin")]
     public class FloorEditDisplayModel : PageModel
     {
 
-        private readonly IOptions<ConnectionConfig> _connectionConfig;
+        readonly Models.BuildingDataAccessLayer ObjBuilding = new Models.BuildingDataAccessLayer();
 
-        readonly RoomDataAccessLayer objRoom = new RoomDataAccessLayer();
+        private readonly IOptions<GenericClasses.ConnectionConfig> _connectionConfig;
 
-        public IEnumerable<Room> Rooms { get; set; }
+        private IWebHostEnvironment _environment;
 
-        public FloorEditDisplayModel(IOptions<ConnectionConfig> connectionConfig)
+        [BindProperty]
+        public string flName { get; set; }
+
+        [BindProperty]
+        public IFormFile Upload { get; set; }
+
+        public bool isFloorPlan { get; set; }
+
+        public FloorEditDisplayModel(IOptions<GenericClasses.ConnectionConfig> connectionConfig, IWebHostEnvironment environment)
         {
             _connectionConfig = connectionConfig;
+            _environment = environment;
+        }
+        public void OnGet(string bdId, string flNo)
+        {
+            flName = ObjBuilding.GetFloorName(bdId, flNo, _connectionConfig.Value.ConnStr);
+            isFloorPlan = System.IO.File.Exists(Path.Combine(_environment.ContentRootPath, "wwwroot/images", bdId + flNo + ".svg"));
         }
 
-        public void OnGet(string bdId, string flId)
+        public void OnPostUpdate(string bdId, string flNo)
         {
-            Rooms = objRoom.GetSelectedRooms(bdId, flId, _connectionConfig.Value.ConnStr);
+            if (!String.IsNullOrEmpty(flName))
+            {
+                ObjBuilding.UpdateFloorName(bdId, flNo, flName, _connectionConfig.Value.ConnStr);
+            }
         }
 
-        public JsonResult OnGetAdd(string RoomNumber, string Coords)
+        public void OnPostUploadAsync(string bdId, string flNo)
         {
-            objRoom.InsertDardenRoom(RoomNumber, Coords, _connectionConfig.Value.ConnStr);
-            return new JsonResult("[success]");
+            string[] extension = Upload.FileName.Split(".");
+            if (extension[extension.Length - 1].ToLower() == "svg") {
+                string fileName = bdId + flNo + ".svg";
+                var file = Path.Combine(_environment.ContentRootPath, "wwwroot/images", fileName);
+                using (var fileStream = new FileStream(file, FileMode.Create))
+                {
+                    Upload.CopyTo(fileStream);
+                }
+            }
         }
     }
 }

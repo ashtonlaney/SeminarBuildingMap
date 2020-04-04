@@ -43,6 +43,31 @@ namespace SeminarBuildingMap.Models
             return bdName;
         }
 
+        public string GetFloorName(string bdId, string flNo, string _connectionString)
+        {
+            string flName = "";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@bdId", bdId);
+                queryParameters.Add("@flNo", flNo);
+                flName = connection.QuerySingle<string>("up_GetFloorName", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return flName;
+        }
+
+        public void UpdateFloorName(string bdId, string flNo, string flName, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@bdId", bdId);
+                queryParameters.Add("@flNo", flNo);
+                queryParameters.Add("@flName", flName);
+                connection.Execute("up_UpdateFloorName", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
         public void AddBuilding(string bdId, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))

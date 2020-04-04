@@ -11,7 +11,7 @@ var building = document.getElementById("building").value;
 var floor = document.getElementById("floor").value;
 var bounds = [[0, 0], [1000, 1000]];
 
-var image = L.imageOverlay('/images/'+ building + floor + '.svg', bounds).addTo(map); //this will need to be a parameter eventually, since we don't want to hardcore the 2nd floor map in
+var image = L.imageOverlay('/images/'+ building + floor + '.svg', bounds).addTo(map); 
 
 
 map.fitBounds(bounds);

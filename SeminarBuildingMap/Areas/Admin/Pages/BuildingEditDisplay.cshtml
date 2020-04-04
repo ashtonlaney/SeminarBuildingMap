@@ -19,7 +19,7 @@
     .Grid(Model.FloorData)
     .Build(columns =>
     {
-        columns.Add(model => model.flNo).Titled("Floor ID");
+        columns.Add(model => model.flNo).Titled("Floor Number");
         columns.Add(model => model.flName).Titled("Floor Name");
     })
     .Empty("No Floors Found For This Building")
