@@ -56,7 +56,5 @@ function onEachFeature(feature, layer) {
     });
 }
 
-L.control.mousePosition().addTo(map);
-
 
 

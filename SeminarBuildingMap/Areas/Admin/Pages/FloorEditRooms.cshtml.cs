@@ -45,9 +45,13 @@ namespace SeminarBuildingMap
 
         public void OnPostAdd(string bdId, string flNo)
         {
-            if (!String.IsNullOrEmpty(newRmNo))
+            if (ModelState.IsValid && !String.IsNullOrEmpty(newRmNo))
             {
                 objRoom.AddRoom(newRmNo, bdId, flNo, coords, _connectionConfig.Value.ConnStr);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Room Number is required for new rooms");
             }
             Rooms = objRoom.GetSelectedRooms(bdId, flNo, _connectionConfig.Value.ConnStr);
             coords = "";
@@ -58,17 +62,36 @@ namespace SeminarBuildingMap
 
         public void OnPostUpdate(string bdId, string flNo)
         {
-            if (!String.IsNullOrEmpty(rmId))
+            if (ModelState.IsValid && !String.IsNullOrEmpty(rmId) && !String.IsNullOrEmpty(rmNo) && int.TryParse(rmId, out _))
             {
                 objRoom.UpdateRoom(rmId, rmNo, _connectionConfig.Value.ConnStr);
             }
+            else
+            {              
+                ModelState.AddModelError(string.Empty, "A Room must be selected and a room number must be provided to update a room");
+            }
             Rooms = objRoom.GetSelectedRooms(bdId, flNo, _connectionConfig.Value.ConnStr);
+            coords = "";
+            rmNo = "";
+            newRmNo = "";
+            rmId = "";
         }
 
         public void OnPostDelete(string bdId, string flNo)
         {
-            objRoom.DeleteRoom(rmId, _connectionConfig.Value.ConnStr);
+            if (ModelState.IsValid && !String.IsNullOrEmpty(rmId) && int.TryParse(rmId, out _))
+            {
+                objRoom.DeleteRoom(rmId, _connectionConfig.Value.ConnStr);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "A Room must be selected in order to delete");
+            }
             Rooms = objRoom.GetSelectedRooms(bdId, flNo, _connectionConfig.Value.ConnStr);
+            coords = "";
+            rmNo = "";
+            newRmNo = "";
+            rmId = "";
         }
     }
 }
