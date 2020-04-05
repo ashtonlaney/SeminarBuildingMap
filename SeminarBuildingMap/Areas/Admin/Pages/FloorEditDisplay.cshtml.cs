@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         private IWebHostEnvironment _environment;
 
-        [BindProperty]
+        [BindProperty][StringLength(50)]
         public string flName { get; set; }
 
         [BindProperty]
@@ -44,20 +45,38 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             if (!String.IsNullOrEmpty(flName))
             {
                 ObjBuilding.UpdateFloorName(bdId, flNo, flName, _connectionConfig.Value.ConnStr);
+            } 
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Floor Name is Required");
             }
+            flName = ObjBuilding.GetFloorName(bdId, flNo, _connectionConfig.Value.ConnStr);
+            isFloorPlan = System.IO.File.Exists(Path.Combine(_environment.ContentRootPath, "wwwroot/images", bdId + flNo + ".svg"));
         }
 
         public void OnPostUploadAsync(string bdId, string flNo)
         {
-            string[] extension = Upload.FileName.Split(".");
-            if (extension[extension.Length - 1].ToLower() == "svg") {
-                string fileName = bdId + flNo + ".svg";
-                var file = Path.Combine(_environment.ContentRootPath, "wwwroot/images", fileName);
-                using (var fileStream = new FileStream(file, FileMode.Create))
+            if (!(Upload == null))
+            {
+                string[] extension = Upload.FileName.Split(".");
+                if (extension[extension.Length - 1].ToLower() == "svg")
                 {
-                    Upload.CopyTo(fileStream);
+                    string fileName = bdId + flNo + ".svg";
+                    var file = Path.Combine(_environment.ContentRootPath, "wwwroot/images", fileName);
+                    using (var fileStream = new FileStream(file, FileMode.Create))
+                    {
+                        Upload.CopyTo(fileStream);
+                    }
+                } else
+                {
+                    ModelState.AddModelError(string.Empty, "Floorplan must be a .svg file");
                 }
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Floorplan file is required");
             }
+            flName = ObjBuilding.GetFloorName(bdId, flNo, _connectionConfig.Value.ConnStr);
+            isFloorPlan = System.IO.File.Exists(Path.Combine(_environment.ContentRootPath, "wwwroot/images", bdId + flNo + ".svg"));
         }
     }
 }

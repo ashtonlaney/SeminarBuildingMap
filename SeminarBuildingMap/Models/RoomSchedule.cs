@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,7 +39,9 @@ namespace SeminarBuildingMap.Models
 
         public int avId { get; set; }
         public string avName { get; set; }
+        [Display(Name = "Start Time")]
         public TimeSpan avStartTime { get; set; }
+        [Display(Name = "End Time")]
         public TimeSpan avEndTime { get; set; }
         public string avDay { get; set; }
         public DateTime evDate { get;set; }

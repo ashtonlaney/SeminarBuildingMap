@@ -16,15 +16,17 @@
     .Pageable()
     .Filterable()
 )
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post">
+    <div class="form-group">
+        <label>New Building ID: </label>
+        <input class="form-control" id="name" asp-for="bdId" required maxlength="20" />
+        <span asp-validation-for="bdId" class="text-danger"></span>
 
-    <form method="post">
-        <div class="form-group">
-            <label>New Building ID: </label>
-            <input class="form-control" id="name" asp-for="bdId" required />
-        </div>
-        <button type="submit" id="submit" class="btn btn-link text-light font-weight-bolder" style="background-color:#d21414">Add Building</button>
+    </div>
+    <button type="submit" id="submit" class="btn btn-link text-light font-weight-bolder" style="background-color:#d21414">Add Building</button>
 
-    </form>
+</form>
 
 @section Scripts
 {
@@ -39,5 +41,7 @@
             window.location.href = "BuildingEditDisplay/" + e.detail.data['bd-id'];
         });
     </script>
+
+    <partial name="_ValidationScriptsPartial" />
 
 }

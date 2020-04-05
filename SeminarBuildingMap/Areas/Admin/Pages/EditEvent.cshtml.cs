@@ -43,6 +43,9 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                 {
                     ObjSchedule.EditRoomEvent(lclNewEvent, _connectionConfig.Value.ConnStr);
                 }
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Error: Invalid Request");
             }
             lclSchedule = ObjSchedule.GetRoomEvents(id, _connectionConfig.Value.ConnStr);
             lclNewEvent = new Models.RoomSchedule();
@@ -56,6 +59,9 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                 {
                     ObjSchedule.DeleteRoomEvent(lclNewEvent.avId, _connectionConfig.Value.ConnStr);
                 }
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Error: Invalid Request");
             }
             lclSchedule = ObjSchedule.GetRoomEvents(id, _connectionConfig.Value.ConnStr);
             lclNewEvent = new Models.RoomSchedule();

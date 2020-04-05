@@ -3,7 +3,8 @@
 @{
 }
 <a asp-page="OwnedRoomSearch/" class="btn btn-default pull-right">Return to search</a>
-<h1>Room</h1>
+<h1>Edit Room</h1>
+<div asp-validation-summary="All" class="text-danger"></div>
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
     <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="EditAvailability/" asp-route-id="@RouteData.Values["id"]">View/Edit Availability</a></li>
@@ -84,4 +85,7 @@
         });
     </script>
 
+    <partial name="_ValidationScriptsPartial" />
+
 }
+

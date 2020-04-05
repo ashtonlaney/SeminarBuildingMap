@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +17,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         private readonly IOptions<GenericClasses.ConnectionConfig> _connectionConfig;
 
-        [BindProperty]
+        [BindProperty][Required][Display(Name = "Building ID")][StringLength(20)]
         public string bdId { get; set; }
 
         public IQueryable<Models.Building> BuildingData { get; set; }

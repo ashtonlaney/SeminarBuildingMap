@@ -2,7 +2,7 @@
 @model SeminarBuildingMap.Areas.Admin.Pages.BuildingEditDisplayModel
 @{
 }
-
+<div asp-validation-summary="All" class="text-danger"></div>
 <form method="post">
     <div class="form-group">
         <label>Building ID:</label>
@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
         <label>Building Name:</label>
-        <input class="form-control" asp-for="bdName" required/>
+        <input class="form-control" asp-for="bdName" maxlength="50" />
     </div>
     <button type="submit" class="btn btn-primary" asp-page-handler="update">Update Building Name</button>
 </form>
@@ -31,7 +31,7 @@
 <form method="post">
     <div class="form-group">
         <label>Floor Number:</label>
-        <input class="form-control" asp-for="flNo" />
+        <input class="form-control" asp-for="flNo" maxlength="1" />
     </div>
     <button type="submit" class="btn btn-primary" asp-page-handler="add">Add New Floor</button>
 </form>
@@ -50,5 +50,7 @@
             window.location.href = "../FloorEditDisplay/" + "@RouteData.Values["bdId"]" + "/"  + e.detail.data['fl-no'];
         });
     </script>
+
+    <partial name="_ValidationScriptsPartial" />
 
 }

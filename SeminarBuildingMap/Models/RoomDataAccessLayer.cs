@@ -9,7 +9,7 @@ namespace SeminarBuildingMap.Models
     public class RoomDataAccessLayer
     {
         //returns all rooms in darden, will be changed to be dynamic later
-        public IEnumerable<Room> GetSelectedRooms(string bdId, string rmFloorNo, string _connectionString)
+        public IEnumerable<Room> GetSelectedRooms(string bdId, string flNo, string _connectionString)
         {
             IEnumerable<Room> rooms = new List<Room>();
 
@@ -17,14 +17,14 @@ namespace SeminarBuildingMap.Models
             {
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@bdId", bdId);
-                queryParameters.Add("@rmFloorNo", rmFloorNo);
+                queryParameters.Add("@flNo", flNo);
                 //creates a list of the "Room" object, the variables in this class must correspond to sql column names or this will not work
                 rooms = connection.Query<Room>("up_GetSelectedRooms", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
             return rooms;
         }
 
-        public IEnumerable<Room> GetSelectedRooms_NoAvailability(string bdId, string rmFloorNo, string _connectionString)
+        public IEnumerable<Room> GetSelectedRooms_NoAvailability(string bdId, string flNo, string _connectionString)
         {
             IEnumerable<Room> rooms = new List<Room>();
 
@@ -32,7 +32,7 @@ namespace SeminarBuildingMap.Models
             {
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@bdId", bdId);
-                queryParameters.Add("@rmFloorNo", rmFloorNo);
+                queryParameters.Add("@flNo", flNo);
                 //creates a list of the "Room" object, the variables in this class must correspond to sql column names or this will not work
                 rooms = connection.Query<Room>("up_GetSelectedRooms_NoAvailability", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
@@ -40,13 +40,13 @@ namespace SeminarBuildingMap.Models
         }
 
         //adds a new room to darden, this will be changed when an eventual admin page for this is created
-        public void AddRoom(string rmNo, string bdId, string flNo, string rmCoords, string _connectionString)
+        public bool AddRoom(string rmNo, string bdId, string flNo, string rmCoords, string _connectionString)
         {
             rmCoords = rmCoords.Remove(rmCoords.Length - 1);
             string[] coordsArray = rmCoords.Split(";");
             if (coordsArray.Length != 4)
             {
-                return;
+                return false;
             }
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -61,6 +61,7 @@ namespace SeminarBuildingMap.Models
                 queryParameters.Add("@rmTopRightPoint", coordsArray[3]);
                 connection.Execute("up_AddRoom", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
+            return true;
         }
 
         public void UpdateRoom(string rmId, string rmNo, string _connectionString)
@@ -140,6 +141,18 @@ namespace SeminarBuildingMap.Models
                 queryParameters.Add("@rmId", rmId);
                 queryParameters.Add("@rmName", rmName);
                 int result = connection.Execute("up_UpdateRoomName", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+
+        public void UpdateRoomNameType(int rmId, string rmName, string rmType, string _connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@rmId", rmId);
+                queryParameters.Add("@rmName", rmName);
+                queryParameters.Add("@rmType", rmType);
+                int result = connection.Execute("up_UpdateRoomNameType", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
 

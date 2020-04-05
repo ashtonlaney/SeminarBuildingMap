@@ -54,9 +54,16 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                         if (user != null && !_userManager.IsInRoleAsync(user, "Admin").Result)
                         {
                             ObjRoom.AddOwnedRooms(id, email, _connectionConfig.Value.ConnStr);
+                        } 
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "User: \"" + item + "\" is either not a valid user or an Admin and cannot be added");
                         }
                     }
                 }
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Please enter at least 1 user to add");
             }
             allUsers = _userManager.GetUsersInRoleAsync("Manager").Result.ToList().AsQueryable();
             allUsers = allUsers.Union(_userManager.GetUsersInRoleAsync("Faculty").Result.ToList().AsQueryable());
@@ -73,8 +80,14 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                     if (!string.IsNullOrEmpty(email))
                     {
                         ObjRoom.DeleteOwnedRooms(id, email, _connectionConfig.Value.ConnStr);
+                    } else
+                    {
+                        ModelState.AddModelError(string.Empty, "Error deleting supplied users, please check for proper input");
                     }
                 }
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Please enter at least 1 user to delete");
             }
             allUsers = _userManager.GetUsersInRoleAsync("Manager").Result.ToList().AsQueryable();
             allUsers = allUsers.Union(_userManager.GetUsersInRoleAsync("Faculty").Result.ToList().AsQueryable());

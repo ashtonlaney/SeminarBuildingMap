@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -16,10 +17,10 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         private readonly IOptions<GenericClasses.ConnectionConfig> _connectionConfig;
 
-        [BindProperty]
+        [BindProperty][StringLength(1)]
         public string flNo { get; set; }
 
-        [BindProperty]
+        [BindProperty][Display(Name ="Building Name")][StringLength(50)]
         public string bdName { get; set; }
 
         public IQueryable<Models.Floor> FloorData { get; set; }
@@ -39,6 +40,9 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             if (!String.IsNullOrEmpty(bdName))
             {
                 ObjBuilding.UpdateBuilding(bdId, bdName, _connectionConfig.Value.ConnStr);
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Building Name is required");
             }
             bdName = ObjBuilding.GetBuildingName(bdId, _connectionConfig.Value.ConnStr);
             FloorData = ObjBuilding.GetBuildingFloors(bdId, _connectionConfig.Value.ConnStr);
@@ -46,9 +50,15 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         public void OnPostAdd(string bdId)
         {
-            ObjBuilding.AddFloor(bdId, flNo, _connectionConfig.Value.ConnStr);
-            FloorData = ObjBuilding.GetBuildingFloors(bdId, _connectionConfig.Value.ConnStr);
+            if (!String.IsNullOrEmpty(flNo))
+            {
+                ObjBuilding.AddFloor(bdId, flNo, _connectionConfig.Value.ConnStr);
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Floor Number is required");
+            }
             bdName = ObjBuilding.GetBuildingName(bdId, _connectionConfig.Value.ConnStr);
+            FloorData = ObjBuilding.GetBuildingFloors(bdId, _connectionConfig.Value.ConnStr);
         }
     }
 }

@@ -2,39 +2,43 @@
 @model SeminarBuildingMap.Areas.Admin.Pages.FloorEditDisplayModel
 @{
 }
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post">
+    <div class="form-group">
+        <label>Building ID:</label>
+        <input class="form-control" value="@RouteData.Values["bdId"]" readonly />
+    </div>
+    <div class="form-group">
+        <label>Floor Number:</label>
+        <input class="form-control" value="@RouteData.Values["flNo"]" readonly />
+    </div>
+    <div class="form-group">
+        <label>Floor Name:</label>
+        <input class="form-control" asp-for="flName" maxlength="50" />
+    </div>
+    <button type="submit" class="btn btn-primary" asp-page-handler="update">Update Floor Name</button>
+</form>
 
-    <form method="post">
-        <div class="form-group">
-            <label>Building ID:</label>
-            <input class="form-control" value="@RouteData.Values["bdId"]" readonly />
-        </div>
-        <div class="form-group">
-            <label>Floor Number:</label>
-            <input class="form-control" value="@RouteData.Values["flNo"]" readonly />
-        </div>
-        <div class="form-group">
-            <label>Floor Name:</label>
-            <input class="form-control" asp-for="flName" required />
-        </div>
-        <button type="submit" class="btn btn-primary" asp-page-handler="update">Update Floor Name</button>
-    </form>
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Floor Plan Exists:</label>
+        @if (Model.isFloorPlan)
+        {
+            <div class="badge badge-success">Yes</div>
+            <a class="btn btn-secondary" asp-page="/FloorEditRooms" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]" role="button">Edit Rooms</a>
+        }
+        else
+        {
+            <div class="badge badge-danger">No</div>
+        }
+    </div>
+    <div class="form-group">
+        <label>Upload New Floor Plan (This will replace existing):</label>
+        <input type="file" asp-for="Upload" />
+    </div>
+    <button type="submit" class="btn btn-primary" asp-page-handler="upload">Upload New Floor Plan</button>
+</form>
 
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label>Floor Plan Exists:</label>
-            @if (Model.isFloorPlan)
-            {
-                <div class="badge badge-success">Yes</div>
-                <a class="btn btn-secondary" asp-page="/FloorEditRooms" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]" role="button">Edit Rooms</a>
-            }
-            else
-            {
-                <div class="badge badge-danger">No</div>
-            }
-        </div>
-        <div class="form-group">
-            <label>Upload New Floor Plan (This will replace existing):</label>
-            <input type="file" asp-for="Upload" />
-        </div>
-        <button type="submit" class="btn btn-primary" asp-page-handler="upload">Upload New Floor Plan</button>
-    </form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

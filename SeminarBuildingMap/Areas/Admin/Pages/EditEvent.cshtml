@@ -4,7 +4,8 @@
 }
 
 <a asp-page="OwnedRoomSearch/" class="btn btn-default pull-right">Return to search</a>
-<h1>Room</h1>
+<h1>Edit Room</h1>
+<div asp-validation-summary="All" class="text-danger"></div>
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
     <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="EditAvailability/" asp-route-id="@RouteData.Values["id"]">View/Edit Availability</a></li>
@@ -14,7 +15,7 @@
 <br />
 <div class="tab-content">
     <div class="tab-pane fade show active">
-    <form method="post">
+        <form method="post">
             @(Html
                 .Grid(Model.lclSchedule)
                 .Build(columns =>
@@ -40,18 +41,22 @@
                 <div class="form-group">
                     <label>Name</label>
                     <input class="form-control" id="name" asp-for="lclNewEvent.avName" required />
+                    <span asp-validation-for="lclNewEvent.avName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label>Date</label>
-                    <input class="form-control" id="date" type="date" asp-for="lclNewEvent.evDate"/>
+                    <input class="form-control" id="date" type="date" asp-for="lclNewEvent.evDate" required />
+                    <span asp-validation-for="lclNewEvent.evDate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label>Start Time</label>
                     <input class="form-control" id="start" asp-for="lclNewEvent.avStartTime" required type="time" />
+                    <span asp-validation-for="lclNewEvent.avStartTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label>End Time</label>
                     <input class="form-control" id="end" asp-for="lclNewEvent.avEndTime" required type="time" />
+                    <span asp-validation-for="lclNewEvent.avEndTime" class="text-danger"></span>
                 </div>
             </div>
 
@@ -95,4 +100,6 @@
             document.getElementById("submit").textContent = "Add New";
         }
     </script>
+
+    <partial name="_ValidationScriptsPartial" />
 }

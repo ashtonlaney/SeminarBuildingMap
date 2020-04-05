@@ -36,7 +36,7 @@
             <button class="btn btn-secondary" onclick="clearMarkers()">Restart Room</button>
             <div class="form-group">
                 <label>Room Number:</label>
-                <input class="form-control" id="newNumber" asp-for="newRmNo" />
+                <input class="form-control" id="newNumber" asp-for="newRmNo" maxlength="10" />
             </div>
             <button type="submit" id="add" class="btn btn-primary" asp-page-handler="add" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]">Add Room</button>
         </div>
@@ -47,7 +47,7 @@
             </div>
             <div class="form-group">
                 <label>Room Number:</label>
-                <input class="form-control" asp-for="rmNo" id="numberLabel" />
+                <input class="form-control" asp-for="rmNo" id="numberLabel" maxlength="10" />
             </div>
             <button type="submit" id="update" class="btn btn-primary" asp-page-handler="update" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]">Update Room</button>
             <button type="submit" id="delete" class="btn btn-danger" asp-page-handler="delete" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]" onclick="return confirm('Are you sure you want to delete this room?')">Delete Room</button>
@@ -57,7 +57,7 @@
 
 
 <div id="mapid"></div>
-
+<p>Start with the top left point of a room, and go counter clockwise for the rest of the points to add a room; exactly 4 points must be added</p>
 <script src="~/js/AddRoomsMap.js"></script>
 
 <script>
@@ -92,3 +92,6 @@
 var geoJson = L.geoJSON(rooms, { style: style, onEachFeature: onEachFeature }).addTo(map);
 </script>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

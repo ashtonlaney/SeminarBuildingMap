@@ -36,9 +36,20 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
             if (ModelState.IsValid && ObjRoom.UserCanEditRoom(User.Identity.Name, id, _connectionConfig.Value.ConnStr))
             {
-                ObjRoom.UpdateRoomName(id, lclRoom.rmName, _connectionConfig.Value.ConnStr);
-                lclRoom = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr);
+                if (User.IsInRole("Admin") && (lclRoom.rmType == "Classroom" || lclRoom.rmType == "Office"))
+                {
+                    ObjRoom.UpdateRoomNameType(id, lclRoom.rmName, lclRoom.rmType, _connectionConfig.Value.ConnStr);
+                }
+                else
+                {
+                    ObjRoom.UpdateRoomName(id, lclRoom.rmName, _connectionConfig.Value.ConnStr);
+                }
+            } 
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid Request");
             }
+            lclRoom = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr);
         }
     }
 }

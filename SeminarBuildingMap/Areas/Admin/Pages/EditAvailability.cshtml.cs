@@ -41,6 +41,10 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                 if (lclNewAvailability.avId == 0)
                 {
                     var validDays = new List<String> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+                    if(checkboxDays.Count == 0)
+                    {
+                        ModelState.AddModelError(String.Empty, "Atleast one day must be selected");
+                    }
                     foreach (string day in checkboxDays)
                     {
                         if (validDays.Contains(day))
@@ -54,6 +58,9 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                 {
                     ObjSchedule.EditRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
                 }
+            } else
+            {
+                ModelState.AddModelError(String.Empty, "Error: Invalid Request");
             }
             lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
             lclNewAvailability = new Models.RoomSchedule();
@@ -66,7 +73,13 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                 if (lclNewAvailability.avId != 0)
                 {
                     ObjSchedule.DeleteRoomAvailability(lclNewAvailability.avId, _connectionConfig.Value.ConnStr);
+                } else
+                {
+                    ModelState.AddModelError(string.Empty, "An availability record must be selected to delete");
                 }
+            } else
+            {
+                ModelState.AddModelError(string.Empty, "Error: Invalid Request");
             }
             lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
             lclNewAvailability = new Models.RoomSchedule();

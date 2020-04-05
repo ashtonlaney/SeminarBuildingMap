@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -19,9 +20,9 @@ namespace SeminarBuildingMap
         [BindProperty]
         public string coords { get; set; }
 
-        [BindProperty]
+        [BindProperty][StringLength(10)]
         public string rmNo { get; set; }
-        [BindProperty]
+        [BindProperty][StringLength(10)]
         public string newRmNo { get; set; }
 
         [BindProperty]
@@ -47,7 +48,11 @@ namespace SeminarBuildingMap
         {
             if (ModelState.IsValid && !String.IsNullOrEmpty(newRmNo))
             {
-                objRoom.AddRoom(newRmNo, bdId, flNo, coords, _connectionConfig.Value.ConnStr);
+               bool success = objRoom.AddRoom(newRmNo, bdId, flNo, coords, _connectionConfig.Value.ConnStr);
+                if (!success)
+                {
+                    ModelState.AddModelError(string.Empty, "Please supply exactly 4 points");
+                }
             }
             else
             {

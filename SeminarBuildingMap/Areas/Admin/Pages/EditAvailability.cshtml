@@ -5,7 +5,8 @@
 
 
 <a asp-page="OwnedRoomSearch/" class="btn btn-default pull-right">Return to search</a>
-<h1>Room</h1>
+<h1>Edit Room</h1>
+<div asp-validation-summary="All" class="text-danger"></div>
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
     <li class="nav-item"><a class="nav-link active" role="tab" aria-controls="home" aria-selected="true">View/Edit Availability</a></li>
@@ -50,6 +51,7 @@
                 <div class="form-group">
                     <label>Name</label>
                     <input class="form-control" id="name" asp-for="lclNewAvailability.avName" required />
+                    <span asp-validation-for="lclNewAvailability.avName" class="text-danger"></span>
                 </div>
                 <div class="form-group" id="checkboxes">
                     <label>Day(s):</label>
@@ -68,16 +70,18 @@
                 <div class="form-group">
                     <label>Start Time</label>
                     <input class="form-control" id="start" asp-for="lclNewAvailability.avStartTime" required type="time" />
+                    <span asp-validation-for="lclNewAvailability.avStartTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label>End Time</label>
                     <input class="form-control" id="end" asp-for="lclNewAvailability.avEndTime" required type="time" />
+                    <span asp-validation-for="lclNewAvailability.avEndTime" class="text-danger"></span>
                 </div>
             </div>
 
             <button onclick="cancelEdit()" id="cancel" style="display:none;" class="btn btn-dark">Cancel Edit</button>
             <button type="submit" id="delete" style="display:none;" asp-page-handler="delete" class="btn btn-danger">Delete Selected</button>
-            <button type="submit" id="submit" class="btn btn-primary" asp-page-handler="save">Add</button>           
+            <button type="submit" id="submit" class="btn btn-primary" asp-page-handler="save">Add</button>
         </form>
     </div>
 </div>
@@ -118,4 +122,6 @@
             document.getElementById("submit").textContent = "Add New";
         }
     </script>
+
+    <partial name="_ValidationScriptsPartial" />
 }

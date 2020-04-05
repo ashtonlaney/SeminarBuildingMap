@@ -38,7 +38,7 @@ namespace SeminarBuildingMap.Models
                 };
             }
         }
-        public string rmFloorNo { get; set; }
+        public string flNo { get; set; }
         public string rmType { get; set; }
 
     }
