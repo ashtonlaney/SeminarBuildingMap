@@ -330,9 +330,10 @@
 .mvc-grid-pager .active,
 .mvc-grid-pager .active:focus,
 .mvc-grid-pager .active:hover {
-    background-color: #d21414;
-    border-color: #d21414;
+    background-color: #404040;
+    border-color: #404040;
     color: #ffffff;
+    font-weight:bolder;
 }
 
 .mvc-grid-pager .disabled,
@@ -418,7 +419,8 @@
 }
 
 .mvc-grid tr {
-    background-color: white
+    background-color: white;
+    font-weight: 600;
 }
 
 .hiddenColumn {

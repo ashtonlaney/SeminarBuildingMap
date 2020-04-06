@@ -30,21 +30,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Index" data-toggle="dropdown">MAP</a>
+                            <a class="nav-link text-light font-weight-bolder" asp-area="" asp-page="/Index" data-toggle="dropdown">MAP</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/BuildingList">FULL SCHEDULE</a>
+                            <a class="nav-link text-light font-weight-bolder" asp-area="" asp-page="/BuildingList">FULL SCHEDULE</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="Admin" asp-page="/Index">ADMIN PANEL</a>
+                                <a class="nav-link text-light font-weight-bolder" asp-area="Admin" asp-page="/Index">ADMIN PANEL</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">FACULTY LOGIN</a>
+                                <a class="nav-link text-light font-weight-bolder" asp-area="Identity" asp-page="/Account/Login">FACULTY LOGIN</a>
                             </li>
                         }
 

@@ -4,8 +4,10 @@
 }
 
 
-<a asp-page="OwnedRoomSearch/" class="btn btn-default pull-right">Return to search</a>
-<h1>Edit Room</h1>
+<a asp-page="OwnedRoomSearch/" class="btn btn-dark btn-default pull-right text-light font-weight-bolder">Return to search</a>
+<br /><br />
+
+<h1 class="text-dark">Edit Room</h1>
 <div asp-validation-summary="All" class="text-danger"></div>
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item"><a class="nav-link" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
@@ -79,9 +81,9 @@
                 </div>
             </div>
 
-            <button onclick="cancelEdit()" id="cancel" style="display:none;" class="btn btn-dark">Cancel Edit</button>
-            <button type="submit" id="delete" style="display:none;" asp-page-handler="delete" class="btn btn-danger">Delete Selected</button>
-            <button type="submit" id="submit" class="btn btn-primary" asp-page-handler="save">Add</button>
+            <button onclick="cancelEdit()" id="cancel" style="display:none;" class="btn btn-dark text-light font-weight-bolder">Cancel Edit</button>
+            <button type="submit" id="delete" style="display:none;" asp-page-handler="delete" class="btn btn-danger text-light font-weight-bolder">Delete Selected</button>
+            <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="save">Add</button>
         </form>
     </div>
 </div>
