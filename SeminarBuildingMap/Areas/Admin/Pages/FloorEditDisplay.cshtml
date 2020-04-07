@@ -16,7 +16,7 @@
         <label>Floor Name:</label>
         <input class="form-control" asp-for="flName" maxlength="50" />
     </div>
-    <button type="submit" class="btn btn-primary" asp-page-handler="update">Update Floor Name</button>
+    <button type="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="update">Update Floor Name</button>
 </form>
 
 <form method="post" enctype="multipart/form-data">
@@ -25,7 +25,7 @@
         @if (Model.isFloorPlan)
         {
             <div class="badge badge-success">Yes</div>
-            <a class="btn btn-secondary" asp-page="/FloorEditRooms" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]" role="button">Edit Rooms</a>
+            <a class="btn btn-secondary text-light font-weight-bolder" asp-page="/FloorEditRooms" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]" role="button">Edit Rooms</a>
         }
         else
         {
@@ -36,7 +36,7 @@
         <label>Upload New Floor Plan (This will replace existing):</label>
         <input type="file" asp-for="Upload" />
     </div>
-    <button type="submit" class="btn btn-primary" asp-page-handler="upload">Upload New Floor Plan</button>
+    <button type="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="upload">Upload New Floor Plan</button>
 </form>
 
 @section Scripts {
