@@ -4,13 +4,13 @@
     //allows user to add or remove events/classes from a room they own
     ViewData["Title"] = "Edit Room";
 }
-<a asp-page="OwnedRoomSearch/" class="btn btn-dark btn-default pull-right text-light font-weight-bolder">Return to search</a>
+<a asp-page="OwnedRoomSearch/" class="btn btn-dark btn-default pull-right text-light font-weight-bolder shadow">Return to search</a>
 <br /><br />
 
 <h1 class="text-dark font-weight-bold">Edit Room</h1>
 <div asp-validation-summary="All" class="text-danger"></div>
 <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item"><a class="nav-link active font-weight-bolder" role="tab" aria-controls="home" aria-selected="true">View/Edit Room</a></li>
+    <li class="nav-item shadow"><a class="nav-link active font-weight-bolder" role="tab" aria-controls="home" aria-selected="true">View/Edit Room</a></li>
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="EditAvailability/" asp-route-id="@RouteData.Values["id"]">View/Edit Availability</a></li>
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="EditEvent/" asp-route-id="@RouteData.Values["id"]">View/Edit Events</a></li>
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="EditOwners/" asp-route-id="@RouteData.Values["id"]">View/Edit Assigned Persons</a></li>
@@ -20,19 +20,19 @@
     <div class="tab-pane fade show active">
         <form method="post">
             <div class="form-group">
-                <label>Building ID</label>
-                <input class="form-control" asp-for="lclRoom.bdId" readonly />
+                <label class="text-dark font-weight-bold">Building ID</label>
+                <input class="form-control shadow" asp-for="lclRoom.bdId" readonly />
             </div>
             <div class="form-group">
-                <label>Room Number</label>
-                <input class="form-control" asp-for="lclRoom.rmNo" readonly />
+                <label class="text-dark font-weight-bold">Room Number</label>
+                <input class="form-control shadow" asp-for="lclRoom.rmNo" readonly />
             </div>
             <div class="form-group">
-                <label>Room Floor</label>
-                <input class="form-control" asp-for="lclRoom.flNo" readonly />
+                <label class="text-dark font-weight-bold">Room Floor</label>
+                <input class="form-control shadow" asp-for="lclRoom.flNo" readonly />
             </div>
             <div class="form-group">
-                <label>Room Type</label>
+                <label class="text-dark font-weight-bold">Room Type</label>
                 @if (User.IsInRole("Admin"))
                 {
                     <select asp-for="lclRoom.rmType" class="form-control">
@@ -43,16 +43,16 @@
                 }
                 else
                 {
-                    <input asp-for="lclRoom.rmType" class="form-control" readonly />
+                    <input asp-for="lclRoom.rmType" class="form-control shadow" readonly />
                 }
             </div>
             <div class="form-group">
-                <label>Room Name</label>
-                <input class="form-control" maxlength="30" asp-for="lclRoom.rmName" required />
+                <label class="text-dark font-weight-bold">Room Name</label>
+                <input class="form-control shadow" maxlength="30" asp-for="lclRoom.rmName" required />
                 <span asp-validation-for="lclRoom.rmName" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-dark text-light font-weight-bolder">Update Room</button>
+            <button type="submit" class="btn btn-dark text-light font-weight-bolder shadow">Update Room</button>
         </form>
     </div>
 </div>

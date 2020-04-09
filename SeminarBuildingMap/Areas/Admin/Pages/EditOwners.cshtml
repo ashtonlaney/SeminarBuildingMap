@@ -2,7 +2,7 @@
 @model SeminarBuildingMap.Areas.Admin.Pages.EditOwnersModel
 @{
 }
-<a asp-page="OwnedRoomSearch/" class="btn btn-dark text-light font-weight-bolder pull-right">Return to search</a>
+<a asp-page="OwnedRoomSearch/" class="btn btn-dark text-light font-weight-bolder pull-right shadow">Return to search</a>
 <br /><br />
 
 <h1 class="text-dark font-weight-bolder">Edit Room</h1>
@@ -11,7 +11,7 @@
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="EditAvailability/" asp-route-id="@RouteData.Values["id"]">View/Edit Availability</a></li>
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="EditEvent/" asp-route-id="@RouteData.Values["id"]">View/Edit Events</a></li>
-    <li class="nav-item"><a class="nav-link active font-weight-bolder" role="tab" aria-controls="home" aria-selected="true" asp-page="EditOwners/">View/Edit Assigned Persons</a></li>
+    <li class="nav-item shadow"><a class="nav-link active font-weight-bolder" role="tab" aria-controls="home" aria-selected="true" asp-page="EditOwners/">View/Edit Assigned Persons</a></li>
 </ul>
 <br />
 <div class="tab-content">
@@ -34,12 +34,12 @@
             )
 
             <div class="form-group">
-                <label>Add:</label>
-                <input class="form-control" id="addusers" asp-for="UsersToAdd" />
+                <label class="text-dark font-weight-bold" style="padding-top:15px">Add:</label>
+                <input class="form-control shadow" id="addusers" asp-for="UsersToAdd" />
             </div>
 
-            <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="save">Add</button>
-
+            <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="save">Add</button>
+            <br /><br />
 
             @(Html
                 .Grid(Model.ownedUsers)
@@ -58,11 +58,11 @@
             )
 
             <div class="form-group">
-                <label>Delete:</label>
-                <input class="form-control" id="deleteusers" asp-for="UsersToDelete" />
+                <label class="text-dark font-weight-bold"  style="padding-top:15px">Delete:</label>
+                <input class="form-control shadow" id="deleteusers" asp-for="UsersToDelete" />
             </div>
 
-            <button type="submit" id="delete" class="btn btn-danger text-light font-weight-bolder" asp-page-handler="delete">Delete Selected</button>
+            <button type="submit" id="delete" class="btn btn-danger text-light font-weight-bolder shadow" asp-page-handler="delete">Delete Selected</button>
 
         </form>
     </div>

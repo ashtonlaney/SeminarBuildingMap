@@ -4,14 +4,14 @@
 }
 
 
-<a asp-page="OwnedRoomSearch/" class="btn btn-dark btn-default pull-right text-light font-weight-bolder">Return to search</a>
+<a asp-page="OwnedRoomSearch/" class="btn btn-dark btn-default pull-right text-light font-weight-bolder shadow">Return to search</a>
 <br /><br />
 
 <h1 class="text-dark font-weight-bolder">Edit Room</h1>
 <div asp-validation-summary="All" class="text-danger"></div>
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="OwnedRoomDisplay/" asp-route-id="@RouteData.Values["id"]">View/Edit Room</a></li>
-    <li class="nav-item"><a class="nav-link active font-weight-bolder" role="tab" aria-controls="home" aria-selected="true">View/Edit Availability</a></li>
+    <li class="nav-item shadow"><a class="nav-link active font-weight-bolder" role="tab" aria-controls="home" aria-selected="true">View/Edit Availability</a></li>
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="EditEvent/" asp-route-id="@RouteData.Values["id"]">View/Edit Events</a></li>
     <li class="nav-item"><a class="nav-link font-weight-bolder" role="tab" aria-controls="home" aria-selected="false" asp-page="EditOwners/" asp-route-id="@RouteData.Values["id"]">View/Edit Assigned Persons</a></li>
 </ul>
@@ -51,39 +51,46 @@
             <div class="form-group">
                 <input id="id" type="hidden" asp-for="lclNewAvailability.avId" value="0" />
                 <div class="form-group">
-                    <label>Name</label>
-                    <input class="form-control" id="name" asp-for="lclNewAvailability.avName" required />
+                    <label class="text-dark font-weight-bold" style="padding-top:15px">Name</label>
+                    <input class="form-control shadow" id="name" asp-for="lclNewAvailability.avName" required />
                     <span asp-validation-for="lclNewAvailability.avName" class="text-danger"></span>
                 </div>
                 <div class="form-group" id="checkboxes">
-                    <label>Day(s):</label>
-                    <label class="form-check-label"><input class="form-check-inline" type="checkbox" value="Monday" name="checkboxDays" />Monday</label>
-                    <label class="form-check-label"><input class="form-check-inline" type="checkbox" value="Tuesday" name="checkboxDays" />Tuesday</label>
-                    <label class="form-check-label"><input class="form-check-inline" type="checkbox" value="Wednesday" name="checkboxDays" />Wednesday</label>
-                    <label class="form-check-label"><input class="form-check-inline" type="checkbox" value="Thursday" name="checkboxDays" />Thursday</label>
-                    <label class="form-check-label"><input class="form-check-inline" type="checkbox" value="Friday" name="checkboxDays" />Friday</label>
-                    <label class="form-check-label"><input class="form-check-inline" type="checkbox" value="Saturday" name="checkboxDays" />Saturday</label>
-                    <label class="form-check-label"><input class="form-check-inline" type="checkbox" value="Sunday" name="checkboxDays" />Sunday</label>
+                    <label class="text-dark font-weight-bold">Day(s):</label>
+                    <br />
+                    <label class="form-check-label text-dark font-weight-bold"><input class="form-check-inline" type="checkbox" value="Monday" name="checkboxDays" />Monday</label>
+                    <br />
+                    <label class="form-check-label text-dark font-weight-bold"><input class="form-check-inline" type="checkbox" value="Tuesday" name="checkboxDays" />Tuesday</label>
+                    <br />
+                    <label class="form-check-label text-dark font-weight-bold"><input class="form-check-inline" type="checkbox" value="Wednesday" name="checkboxDays" />Wednesday</label>
+                    <br />
+                    <label class="form-check-label text-dark font-weight-bold"><input class="form-check-inline" type="checkbox" value="Thursday" name="checkboxDays" />Thursday</label>
+                    <br />
+                    <label class="form-check-label text-dark font-weight-bold"><input class="form-check-inline" type="checkbox" value="Friday" name="checkboxDays" />Friday</label>
+                    <br />
+                    <label class="form-check-label text-dark font-weight-bold"><input class="form-check-inline" type="checkbox" value="Saturday" name="checkboxDays" />Saturday</label>
+                    <br />
+                    <label class="form-check-label text-dark font-weight-bold"><input class="form-check-inline" type="checkbox" value="Sunday" name="checkboxDays" />Sunday</label>
                 </div>
                 <div class="form-group" id="divDayDisplay" style="display:none;">
-                    <label>Day:</label>
-                    <input class="form-control" id="dayDisplay" readonly />
+                    <label class="text-dark font-weight-bold">Day:</label>
+                    <input class="form-control shadow" id="dayDisplay" readonly />
                 </div>
                 <div class="form-group">
-                    <label>Start Time</label>
-                    <input class="form-control" id="start" asp-for="lclNewAvailability.avStartTime" required type="time" />
+                    <label class="text-dark font-weight-bold">Start Time</label>
+                    <input class="form-control shadow" id="start" asp-for="lclNewAvailability.avStartTime" required type="time" />
                     <span asp-validation-for="lclNewAvailability.avStartTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label>End Time</label>
-                    <input class="form-control" id="end" asp-for="lclNewAvailability.avEndTime" required type="time" />
+                    <label class="text-dark font-weight-bold">End Time</label>
+                    <input class="form-control shadow" id="end" asp-for="lclNewAvailability.avEndTime" required type="time" />
                     <span asp-validation-for="lclNewAvailability.avEndTime" class="text-danger"></span>
                 </div>
             </div>
 
-            <button onclick="cancelEdit()" id="cancel" style="display:none;" class="btn btn-dark text-light font-weight-bolder">Cancel Edit</button>
-            <button type="submit" id="delete" style="display:none;" asp-page-handler="delete" class="btn btn-danger text-light font-weight-bolder">Delete Selected</button>
-            <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="save">Add</button>
+            <button onclick="cancelEdit()" id="cancel" style="display:none;" class="btn btn-dark text-light font-weight-bolder shadow">Cancel Edit</button>
+            <button type="submit" id="delete" style="display:none;" asp-page-handler="delete" class="btn btn-danger text-light font-weight-bolder shadow">Delete Selected</button>
+            <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="save">Add</button>
         </form>
     </div>
 </div>
