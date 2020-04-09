@@ -8,7 +8,7 @@ namespace SeminarBuildingMap.Models
 {
     public class RoomDataAccessLayer
     {
-        //returns all rooms in darden, will be changed to be dynamic later
+        //returns all rooms in a building/floor
         public IEnumerable<Room> GetSelectedRooms(string bdId, string flNo, string _connectionString)
         {
             IEnumerable<Room> rooms = new List<Room>();
@@ -24,6 +24,7 @@ namespace SeminarBuildingMap.Models
             return rooms;
         }
 
+        //does the same as above, but without the expensive availability calculation, used for admin room editor
         public IEnumerable<Room> GetSelectedRooms_NoAvailability(string bdId, string flNo, string _connectionString)
         {
             IEnumerable<Room> rooms = new List<Room>();
@@ -39,14 +40,14 @@ namespace SeminarBuildingMap.Models
             return rooms;
         }
 
-        //adds a new room to darden, this will be changed when an eventual admin page for this is created
+        //adds a new room to specified building/floor
         public bool AddRoom(string rmNo, string bdId, string flNo, string rmCoords, string _connectionString)
         {
-            rmCoords = rmCoords.Remove(rmCoords.Length - 1);
-            string[] coordsArray = rmCoords.Split(";");
-            if (coordsArray.Length != 4)
+            rmCoords = rmCoords.Remove(rmCoords.Length - 1); //gets rid of the ending semicolon
+            string[] coordsArray = rmCoords.Split(";"); //split the 4 coordinates into an array
+            if (coordsArray.Length != 4) //makes sure exactly four corners are specified
             {
-                return false;
+                return false; //returns success handling so user can be told if the add was successful
             }
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -63,7 +64,8 @@ namespace SeminarBuildingMap.Models
             }
             return true;
         }
-
+        
+        //updates room Number
         public void UpdateRoom(string rmId, string rmNo, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -76,6 +78,7 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        //delets a room
         public void DeleteRoom(string rmId, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -87,7 +90,7 @@ namespace SeminarBuildingMap.Models
             }
         }
 
-        //return rooms owned by user
+        //return rooms a user can edit, this is different depending on if a user is an Admin, Manager, or Faculty member (admin has all, manager looks for their buildings, faculty gets specific rooms)
         public IQueryable<Room> GetOwnedRooms(string username, string userRole, string _connectionString)
         {
             IEnumerable<Room> roomList = new List<Room>();
@@ -101,6 +104,7 @@ namespace SeminarBuildingMap.Models
             return roomList.AsQueryable();
         }
 
+        //returns Room object which contains info about specified room
         public Room GetRoomInfo(int rmId, string _connectionString)
         {
             Room room;
@@ -111,6 +115,7 @@ namespace SeminarBuildingMap.Models
             return room;
         }
 
+        //Authentication function, it checks that a user can edit a room before doing so
         public bool UserCanEditRoom(string UserName, int rmId, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -122,7 +127,7 @@ namespace SeminarBuildingMap.Models
                 if (string.IsNullOrEmpty(result))
                 {
                     return false;
-                } else if(result == rmId.ToString())
+                } else if(result == rmId.ToString()) //the function returns the requested roomId if successful
                 {
                     return true;
                 }
@@ -133,6 +138,7 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        //updates a room's name
         public void UpdateRoomName(int rmId, string rmName, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -144,6 +150,7 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        //updates a room's name and type, this is the version of the above function, that is available to Admins
         public void UpdateRoomNameType(int rmId, string rmName, string rmType, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -156,6 +163,7 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        //gets all users with permissions over a room
         public IQueryable<SeminarBuildingMapUser> GetOwnedUsers(int rmId, string _connectionString)
         {
             IEnumerable<SeminarBuildingMapUser> schedule = new List<SeminarBuildingMapUser>();
@@ -170,6 +178,7 @@ namespace SeminarBuildingMap.Models
             return schedule.AsQueryable();
         }
 
+        //assign a room to the specified user
         public void AddOwnedRooms(int rmId, string username, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -182,6 +191,7 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        //delete an assigned room from a user
         public void DeleteOwnedRooms(int rmId, string username, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -194,6 +204,7 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        //gets all rooms in a building, used for the public schedule viewer
         public IQueryable<Room> GetBuildingRooms(string bdId, string _connectionString)
         {
             IEnumerable<Room> roomList = new List<Room>();
@@ -205,7 +216,8 @@ namespace SeminarBuildingMap.Models
             }
             return roomList.AsQueryable();
         }
-
+        
+        //get all users that can be modified (non admins)
         public IQueryable<SeminarBuildingMapUser> GetSubusers(string _connectionString)
         {
             IEnumerable<SeminarBuildingMapUser> userList = new List<SeminarBuildingMapUser>();

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SeminarBuildingMap.Models
 {
+    //Deals with all touching the database using Dapper for room schedules (events/availability)
     public class RoomScheduleDataAccessLayer
     {
         //this function takes in a room and returns all events/availabilites for that room on the current date
@@ -24,6 +25,7 @@ namespace SeminarBuildingMap.Models
             return schedule;
         }
 
+        //returns availability list for room
         public IQueryable<RoomSchedule> GetRoomAvailability(int rmId, string _connectionString)
         {
             IEnumerable<RoomSchedule> schedule = new List<RoomSchedule>();
@@ -37,7 +39,8 @@ namespace SeminarBuildingMap.Models
             }
             return schedule.AsQueryable();
         }
-
+        
+        //add new availability for room
         public void InsertRoomAvailability(RoomSchedule availability, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -53,6 +56,8 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+
+        //change an existing availability
         public void EditRoomAvailability(RoomSchedule availability, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -67,6 +72,7 @@ namespace SeminarBuildingMap.Models
             }
         }
 
+        //delete existing availability
         public void DeleteRoomAvailability(int avId, string _connectionString)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -76,6 +82,10 @@ namespace SeminarBuildingMap.Models
                 connection.Execute("up_DeleteAvailability", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
+
+        //
+        //the below are the same but for events instead of availability
+        //
 
         public IQueryable<RoomSchedule> GetRoomEvents(int rmId, string _connectionString)
         {

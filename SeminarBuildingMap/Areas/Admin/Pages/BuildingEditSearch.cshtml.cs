@@ -37,7 +37,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             if (!string.IsNullOrEmpty(bdId))
             {
                 ObjBuilding.AddBuilding(bdId, _connectionConfig.Value.ConnStr);
-                return RedirectToPage("./BuildingEditDisplay/" + bdId);
+                return RedirectToPage("BuildingEditDisplay/", new {bdId = bdId });
             } else
 
             {
