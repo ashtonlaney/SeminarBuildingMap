@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SeminarBuildingMap.Areas.Identity.Data;
 
+//This is the built in .NET Core Registration page
+//The only thing I changed was adding a role selection
 namespace SeminarBuildingMap.Areas.Admin.Pages
 {
     [Authorize(Roles = "Admin,Manager")]
@@ -64,6 +66,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             AvailableRoles = new List<String>();
+            //managers can only add normal users, admins can add any role
             if (User.IsInRole("Admin"))
             {
                 AvailableRoles.Add("Admin");

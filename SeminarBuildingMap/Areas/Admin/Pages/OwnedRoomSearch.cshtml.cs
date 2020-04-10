@@ -21,7 +21,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         {
             _connectionConfig = connectionConfig;
         }
-        public void OnGet()
+        public void OnGet() //lists a users rooms they own. how this is determined is based upon their role
         {
             string userRole;
             if (User.IsInRole("Admin"))

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SeminarBuildingMap.Areas.Identity.Data
 {
-    //this is pulled from the original asp.net membership class (identity which we used replaced it in core) that can generate a random password
+    //this is pulled from the original asp.net membership class (identity which we used replaced it in core, and this functionality is still missing, so i imported it myself) that can generate a random password
     //its used to make a temporary password to store in the database until the user sets their own
+    //refer to Microsoft Membership documentation for details
     public class Password
     {
         private static readonly char[] Punctuations = "!@#$%^&*()_-+=[{]};:>|./?".ToCharArray();

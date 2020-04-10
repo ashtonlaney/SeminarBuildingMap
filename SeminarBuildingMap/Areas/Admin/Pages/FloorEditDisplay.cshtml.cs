@@ -19,15 +19,15 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         private readonly IOptions<GenericClasses.ConnectionConfig> _connectionConfig;
 
-        private IWebHostEnvironment _environment;
+        private IWebHostEnvironment _environment; //used to find paths to save file
 
         [BindProperty][StringLength(50)]
         public string flName { get; set; }
 
         [BindProperty]
-        public IFormFile Upload { get; set; }
+        public IFormFile Upload { get; set; } //holds uploaded file
 
-        public bool isFloorPlan { get; set; }
+        public bool isFloorPlan { get; set; } //stores if svg is saved already
 
         public FloorEditDisplayModel(IOptions<GenericClasses.ConnectionConfig> connectionConfig, IWebHostEnvironment environment)
         {
@@ -36,8 +36,8 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         }
         public void OnGet(string bdId, string flNo)
         {
-            flName = ObjBuilding.GetFloorName(bdId, flNo, _connectionConfig.Value.ConnStr);
-            isFloorPlan = System.IO.File.Exists(Path.Combine(_environment.ContentRootPath, "wwwroot/images", bdId + flNo + ".svg"));
+            flName = ObjBuilding.GetFloorName(bdId, flNo, _connectionConfig.Value.ConnStr); //gets the floorname from its id
+            isFloorPlan = System.IO.File.Exists(Path.Combine(_environment.ContentRootPath, "wwwroot/images", bdId + flNo + ".svg")); //checks to see if file is already saved on webserver
         }
 
         public void OnPostUpdate(string bdId, string flNo)
@@ -54,18 +54,18 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             isFloorPlan = System.IO.File.Exists(Path.Combine(_environment.ContentRootPath, "wwwroot/images", bdId + flNo + ".svg"));
         }
 
-        public void OnPostUploadAsync(string bdId, string flNo)
+        public void OnPostUploadAsync(string bdId, string flNo) //handles uploading file
         {
             if (!(Upload == null))
             {
                 string[] extension = Upload.FileName.Split(".");
-                if (extension[extension.Length - 1].ToLower() == "svg")
+                if (extension[extension.Length - 1].ToLower() == "svg") //ensurs the uploaded file atleast is an .svg file
                 {
-                    string fileName = bdId + flNo + ".svg";
-                    var file = Path.Combine(_environment.ContentRootPath, "wwwroot/images", fileName);
-                    using (var fileStream = new FileStream(file, FileMode.Create))
+                    string fileName = bdId + flNo + ".svg"; //ignore what the files name is, instead change it to  what the system requires
+                    var file = Path.Combine(_environment.ContentRootPath, "wwwroot/images", fileName); //create the path to save it on
+                    using (var fileStream = new FileStream(file, FileMode.Create)) 
                     {
-                        Upload.CopyTo(fileStream);
+                        Upload.CopyTo(fileStream); //do the actual write
                     }
                 } else
                 {

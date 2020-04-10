@@ -20,7 +20,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         [BindProperty]
         public Models.RoomSchedule lclNewAvailability { get; set; }
         [BindProperty]
-        public List<String> checkboxDays { get; set; }
+        public List<String> checkboxDays { get; set; } //holds the days selected for availability
         public IQueryable<Models.RoomSchedule> lclSchedule { get; set; }
 
         public EditAvailabilityModel(IOptions<ConnectionConfig> connectionConfig)
@@ -30,22 +30,22 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         public void OnGet(int id)
         {
-            lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
+            lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr); //load the schedule with availabilties for the room
         }
 
         public void OnPostSave(int id)
         {
             lclNewAvailability.rmId = id;
-            if (ModelState.IsValid && ObjRoom.UserCanEditRoom(User.Identity.Name, id, _connectionConfig.Value.ConnStr))
+            if (ModelState.IsValid && ObjRoom.UserCanEditRoom(User.Identity.Name, id, _connectionConfig.Value.ConnStr)) //checks to make sure user has permissions over this room
             {
-                if (lclNewAvailability.avId == 0)
+                if (lclNewAvailability.avId == 0) //if availability # is 0, then its a new record
                 {
-                    var validDays = new List<String> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+                    var validDays = new List<String> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }; //ensures added day is valid 
                     if(checkboxDays.Count == 0)
                     {
                         ModelState.AddModelError(String.Empty, "Atleast one day must be selected");
                     }
-                    foreach (string day in checkboxDays)
+                    foreach (string day in checkboxDays) //insert each each availability
                     {
                         if (validDays.Contains(day))
                         {
@@ -54,7 +54,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                         }
                     }
                 }
-                else
+                else //edits the selected availability
                 {
                     ObjSchedule.EditRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
                 }
@@ -70,7 +70,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         {
             if(ModelState.IsValid && ObjRoom.UserCanEditRoom(User.Identity.Name, id, _connectionConfig.Value.ConnStr))
             {
-                if (lclNewAvailability.avId != 0)
+                if (lclNewAvailability.avId != 0) //can't delete a record that isn't in the database
                 {
                     ObjSchedule.DeleteRoomAvailability(lclNewAvailability.avId, _connectionConfig.Value.ConnStr);
                 } else
@@ -79,7 +79,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                 }
             } else
             {
-                ModelState.AddModelError(string.Empty, "Error: Invalid Request");
+                ModelState.AddModelError(string.Empty, "Error: Invalid Request"); //shouldn't ever be reached, but better safe than sorry
             }
             lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
             lclNewAvailability = new Models.RoomSchedule();

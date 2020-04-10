@@ -40,9 +40,9 @@
             <br />
             <button class="btn btn-dark text-light font-weight-bolder dropdown-toggle" type="button" data-toggle="dropdown">Building</button>
             <div class="dropdown-menu" style="z-index:10000">
-                @for (int i = 0; i < Model.Buildings.Count(); i++)
+                @for (int i = 0; i < Model.Buildings.Count(); i++) //loop through all buildings and print a list of them
                 {
-                    <a class="dropdown-item" href="/?building=@Model.Buildings.ElementAt(i).bdName">@Model.Buildings.ElementAt(i).bdName</a>
+                    <a class="dropdown-item" href="/?building=@Model.Buildings.ElementAt(i).bdId">@Model.Buildings.ElementAt(i).bdName</a>
                 }
             </div>
         </div>
@@ -50,7 +50,7 @@
             <br />
             <button class="btn btn-dark text-light font-weight-bolder dropdown-toggle" type="button" data-toggle="dropdown">Floor</button>
             <div class="dropdown-menu" style="z-index:10000">
-                @for (int i = 0; i < Model.Floors.Count(); i++)
+                @for (int i = 0; i < Model.Floors.Count(); i++) //loop through all floors of selected building
                 {
                     <a class="dropdown-item" href="/?building=@Model.building&floor=@Model.Floors.ElementAt(i).flNo">@Model.Floors.ElementAt(i).flName</a>
                 }

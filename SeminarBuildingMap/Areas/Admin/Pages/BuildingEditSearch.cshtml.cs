@@ -20,21 +20,21 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         [BindProperty][Required][Display(Name = "Building ID")][StringLength(20)]
         public string bdId { get; set; }
 
-        public IQueryable<Models.Building> BuildingData { get; set; }
+        public IQueryable<Models.Building> BuildingData { get; set; } 
 
-        public BuildingEditSearchModel(IOptions<GenericClasses.ConnectionConfig> connectionConfig)
+        public BuildingEditSearchModel(IOptions<GenericClasses.ConnectionConfig> connectionConfig) 
         {
             _connectionConfig = connectionConfig;
         }
 
         public void OnGet()
         {
-            BuildingData = ObjBuilding.GetAllBuildings(_connectionConfig.Value.ConnStr);
+            BuildingData = ObjBuilding.GetAllBuildings(_connectionConfig.Value.ConnStr); //set building datagrid
         }
 
         public IActionResult OnPost()
         {
-            if (!string.IsNullOrEmpty(bdId))
+            if (!string.IsNullOrEmpty(bdId)) //add new building and redirect to it
             {
                 ObjBuilding.AddBuilding(bdId, _connectionConfig.Value.ConnStr);
                 return RedirectToPage("BuildingEditDisplay/", new {bdId = bdId });

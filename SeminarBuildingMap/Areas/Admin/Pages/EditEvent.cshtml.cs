@@ -9,6 +9,7 @@ using SeminarBuildingMap.GenericClasses;
 
 namespace SeminarBuildingMap.Areas.Admin.Pages
 {
+    //this is pretty much identical to availability, so just check that code to see how this works
     public class EditEventModel : PageModel
     {
         private readonly IOptions<ConnectionConfig> _connectionConfig;

@@ -18,21 +18,21 @@ namespace SeminarBuildingMap
     {
 
         [BindProperty]
-        public string coords { get; set; }
+        public string coords { get; set; } //coords to add for room
 
         [BindProperty][StringLength(10)]
-        public string rmNo { get; set; }
+        public string rmNo { get; set; } //room # to edit
         [BindProperty][StringLength(10)]
-        public string newRmNo { get; set; }
+        public string newRmNo { get; set; } //room # of new room to add
 
         [BindProperty]
-        public string rmId { get; set; }
+        public string rmId { get; set; } //rmId to edit
 
         private readonly IOptions<ConnectionConfig> _connectionConfig;
 
         readonly RoomDataAccessLayer objRoom = new RoomDataAccessLayer();
 
-        public IEnumerable<Room> Rooms { get; set; }
+        public IEnumerable<Room> Rooms { get; set; } //list of rooms to add to map
 
         public FloorEditDisplayModel(IOptions<ConnectionConfig> connectionConfig)
         {
@@ -48,7 +48,7 @@ namespace SeminarBuildingMap
         {
             if (ModelState.IsValid && !String.IsNullOrEmpty(newRmNo))
             {
-               bool success = objRoom.AddRoom(newRmNo, bdId, flNo, coords, _connectionConfig.Value.ConnStr);
+               bool success = objRoom.AddRoom(newRmNo, bdId, flNo, coords, _connectionConfig.Value.ConnStr); //add room, returns true if it successfully adds (mainly doesn't due to bad coord input)
                 if (!success)
                 {
                     ModelState.AddModelError(string.Empty, "Please supply exactly 4 points");
@@ -65,7 +65,7 @@ namespace SeminarBuildingMap
             rmId = "";
         }
 
-        public void OnPostUpdate(string bdId, string flNo)
+        public void OnPostUpdate(string bdId, string flNo) //updates room # of a rmId
         {
             if (ModelState.IsValid && !String.IsNullOrEmpty(rmId) && !String.IsNullOrEmpty(rmNo) && int.TryParse(rmId, out _))
             {
@@ -82,9 +82,9 @@ namespace SeminarBuildingMap
             rmId = "";
         }
 
-        public void OnPostDelete(string bdId, string flNo)
+        public void OnPostDelete(string bdId, string flNo) //delete selected room based on id
         {
-            if (ModelState.IsValid && !String.IsNullOrEmpty(rmId) && int.TryParse(rmId, out _))
+            if (ModelState.IsValid && !String.IsNullOrEmpty(rmId) && int.TryParse(rmId, out _)) //makes sure rmId is a valid int, the out _ throws away the conversion of the tryParse
             {
                 objRoom.DeleteRoom(rmId, _connectionConfig.Value.ConnStr);
             }
