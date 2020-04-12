@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{Building}"
 @model SeminarBuildingMap.RoomListModel
 @{
     ViewData["Title"] = "RoomList";
@@ -7,12 +7,15 @@
 
 <h1 class="text-dark font-weight-bold">RoomList</h1>
 
-
 @(Html
-    .Grid(Model.BuildingData)
+    .Grid(Model.RoomData)
     .Build(columns =>
     {
         columns.Add(model => model.rmNo).Titled("Room Number");
+        columns.Add(model => model.rmName).Titled("Room Name");
+        columns.Add(model => model.flNo).Titled("Floor Number");
+        columns.Add(model => model.rmId).Titled("Floor Number");
+
     })
     .Empty("No Buildings Found")
     .Sortable()
@@ -30,7 +33,7 @@
     </script>
     <script>
         document.addEventListener('rowclick', function (e) {
-            window.location.href = "RoomSchedule/" + e.detail.data['rmNo'];
+            window.location.href = "/RoomSchedule/" + e.detail.data['rm-id'];
         });
     </script>
 

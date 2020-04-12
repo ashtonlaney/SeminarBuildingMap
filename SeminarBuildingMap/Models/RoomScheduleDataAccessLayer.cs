@@ -25,6 +25,20 @@ namespace SeminarBuildingMap.Models
             return schedule;
         }
 
+        public IQueryable<SimpleSchedule> GetRoomSchedule(int rmId, string _connectionString)
+        {
+            IEnumerable<SimpleSchedule> schedule = new List<SimpleSchedule>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@RmId", rmId);
+
+                schedule = connection.Query<SimpleSchedule>("up_GetRoomSchedule", queryParameters, commandType: System.Data.CommandType.StoredProcedure);
+            }
+            return schedule.AsQueryable();
+        }
+
         //returns availability list for room
         public IQueryable<RoomSchedule> GetRoomAvailability(int rmId, string _connectionString)
         {

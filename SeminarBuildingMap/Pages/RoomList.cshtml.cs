@@ -14,17 +14,18 @@ namespace SeminarBuildingMap
 
         private readonly IOptions<GenericClasses.ConnectionConfig> _connectionConfig;
 
-        public IQueryable<Models.Room> BuildingData { get; set; }
+        public IQueryable<Models.Room> RoomData { get; set; }
 
         public RoomListModel(IOptions<GenericClasses.ConnectionConfig> connectionConfig)
         {
             _connectionConfig = connectionConfig;
         }
 
-        public void OnGet()
+        public void OnGet(string Building)
         {
+            
             //Needs to be able to change buildings. Currently it shows only dardens rooms.
-            BuildingData = ObjRoom.GetBuildingRooms("DARDEN", _connectionConfig.Value.ConnStr);
+            RoomData = ObjRoom.GetBuildingRooms(Building, _connectionConfig.Value.ConnStr);
         }
     }
 }

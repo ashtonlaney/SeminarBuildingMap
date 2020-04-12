@@ -1,10 +1,24 @@
-﻿@page
+﻿@page "{Room}"
 @model SeminarBuildingMap.RoomScheduleModel
 @{
     ViewData["Title"] = "RoomSchedule";
-   //present all info about the selected room. will have ownership of room, number, floor, building, etc at top and feature a datagrid with the full schedule of that room everyday at bottom 
+    //present all info about the selected room. will have ownership of room, number, floor, building, etc at top and feature a datagrid with the full schedule of that room everyday at bottom
 
 }
 
 <h1>RoomSchedule</h1>
 
+@(Html
+    .Grid(Model.ScheduleData)
+    .Build(columns =>
+    {
+        columns.Add(model => model.avName).Titled("Class Name");
+        columns.Add(model => model.avDay).Titled("Start Time");
+        columns.Add(model => model.avStartTime).Titled("Start Time");
+        columns.Add(model => model.avEndTime).Titled("End Time");
+    })
+    .Empty("No Buildings Found")
+    .Sortable()
+    .Pageable()
+    .Filterable()
+)

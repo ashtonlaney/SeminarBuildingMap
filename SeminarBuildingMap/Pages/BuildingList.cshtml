@@ -11,7 +11,7 @@
     .Grid(Model.BuildingData)
     .Build(columns =>
     {
-        columns.Add(model => model.bdId).Titled("Building ID");
+        columns.Add(model => model.bdId).Titled("Building ID").Css("hiddenColumn");
         columns.Add(model => model.bdName).Titled("Building Name");
     })
     .Empty("No Buildings Found")
@@ -30,7 +30,7 @@
     </script>
     <script>
         document.addEventListener('rowclick', function (e) {
-            window.location.href = "RoomList?Building=" + e.detail.data['bd-id'];
+            window.location.href = "/RoomList/" + e.detail.data['bd-id'];
         });
     </script>
 
