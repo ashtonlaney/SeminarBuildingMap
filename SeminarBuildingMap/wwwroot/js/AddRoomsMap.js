@@ -1,6 +1,8 @@
 ﻿//I'm not redetailing on the repeated code in this file, check MainMap.js to see the details on everything 
 var map = L.map('mapid', {
-    crs: L.CRS.Simple
+    crs: L.CRS.Simple,
+     minZoom: 0.5, //sets zoom settings
+    zoomSnap: 0.25
 });
 
 var building = document.getElementById("building").value;

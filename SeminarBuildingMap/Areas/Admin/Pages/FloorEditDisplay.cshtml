@@ -1,27 +1,36 @@
 ﻿@page "{bdId}/{flNo}"
 @model SeminarBuildingMap.Areas.Admin.Pages.FloorEditDisplayModel
 @{
+    ViewData["Title"] = "Edit Building - Floor";
 }
+
+    <h2 class="display-4 border-bottom">Edit Floor Information</h2>
+
+
 <div asp-validation-summary="All" class="text-danger"></div>
 <form method="post">
     <div class="form-group">
-        <label>Building ID:</label>
+        <label class="text-dark font-weight-bold">Building ID</label>
         <input class="form-control" value="@RouteData.Values["bdId"]" readonly />
     </div>
     <div class="form-group">
-        <label>Floor Number:</label>
+        <label class="text-dark font-weight-bold">Floor Number</label>
         <input class="form-control" value="@RouteData.Values["flNo"]" readonly />
     </div>
     <div class="form-group">
-        <label>Floor Name:</label>
+        <label class="text-dark font-weight-bold">Floor Name</label>
         <input class="form-control" asp-for="flName" maxlength="50" />
     </div>
     <button type="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="update">Update Floor Name</button>
 </form>
 
+<br/>
+
+<h2 class="display-4 border-bottom">Edit Floorplans</h2>
+
 <form method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label>Floor Plan Exists:</label>
+        <label class="text-dark font-weight-bold">Floor Plan Exists</label>
         @if (Model.isFloorPlan)
         {
             <div class="badge badge-success">Yes</div>
@@ -33,7 +42,7 @@
         }
     </div>
     <div class="form-group">
-        <label>Upload New Floor Plan (This will replace existing):</label>
+        <label class="text-dark font-weight-bold">Upload New Floor Plan (This will replace existing)</label>
         <input type="file" asp-for="Upload" />
     </div>
     <button type="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="upload">Upload New Floor Plan</button>

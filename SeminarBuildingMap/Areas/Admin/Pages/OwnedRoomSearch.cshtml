@@ -2,8 +2,9 @@
 @model SeminarBuildingMap.Areas.Admin.Pages.OwnedRoomSearchModel
 @{
     //show all rooms a user owns
+    ViewData["Title"] = "Owned Room - Search";
 }
-
+    <h1 class="text-dark font-weight-bolder">Select Room to Edit</h1>
 @(Html
     .Grid(Model.RoomData)
     .Build(columns =>

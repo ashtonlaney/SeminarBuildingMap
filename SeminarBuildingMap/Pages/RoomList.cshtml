@@ -11,10 +11,10 @@
     .Grid(Model.RoomData)
     .Build(columns =>
     {
+        columns.Add(model => model.rmId).Titled("Room ID").Css("hiddenColumn");
         columns.Add(model => model.rmNo).Titled("Room Number");
         columns.Add(model => model.rmName).Titled("Room Name");
         columns.Add(model => model.flNo).Titled("Floor Number");
-        columns.Add(model => model.rmId).Titled("Floor Number");
 
     })
     .Empty("No Buildings Found")

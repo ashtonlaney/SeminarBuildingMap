@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Admin Panel";
 }
-<h1 class="font-weight-bold text-dark">Admin Page</h1>
+<h1 class="font-weight-bold text-dark">Admin Panel</h1>
+<hr/>
 @if (User.Identity.IsAuthenticated && (User.IsInRole("Faculty") || User.IsInRole("Manager") || User.IsInRole("Admin")))
 {
     <div id="faculty">

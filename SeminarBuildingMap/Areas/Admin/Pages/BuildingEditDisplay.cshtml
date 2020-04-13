@@ -1,36 +1,40 @@
 ﻿@page "{bdId}"
 @model SeminarBuildingMap.Areas.Admin.Pages.BuildingEditDisplayModel
 @{
+    ViewData["Title"] = "Edit Building";
 }
 <div asp-validation-summary="All" class="text-danger"></div>
 <form method="post">
+    <h2 class="display-4 border-bottom">Edit Building Information</h2>
     <div class="form-group">
-        <label>Building ID:</label>
+        <label class="text-dark font-weight-bold">Building ID</label>
         <input class="form-control" value="@RouteData.Values["bdId"]" readonly />
     </div>
     <div class="form-group">
-        <label>Building Name:</label>
+        <label class="text-dark font-weight-bold">Building Name</label>
         <input class="form-control" asp-for="bdName" maxlength="50" />
     </div>
     <button type="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="update">Update Building Name</button>
-</form>
+    <br /><br />
 
-@(Html
-    .Grid(Model.FloorData)
-    .Build(columns =>
-    {
-        columns.Add(model => model.flNo).Titled("Floor Number");
-        columns.Add(model => model.flName).Titled("Floor Name");
-    })
-    .Empty("No Floors Found For This Building")
-    .Sortable()
-    .Pageable()
-    .Filterable()
-)
+    <h2 class="display-4 border-bottom">Edit Building Floors</h2>
 
-<form method="post">
+    @(Html
+        .Grid(Model.FloorData)
+        .Build(columns =>
+        {
+            columns.Add(model => model.flNo).Titled("Floor Number");
+            columns.Add(model => model.flName).Titled("Floor Name");
+        })
+        .Empty("No Floors Found For This Building")
+        .Sortable()
+        .Pageable()
+        .Filterable()
+    )
+    <br />
+
     <div class="form-group">
-        <label>Floor Number:</label>
+        <label class="text-dark font-weight-bold">Floor Number</label>
         <input class="form-control" asp-for="flNo" maxlength="1" />
     </div>
     <button type="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="add">Add New Floor</button>

@@ -2,7 +2,11 @@
 @model SeminarBuildingMap.Areas.Admin.Pages.BuildingEditSearchModel
 @{
     //shows list of all buildings on campus or allow admin to add new building
+    ViewData["Title"] = "Edit Building";
 }
+
+<h1 class="text-dark font-weight-bold">Select Building to Edit</h1>
+
 
 @(Html
     .Grid(Model.BuildingData)
@@ -19,7 +23,7 @@
 <div asp-validation-summary="All" class="text-danger"></div>
 <form method="post">
     <div class="form-group">
-        <label>New Building ID: </label>
+        <label class="text-dark font-weight-bold">New Building ID</label>
         <input class="form-control" id="name" asp-for="bdId" required maxlength="20" />
         <span asp-validation-for="bdId" class="text-danger"></span>
 

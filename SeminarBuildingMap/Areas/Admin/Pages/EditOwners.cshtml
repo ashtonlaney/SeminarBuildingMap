@@ -1,6 +1,7 @@
 ﻿@page "{id}"
 @model SeminarBuildingMap.Areas.Admin.Pages.EditOwnersModel
 @{
+    ViewData["Title"] = "Edit Room Users";
 }
 <a asp-page="OwnedRoomSearch/" class="btn btn-dark text-light font-weight-bolder pull-right shadow">Return to search</a>
 <br /><br />
@@ -17,6 +18,7 @@
 <div class="tab-content">
     <div class="tab-pane fade show active">
         <form method="post">
+            <h2 class="display-4 border-bottom">Add User</h2>
             @(Html
                 .Grid(Model.allUsers)
                 .Build(columns =>
@@ -34,13 +36,13 @@
             )
 
             <div class="form-group">
-                <label class="text-dark font-weight-bold" style="padding-top:15px">Add:</label>
+                <label class="text-dark font-weight-bold" style="padding-top:15px">Add</label>
                 <input class="form-control shadow" id="addusers" asp-for="UsersToAdd" />
             </div>
 
             <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="save">Add</button>
             <br /><br />
-
+            <h2 class="display-4 border-bottom">Delete User</h2>
             @(Html
                 .Grid(Model.ownedUsers)
                 .Build(columns =>
@@ -58,7 +60,7 @@
             )
 
             <div class="form-group">
-                <label class="text-dark font-weight-bold"  style="padding-top:15px">Delete:</label>
+                <label class="text-dark font-weight-bold" style="padding-top:15px">Delete</label>
                 <input class="form-control shadow" id="deleteusers" asp-for="UsersToDelete" />
             </div>
 

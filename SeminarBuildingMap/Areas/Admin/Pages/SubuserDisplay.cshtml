@@ -2,25 +2,26 @@
 @model SeminarBuildingMap.Areas.Admin.SubuserDisplayModel
 @{
     //allow manager to assign rooms or delete user / allow admin to promote/demote manager for building
+    ViewData["Title"] = "Edit User";
 }
 
 <form method="post">
 
     <div class="form-group">
-        <label>Email:</label>
+        <label class="text-dark font-weight-bold">Email</label>
         <input class="form-control" id="name" asp-for="Email" readonly />
     </div>
 
     <div class="form-group">
-        <label>Role:</label>
+        <label class="text-dark font-weight-bold">Role</label>
         <select asp-for="SelectedRole" asp-items="@new SelectList(Model.AvailableRoles)" class="form-control"></select>
         <span asp-validation-for="SelectedRole" class="text-danger"></span>
     </div>
 
 
     <div class="form-group">
-        <label>Assigned Buildings:</label>
-        <select asp-for="SelectedBuildings" asp-items="Model.buildings"></select>
+        <label class="text-dark font-weight-bold">Assigned Buildings</label>
+        <select asp-for="SelectedBuildings" asp-items="Model.buildings" class="form-control"></select>
     </div>
 
     <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="save">Save</button>

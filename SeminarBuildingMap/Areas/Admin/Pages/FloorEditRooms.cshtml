@@ -1,7 +1,7 @@
 ﻿@page "{bdId}/{flNo}"
 @model SeminarBuildingMap.FloorEditDisplayModel
 @{
-    ViewData["Title"] = "addRoomsToMap";
+    ViewData["Title"] = "Edit Floor - Rooms";
     //allows admin to add/remove rooms or change building info(name)
 }
 @section Mapping{
@@ -31,22 +31,22 @@
 </ul>
 <form method="post">
     <div class="tab-content">
-        <div class="tab-pane fade in active show" id="add">
+        <div class="tab-pane fade in active show p-2" id="add">
             <input id="coords" type="hidden" asp-for="coords" />
-            <button class="btn btn-secondary text-light font-weight-bolder" onclick="clearMarkers()">Restart Room</button>
             <div class="form-group">
-                <label>Room Number:</label>
+                <label class="text-dark font-weight-bold">Room Number</label>
                 <input class="form-control" id="newNumber" asp-for="newRmNo" maxlength="10" />
             </div>
             <button type="submit" id="add" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="add" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]">Add Room</button>
+            <button class="btn btn-secondary text-light font-weight-bolder" onclick="clearMarkers()">Restart Room</button>
         </div>
-        <div class="tab-pane fade" id="edit">
+        <div class="tab-pane fade p-2" id="edit">
             <div class="form-group">
-                <label>Selected Room ID:</label>
+                <label class="text-dark font-weight-bold">Selected Room ID</label>
                 <input class="form-control" asp-for="rmId" id="idLabel" readonly />
             </div>
             <div class="form-group">
-                <label>Room Number:</label>
+                <label class="text-dark font-weight-bold">Room Number</label>
                 <input class="form-control" asp-for="rmNo" id="numberLabel" maxlength="10" />
             </div>
             <button type="submit" id="update" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="update" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]">Update Room</button>
