@@ -35,29 +35,30 @@
             <input id="coords" type="hidden" asp-for="coords" />
             <div class="form-group">
                 <label class="text-dark font-weight-bold">Room Number</label>
-                <input class="form-control" id="newNumber" asp-for="newRmNo" maxlength="10" />
+                <input class="form-control shadow" id="newNumber" asp-for="newRmNo" maxlength="10" />
             </div>
-            <button type="submit" id="add" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="add" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]">Add Room</button>
-            <button class="btn btn-secondary text-light font-weight-bolder" onclick="clearMarkers()">Restart Room</button>
+            <button type="submit" id="add" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="add" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]">Add Room</button>
+            <button class="btn btn-secondary text-light font-weight-bolder shadow" onclick="clearMarkers()">Restart Room</button>
+            <br /><br />
+            <p class="text-dark font-weight-bold">Start with the top left point of a room, and go counter clockwise for the rest of the points to add a room. Exactly 4 points must be added.</p>
         </div>
         <div class="tab-pane fade p-2" id="edit">
             <div class="form-group">
                 <label class="text-dark font-weight-bold">Selected Room ID</label>
-                <input class="form-control" asp-for="rmId" id="idLabel" readonly />
+                <input class="form-control shadow" asp-for="rmId" id="idLabel" readonly />
             </div>
             <div class="form-group">
                 <label class="text-dark font-weight-bold">Room Number</label>
-                <input class="form-control" asp-for="rmNo" id="numberLabel" maxlength="10" />
+                <input class="form-control shadow" asp-for="rmNo" id="numberLabel" maxlength="10" />
             </div>
-            <button type="submit" id="update" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="update" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]">Update Room</button>
-            <button type="submit" id="delete" class="btn btn-danger text-light font-weight-bolder" asp-page-handler="delete" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]" onclick="return confirm('Are you sure you want to delete this room?')">Delete Room</button>
+            <button type="submit" id="update" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="update" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]">Update Room</button>
+            <button type="submit" id="delete" class="btn btn-danger text-light font-weight-bolder shadow" asp-page-handler="delete" asp-route-bdId="@RouteData.Values["bdId"]" asp-route-flNo="@RouteData.Values["flNo"]" onclick="return confirm('Are you sure you want to delete this room?')">Delete Room</button>
         </div>
     </div>
 </form>
 
 
 <div id="mapid"></div>
-<p>Start with the top left point of a room, and go counter clockwise for the rest of the points to add a room; exactly 4 points must be added</p>
 <script src="~/js/AddRoomsMap.js"></script>
 
 <script>

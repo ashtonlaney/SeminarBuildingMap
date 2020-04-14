@@ -5,19 +5,19 @@
 }
 <div asp-validation-summary="All" class="text-danger"></div>
 <form method="post">
-    <h2 class="display-4 border-bottom">Edit Building Information</h2>
+    <h2 class="font-weight-bold text-dark border-bottom">Edit Building Information</h2>
     <div class="form-group">
         <label class="text-dark font-weight-bold">Building ID</label>
-        <input class="form-control" value="@RouteData.Values["bdId"]" readonly />
+        <input class="form-control shadow" value="@RouteData.Values["bdId"]" readonly />
     </div>
     <div class="form-group">
         <label class="text-dark font-weight-bold">Building Name</label>
-        <input class="form-control" asp-for="bdName" maxlength="50" />
+        <input class="form-control shadow" asp-for="bdName" maxlength="50" />
     </div>
-    <button type="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="update">Update Building Name</button>
+    <button type="submit" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="update">Update Building Name</button>
     <br /><br />
 
-    <h2 class="display-4 border-bottom">Edit Building Floors</h2>
+    <h2 class="font-weight-bold text-dark border-bottom">Edit Building Floors</h2>
 
     @(Html
         .Grid(Model.FloorData)
@@ -35,9 +35,9 @@
 
     <div class="form-group">
         <label class="text-dark font-weight-bold">Floor Number</label>
-        <input class="form-control" asp-for="flNo" maxlength="1" />
+        <input class="form-control shadow" asp-for="flNo" maxlength="1" />
     </div>
-    <button type="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="add">Add New Floor</button>
+    <button type="submit" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="add">Add New Floor</button>
 </form>
 
 

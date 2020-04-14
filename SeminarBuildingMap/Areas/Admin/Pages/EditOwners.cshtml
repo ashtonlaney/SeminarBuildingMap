@@ -18,7 +18,7 @@
 <div class="tab-content">
     <div class="tab-pane fade show active">
         <form method="post">
-            <h2 class="display-4 border-bottom">Add User</h2>
+            <h2 class="font-weight-normal text-dark border-bottom">Add User</h2>
             @(Html
                 .Grid(Model.allUsers)
                 .Build(columns =>
@@ -42,7 +42,7 @@
 
             <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="save">Add</button>
             <br /><br />
-            <h2 class="display-4 border-bottom">Delete User</h2>
+            <h2 class="font-weight-normal text-dark border-bottom">Delete User</h2>
             @(Html
                 .Grid(Model.ownedUsers)
                 .Build(columns =>

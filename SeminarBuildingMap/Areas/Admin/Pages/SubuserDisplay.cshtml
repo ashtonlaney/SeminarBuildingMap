@@ -9,23 +9,23 @@
 
     <div class="form-group">
         <label class="text-dark font-weight-bold">Email</label>
-        <input class="form-control" id="name" asp-for="Email" readonly />
+        <input class="form-control shadow" id="name" asp-for="Email" readonly />
     </div>
 
     <div class="form-group">
         <label class="text-dark font-weight-bold">Role</label>
-        <select asp-for="SelectedRole" asp-items="@new SelectList(Model.AvailableRoles)" class="form-control"></select>
+        <select asp-for="SelectedRole" asp-items="@new SelectList(Model.AvailableRoles)" class="form-control shadow"></select>
         <span asp-validation-for="SelectedRole" class="text-danger"></span>
     </div>
 
 
     <div class="form-group">
         <label class="text-dark font-weight-bold">Assigned Buildings</label>
-        <select asp-for="SelectedBuildings" asp-items="Model.buildings" class="form-control"></select>
+        <select asp-for="SelectedBuildings" asp-items="Model.buildings" class="form-control shadow"></select>
     </div>
 
-    <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder" asp-page-handler="save">Save</button>
-    <button type="submit" id="submit" class="btn btn-danger text-light font-weight-bolder" asp-page-handler="delete" onclick="return confirm('Are you sure you want to delete this user?')">Delete User</button>
+    <button type="submit" id="submit" class="btn btn-dark text-light font-weight-bolder shadow" asp-page-handler="save">Save</button>
+    <button type="submit" id="submit" class="btn btn-danger text-light font-weight-bolder shadow" asp-page-handler="delete" onclick="return confirm('Are you sure you want to delete this user?')">Delete User</button>
 
 </form>
 
