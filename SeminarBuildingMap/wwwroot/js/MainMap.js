@@ -76,29 +76,29 @@ function getSchedule(e) { //does the ajax to get schedules for selected rooms
             cell.appendChild(text);
         }
 
-        if (result.length > 0) { //this is used to make the headers
+        //this is used to make the headers           
 
-            let headers = ["Name", "Start Time", "End Time"]
-
-            let thead = table.createTHead(); //this block sets the room name
-            let row = thead.insertRow();
-            let th = document.createElement("th");
-            th.colSpan = 3;
-            let text = document.createTextNode(decodeHtml(name));
-            th.appendChild(text);
-            row.appendChild(th);
-            rowNum += 1;
-
-         
-            }
-
+        let thead = table.createTHead(); //this block sets the room name
         row = thead.insertRow();
+        let th = document.createElement("th");
+        th.colSpan = 3;
+        let text = document.createTextNode(decodeHtml(name));
+        th.appendChild(text);
+        row.appendChild(th);
         rowNum += 1;
-        for (let key of headers) { //this loop is for each indvidual column header
-            th = document.createElement("th");
-            text = document.createTextNode(decodeHtml(key));
-            th.appendChild(text);
-            row.appendChild(th);
+        row = thead.insertRow();
+
+        rowNum += 1;
+
+        if (result.length > 0) {
+            let headers = ["Event Name", "Start Time", "End Time"]
+
+            for (let key of headers) { //this loop is for each indvidual column header
+                th = document.createElement("th");
+                text = document.createTextNode(decodeHtml(key));
+                th.appendChild(text);
+                row.appendChild(th);
+            }
 
         }
         

@@ -15,10 +15,15 @@
     </style>
 
     <style>
-        .info-panel {
-            position: absolute;
-            right: 80px;
-            width: 300px;
+        #InfoPanelTable th {
+            font-size: 1.2rem;
+            font-weight: bold;
+            white-space: nowrap;
+            line-height: 2;
+        }
+        #InfoPanelTable tr {
+            font-size: 1rem;
+            font-weight: 400;
         }
     </style>
 
@@ -63,8 +68,8 @@
     <div class="row">
         <!-- DO NOT REMOVE OR MODIFY THE BELOW DIV, THIS IS WHAT THE MAP IS BOUND TO-->
         <div class="col-sm-9" id="mapid"></div>
-        <div class="col-sm-3" id="test">
-            <table id="InfoPanelTable" class="table" style="font-size: 1.5rem; font-weight: 300; line-height: 3"></table>
+        <div class="col-sm-3" id="infoPanel">
+            <table id="InfoPanelTable" class="table"></table>
         </div>
     </div>
 </div>
