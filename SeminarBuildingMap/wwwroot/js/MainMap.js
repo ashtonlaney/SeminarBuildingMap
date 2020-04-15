@@ -48,7 +48,7 @@ function getSchedule(e) { //does the ajax to get schedules for selected rooms
     var roomID = e.target.feature.properties.id; //gets the stored properties of the selected room from its geoJSON
     var name = e.target.feature.properties.name;
 
-    scheduleJSON = $.getJSON('https://localhost:44317/?handler=Info&rmId=' + roomID, function (result) { //call ajax query
+    scheduleJSON = $.getJSON('/?handler=Info&rmId=' + roomID, function (result) { //call ajax query
 
         var table = document.getElementById("InfoPanelTable"); //grab the table to insert it into
         
