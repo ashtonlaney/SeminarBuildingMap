@@ -17,6 +17,8 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         readonly Models.RoomScheduleDataAccessLayer ObjSchedule = new Models.RoomScheduleDataAccessLayer();
 
+        public string RoomName { get; set; }
+
         [BindProperty]
         public Models.RoomSchedule lclNewAvailability { get; set; }
         [BindProperty]
@@ -31,6 +33,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         public void OnGet(int id)
         {
             lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr); //load the schedule with availabilties for the room
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
         }
 
         public void OnPostSave(int id)
@@ -51,12 +54,14 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                         {
                             lclNewAvailability.avDay = day;
                             ObjSchedule.InsertRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+                            ModelState.Clear();
                         }
                     }
                 }
                 else //edits the selected availability
                 {
                     ObjSchedule.EditRoomAvailability(lclNewAvailability, _connectionConfig.Value.ConnStr);
+                    ModelState.Clear();
                 }
             } else
             {
@@ -64,6 +69,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             }
             lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
             lclNewAvailability = new Models.RoomSchedule();
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
         }
 
         public void OnPostDelete(int id)
@@ -73,6 +79,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                 if (lclNewAvailability.avId != 0) //can't delete a record that isn't in the database
                 {
                     ObjSchedule.DeleteRoomAvailability(lclNewAvailability.avId, _connectionConfig.Value.ConnStr);
+                    ModelState.Clear();
                 } else
                 {
                     ModelState.AddModelError(string.Empty, "An availability record must be selected to delete");
@@ -83,6 +90,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             }
             lclSchedule = ObjSchedule.GetRoomAvailability(id, _connectionConfig.Value.ConnStr);
             lclNewAvailability = new Models.RoomSchedule();
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
         }
     }
 

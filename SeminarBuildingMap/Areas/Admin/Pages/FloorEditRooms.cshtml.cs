@@ -49,6 +49,7 @@ namespace SeminarBuildingMap
             if (ModelState.IsValid && !String.IsNullOrEmpty(newRmNo))
             {
                bool success = objRoom.AddRoom(newRmNo, bdId, flNo, coords, _connectionConfig.Value.ConnStr); //add room, returns true if it successfully adds (mainly doesn't due to bad coord input)
+                ModelState.Clear();
                 if (!success)
                 {
                     ModelState.AddModelError(string.Empty, "Please supply exactly 4 points");
@@ -70,6 +71,7 @@ namespace SeminarBuildingMap
             if (ModelState.IsValid && !String.IsNullOrEmpty(rmId) && !String.IsNullOrEmpty(rmNo) && int.TryParse(rmId, out _))
             {
                 objRoom.UpdateRoom(rmId, rmNo, _connectionConfig.Value.ConnStr);
+                ModelState.Clear();
             }
             else
             {              

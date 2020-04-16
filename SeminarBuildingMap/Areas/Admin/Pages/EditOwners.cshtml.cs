@@ -23,6 +23,9 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         private readonly Models.RoomDataAccessLayer ObjRoom = new Models.RoomDataAccessLayer();
         public IQueryable<SeminarBuildingMapUser> allUsers { get; set; }
         public IQueryable<SeminarBuildingMapUser> ownedUsers { get; set; }
+
+        public string RoomName { get; set; }
+
         [BindProperty]
         public string UsersToAdd { get; set; }
         [BindProperty]
@@ -38,7 +41,9 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         {
             allUsers = _userManager.GetUsersInRoleAsync("Manager").Result.ToList().AsQueryable();
             allUsers = allUsers.Union(_userManager.GetUsersInRoleAsync("Faculty").Result.ToList().AsQueryable()); //union the datasets together so it can list all editable users
-            ownedUsers = ObjRoom.GetOwnedUsers(id, _connectionConfig.Value.ConnStr);           
+            ownedUsers = ObjRoom.GetOwnedUsers(id, _connectionConfig.Value.ConnStr);
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
+
         }
 
         public void OnPostSave(int id)
@@ -53,7 +58,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                         var user = _userManager.FindByEmailAsync(email).Result; //find the user based on entered email
                         if (user != null && !_userManager.IsInRoleAsync(user, "Admin").Result) //make sure an admin isn't entered and that a valid user is selected
                         {
-                            ObjRoom.AddOwnedRooms(id, email, _connectionConfig.Value.ConnStr);  //authorize the user to edit the selected room
+                            ObjRoom.AddOwnedRooms(id, email, _connectionConfig.Value.ConnStr);  //authorize the user to edit the selected room                            
                         } 
                         else
                         {
@@ -68,6 +73,13 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             allUsers = _userManager.GetUsersInRoleAsync("Manager").Result.ToList().AsQueryable();
             allUsers = allUsers.Union(_userManager.GetUsersInRoleAsync("Faculty").Result.ToList().AsQueryable());
             ownedUsers = ObjRoom.GetOwnedUsers(id, _connectionConfig.Value.ConnStr);
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
+            UsersToAdd = "";
+            UsersToDelete = "";
+            if(ModelState.ErrorCount == 0)
+            {
+                ModelState.Clear();
+            }
         }
         public void OnPostDelete(int id) //delete user from room's authorized list
         {
@@ -80,9 +92,6 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
                     if (!string.IsNullOrEmpty(email))
                     {
                         ObjRoom.DeleteOwnedRooms(id, email, _connectionConfig.Value.ConnStr); //call delete function for user
-                    } else
-                    {
-                        ModelState.AddModelError(string.Empty, "Error deleting supplied users, please check for proper input");
                     }
                 }
             } else
@@ -92,6 +101,13 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             allUsers = _userManager.GetUsersInRoleAsync("Manager").Result.ToList().AsQueryable();
             allUsers = allUsers.Union(_userManager.GetUsersInRoleAsync("Faculty").Result.ToList().AsQueryable());
             ownedUsers = ObjRoom.GetOwnedUsers(id, _connectionConfig.Value.ConnStr);
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
+            UsersToAdd = "";
+            UsersToDelete = "";
+            if (ModelState.ErrorCount == 0)
+            {
+                ModelState.Clear();
+            }
         }
     }
 }

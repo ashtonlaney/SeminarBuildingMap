@@ -11,10 +11,13 @@ namespace SeminarBuildingMap
     public class RoomListModel : PageModel
     {
         readonly Models.RoomDataAccessLayer ObjRoom = new Models.RoomDataAccessLayer();
+        readonly Models.BuildingDataAccessLayer ObjBuilding = new Models.BuildingDataAccessLayer();
 
         private readonly IOptions<GenericClasses.ConnectionConfig> _connectionConfig;
 
         public IQueryable<Models.Room> RoomData { get; set; }
+
+        public string BuildingName { get; set; }
 
         public RoomListModel(IOptions<GenericClasses.ConnectionConfig> connectionConfig)
         {
@@ -23,8 +26,7 @@ namespace SeminarBuildingMap
 
         public void OnGet(string Building)
         {
-            
-            //Needs to be able to change buildings. Currently it shows only dardens rooms.
+            BuildingName = ObjBuilding.GetBuildingName(Building, _connectionConfig.Value.ConnStr);
             RoomData = ObjRoom.GetBuildingRooms(Building, _connectionConfig.Value.ConnStr);
         }
     }

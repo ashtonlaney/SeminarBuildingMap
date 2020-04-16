@@ -18,6 +18,8 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
 
         readonly Models.RoomScheduleDataAccessLayer ObjSchedule = new Models.RoomScheduleDataAccessLayer();
 
+        public string RoomName { get; set; }
+
         [BindProperty]
         public Models.RoomSchedule lclNewEvent { get; set; }
         public IQueryable<Models.RoomSchedule> lclSchedule { get; set; }
@@ -29,6 +31,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
         public void OnGet(int id)
         {
             lclSchedule = ObjSchedule.GetRoomEvents(id, _connectionConfig.Value.ConnStr);
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
         }
 
         public void OnPostSave(int id)
@@ -50,6 +53,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             }
             lclSchedule = ObjSchedule.GetRoomEvents(id, _connectionConfig.Value.ConnStr);
             lclNewEvent = new Models.RoomSchedule();
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
         }
 
         public void OnPostDelete(int id)
@@ -66,6 +70,7 @@ namespace SeminarBuildingMap.Areas.Admin.Pages
             }
             lclSchedule = ObjSchedule.GetRoomEvents(id, _connectionConfig.Value.ConnStr);
             lclNewEvent = new Models.RoomSchedule();
+            RoomName = ObjRoom.GetRoomInfo(id, _connectionConfig.Value.ConnStr).rmName;
         }
     }
 }
