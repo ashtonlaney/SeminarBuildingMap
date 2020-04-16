@@ -36,29 +36,30 @@
 
 <div class="row">
 
-    <div class="col-sm-10">
+    <div class="col-sm-9" style="display:flex; padding-right:0" >
         <h1 id="hMapTitle" class="display-4 font-weight-normal text-dark">@Model.buildingName @Model.floorName</h1>
-    </div>
-    <div class="btn-toolbar col-sm-2" style="z-index:1000">
 
-        <div class="dropdown mr-2">
-            <br />
-            <button class="btn btn-dark text-light font-weight-bolder dropdown-toggle" type="button" data-toggle="dropdown">Building</button>
-            <div class="dropdown-menu" style="z-index:10000">
-                @for (int i = 0; i < Model.Buildings.Count(); i++) //loop through all buildings and print a list of them
-                {
-                    <a class="dropdown-item" href="/?building=@Model.Buildings.ElementAt(i).bdId">@Model.Buildings.ElementAt(i).bdName</a>
-                }
+        <div class="btn-toolbar ml-auto">
+
+            <div class="dropdown mr-2">
+                <br />
+                <button class="btn btn-dark text-light font-weight-bolder dropdown-toggle" type="button" data-toggle="dropdown">Building</button>
+                <div class="dropdown-menu" style="z-index:10000">
+                    @for (int i = 0; i < Model.Buildings.Count(); i++) //loop through all buildings and print a list of them
+                    {
+                        <a class="dropdown-item" href="/?building=@Model.Buildings.ElementAt(i).bdId">@Model.Buildings.ElementAt(i).bdName</a>
+                    }
+                </div>
             </div>
-        </div>
-        <div class="dropdown mr-2">
-            <br />
-            <button class="btn btn-dark text-light font-weight-bolder dropdown-toggle" type="button" data-toggle="dropdown">Floor</button>
-            <div class="dropdown-menu" style="z-index:10000">
-                @for (int i = 0; i < Model.Floors.Count(); i++) //loop through all floors of selected building
-                {
-                    <a class="dropdown-item" href="/?building=@Model.building&floor=@Model.Floors.ElementAt(i).flNo">@Model.Floors.ElementAt(i).flName</a>
-                }
+            <div class="dropdown mr-2">
+                <br />
+                <button class="btn btn-dark text-light font-weight-bolder dropdown-toggle" type="button" data-toggle="dropdown">Floor</button>
+                <div class="dropdown-menu" style="z-index:10000">
+                    @for (int i = 0; i < Model.Floors.Count(); i++) //loop through all floors of selected building
+                    {
+                        <a class="dropdown-item" href="/?building=@Model.building&floor=@Model.Floors.ElementAt(i).flNo">@Model.Floors.ElementAt(i).flName</a>
+                    }
+                </div>
             </div>
         </div>
     </div>
