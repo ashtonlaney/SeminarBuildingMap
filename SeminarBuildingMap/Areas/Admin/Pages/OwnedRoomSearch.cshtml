@@ -12,6 +12,7 @@
         columns.Add(model => model.rmId).Titled("rmId").Css("hiddenColumn");
         columns.Add(model => model.bdId).Titled("Building");
         columns.Add(model => model.rmNo).Titled("Room Number");
+        columns.Add(model => model.rmName).Titled("Room Name");
     })
     .Empty("No Owned Rooms Found")
     .Sortable()
